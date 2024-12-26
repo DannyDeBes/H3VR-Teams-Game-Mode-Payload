@@ -10,5 +10,8 @@ namespace TeamsGameMode
         public string name;
         public List<string> playerTeams;
         public List<string> sosigTeams;
+
+        public int[] gameSettings;
+        public int[] gamemodeSettings;
     }
 }

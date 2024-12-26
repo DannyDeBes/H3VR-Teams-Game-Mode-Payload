@@ -28,7 +28,7 @@ namespace TeamsGameMode
 
         public void AdjustSettingValue(int amount)
         {
-            TGM_MainMenu.Setting setting = TGM_MainMenu.instance.settings[index];
+            TGM_MainMenu.Setting setting = TGM_MainMenu.instance.gameSettings[index];
 
             //Loop Around
             if (value + amount > setting.intMax)

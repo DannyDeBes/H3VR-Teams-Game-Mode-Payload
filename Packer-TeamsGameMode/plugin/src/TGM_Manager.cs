@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace TeamsGameMode
 {
@@ -9,18 +8,14 @@ namespace TeamsGameMode
     {
         public static TGM_Manager instance;
         public static TGM_Profile profile;
+        public static GameStateEnum gameState = GameStateEnum.GamemodeSelect;
         public TGM_Gamemode[] gamemodes;
-
-        public class GameSettings
-        {
-            public int teamCount = 2;
-            public bool dropItemsOnDeath = false;
-            public bool destroyItemsOnDeath = false;
-        }
 
         public Transform playerSpawnPoint;
         public TGM_Teams teams;
         public TGM_Gamemode gamemode;
+
+        [Header("DATA")]
         public TGM_Player localPlayer = new TGM_Player();
         public TGM_Player[] players;
         public TGM_Player[] sosigs;
@@ -46,11 +41,58 @@ namespace TeamsGameMode
         public AudioClip audioTeamLost;
 
 
+        public delegate void GameStateDelegate();
+        public static event GameStateDelegate GameStateEvent;
+
+
         public void Setup()
         {
             teams = new TGM_Teams();
             TGM_Teams.instance = teams;
         }
+
+        void Update()
+        {
+            if (gameState == GameStateEnum.Gameplay)
+                gamemode.Update();
+        }
+
+
+        public void SetGameState(GameStateEnum state)
+        {
+            gameState = state;
+
+            if (GameStateEvent != null)
+                GameStateEvent.Invoke();
+
+            switch (state)
+            {
+                case GameStateEnum.GamemodeSelect:
+                    //TODO reset entire gamemode back (Or Reload level?)
+                    break;
+                case GameStateEnum.Setup:
+                    gamemode.Setup();
+
+                    break;
+                case GameStateEnum.Gameplay:
+                    break;
+                case GameStateEnum.Gameover:
+                    break;
+            }
+        }
+
+        //------------------------------------------------------------------------------
+        // Sosigs
+        //------------------------------------------------------------------------------
+
+        protected virtual IEnumerator ClearSosig()
+        {
+            yield return null;
+        }
+
+        //------------------------------------------------------------------------------
+        // AUDIO
+        //------------------------------------------------------------------------------
 
         public static void PlayAudio(PlayAudioEnum type, bool pitchVariation = false)
         {
@@ -133,6 +175,15 @@ namespace TeamsGameMode
             Elimination = 5,
             TeamWon = 6,
             TeamLost = 7,        
+        }
+
+        public enum GameStateEnum
+        {
+            GamemodeSelect,
+            Setup,
+            Gameplay,
+            Finale,     //30 secs post game before game over
+            Gameover,
         }
     }
 }

@@ -47,8 +47,10 @@ namespace TeamsGameMode
         }
 
         [Header("Page: Game Settings")]
-        public List<Setting> settings = new List<Setting>();
-        public GameObject settingPrefab;
+        public List<Setting> gameSettings = new List<Setting>();
+        public GameObject gameSettingPrefab;
+        public List<Setting> gamemodeSettings = new List<Setting>();
+        public GameObject gamemodeSettingPrefab;
 
         //Put Base Game settings here
         //Save Data?
@@ -60,13 +62,6 @@ namespace TeamsGameMode
         [HideInInspector]
         public TGM_Button[] gamemodesBtns;
 
-
-        [Header("Team Window")]
-        public GameObject[] teamWindow;
-
-
-        [Header("Join Game")]
-        public GameObject joinMenu;
 
         public delegate void SetupDelegate();
         public static event SetupDelegate SetupEvent;
@@ -118,6 +113,7 @@ namespace TeamsGameMode
             TGM_Manager.instance.gamemode = TGM_Manager.instance.gamemodes[index];
             OpenPage(Page.GameSettings);
             UpdateSettings();
+            TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Setup);
         }
 
         //-------------------------------------------------------------------------------------
@@ -126,26 +122,22 @@ namespace TeamsGameMode
 
         void SetupSettings()
         {
-            for (int i = 0; i < settings.Count; i++)
+            for (int i = 0; i < gameSettings.Count; i++)
             {
-                //If only 2 teams, hide team setting
-                if (i == (int)SettingEnum.Teams && TGM_Scene.instance.teams.Length <= 2)
-                    continue;
-
-                TGM_Button btn = Instantiate(settingPrefab, settingPrefab.transform).GetComponent<TGM_Button>();
+                TGM_Button btn = Instantiate(gameSettingPrefab, gameSettingPrefab.transform).GetComponent<TGM_Button>();
                 btn.gameObject.SetActive(true);
                 btn.index = i;
-                btn.value = settings[i].value;
+                btn.value = gameSettings[i].value;
 
-                btn.texts[0].text = settings[i].description;
+                btn.texts[0].text = gameSettings[i].description;
 
                 //Current Setting
-                if (settings[i].type == Setting.SettingType.Strings)
-                    btn.texts[1].text = settings[i].settings[settings[i].value]; //Text
+                if (gameSettings[i].type == Setting.SettingType.Strings)
+                    btn.texts[1].text = gameSettings[i].settings[gameSettings[i].value]; //Text
                 else
-                    btn.texts[1].text = settings[i].value.ToString(); //Number
+                    btn.texts[1].text = gameSettings[i].value.ToString(); //Number
 
-                if (Networking.IsClient() && !settings[i].localOnly)
+                if (Networking.IsClient() && !gameSettings[i].localOnly)
                 {
                     btn.buttons[0].gameObject.SetActive(false);
                     btn.buttons[1].gameObject.SetActive(false);
@@ -155,7 +147,7 @@ namespace TeamsGameMode
 
         public void UpdateSettings()
         {
-            for (int i = 0; i < settings.Count; i++)
+            for (int i = 0; i < gameSettings.Count; i++)
             {
 
             }
@@ -191,7 +183,7 @@ namespace TeamsGameMode
 
         public void StartGame()
         {
-
+            TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Gameplay);
         }
     }
 }
@@ -201,6 +193,8 @@ public enum SettingEnum
     SpawnLock = 0,
     SpawnWaveTime = 1,
     TimeLimit = 2,
-    Teams = 3,
-    CanRespawn = 4
+    CanRespawn = 3,
+    ShowFriendlies = 4,
+    ItemsOnDeath = 5,
+    SosigWeapons = 6,
 }

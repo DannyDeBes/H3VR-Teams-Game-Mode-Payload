@@ -16,6 +16,7 @@ namespace TeamsGameMode
         [Header("Human")]
         public int playerIndex = 0; //H3MP data
         public int classIndex = 0; // Class ID
+        public bool awaitingRespawn = false;
 
         [Header("Stats")]
         public int iff = 0; //Default team

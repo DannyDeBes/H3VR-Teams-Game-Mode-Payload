@@ -17,10 +17,18 @@ namespace TeamsGameMode
 
         public List<TGM_Button> buttons = new List<TGM_Button>();
 
+        public Text spawnCountdown;
+
 
         void Awake()
         {
             instance = this;
+        }
+
+        void Update()
+        {
+            if (spawnCountdown.gameObject.activeSelf)
+                spawnCountdown.text = TGM_Manager.instance.nextSpawnWave.ToString();
         }
 
 
@@ -42,6 +50,10 @@ namespace TeamsGameMode
             buttons.Clear();
         }
 
+        public void JoinRespawn()
+        {
+            TGM_Manager.instance.localPlayer.awaitingRespawn = true;
+        }
 
         public void SpawnClass(int id)
         {

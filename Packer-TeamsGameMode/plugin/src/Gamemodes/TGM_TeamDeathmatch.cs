@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using FistVR;
+using UnityEngine;
+using H3MP.Networking;
+
 
 namespace TeamsGameMode
 {
@@ -14,6 +15,42 @@ namespace TeamsGameMode
         {
             base.Setup();
 
+        }
+
+        public override bool IsGamemodeValid()
+        {
+            //TDM always valid
+            return true;
+        }
+
+        public override void Update()
+        {
+            base.Update();
+
+            if (Networking.IsClient())
+                return;
+
+            //Check for Win Condition
+            for (int i = 0; i < TGM_Teams.instance.teams.Length; i++)
+            {
+                TGM_Teams.Team team = TGM_Teams.instance.teams[i];
+
+                if (team.currentScore == team.scoreGoal)
+                {
+                    //Won
+                    TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Gameover);
+                    return;
+                }
+            }    
+        }
+
+        public override void OnSosigKilled(Sosig s)
+        {
+            base.OnSosigKilled(s);
+
+            int iff = s.GetIFF();
+
+            AdjustTeamScore(iff, 1);
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace TeamsGameMode
 {
@@ -18,6 +19,11 @@ namespace TeamsGameMode
 
         [Tooltip("SosigEnemyID list, add duplicate IDs to weight them more likely to be picked")]
         public int[] sosigEnemyIDs;
+
+        public int GetRandomSosigEnemyID()
+        {
+            return sosigEnemyIDs[Random.Range(0, sosigEnemyIDs.Length)];
+        }
 
     }
 }

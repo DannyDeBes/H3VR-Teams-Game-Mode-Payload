@@ -10,8 +10,6 @@ public class TGM_FVRPointableButton : FVRPointableButton
 
         if (box != null)
         {
-            if (box.enabled == false || box.size.x > 1)
-                return;
 
             RectTransform rect = GetComponent<RectTransform>();
             box.size = new Vector3(rect.sizeDelta.x, rect.sizeDelta.y, 1);

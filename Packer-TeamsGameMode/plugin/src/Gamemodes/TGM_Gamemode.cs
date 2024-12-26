@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using FistVR;
 using UnityEngine;
 
@@ -24,7 +21,7 @@ namespace TeamsGameMode
         }
 
         /// <summary>
-        /// Called each Update frame
+        /// Called each Update frame while in Gameplay Game State
         /// </summary>
         public virtual void Update() 
         {
@@ -41,18 +38,14 @@ namespace TeamsGameMode
             return false;
         }
 
-        public virtual void WinConditionCheck()
-        { 
-
-        }
-
         /// <summary>
         /// Method to adjust a teams score
         /// </summary>
         /// <param name="teamID"></param>
         /// <param name="amount"></param>
-        public virtual void AdjustScore(int teamID, int amount)
+        public virtual void AdjustTeamScore(int teamID, int amount)
         {
+            TGM_Teams.instance.teams[teamID].currentScore += amount;
         }
 
         /// <summary>
@@ -61,7 +54,7 @@ namespace TeamsGameMode
         /// <param name="s"></param>
         public virtual void OnSosigKilled(Sosig s)
         {
-
+            s.ClearSosig();
         }
 
         /// <summary>
@@ -72,16 +65,6 @@ namespace TeamsGameMode
         public virtual void OnPlayerKilled(int playerIndex, int killerIFF)
         {
 
-        }
-
-        public virtual Vector3 GetTeamRoomSpawnPoint(int team)
-        {
-            return Vector3.zero;
-        }
-
-        public virtual void GetLevelSpawnPoint(int team)
-        {
-            
         }
     }
 }

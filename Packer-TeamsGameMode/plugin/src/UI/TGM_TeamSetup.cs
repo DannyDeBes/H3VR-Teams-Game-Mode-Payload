@@ -101,6 +101,8 @@ namespace TeamsGameMode
                 classPreviews.Add(img);
             }
 
+            //Old +2 Teams code
+            /*
             int teamsMax = TGM_Scene.instance.teams.Length;
             int teamCount = TGM_Teams.instance.teams.Length;
 
@@ -127,6 +129,7 @@ namespace TeamsGameMode
                 btn.gameObject.SetActive(true);
                 teamsButtons.Add(btn);
             }
+            */
         }
 
         public void AdjustTeamScore(int amount)
@@ -213,16 +216,6 @@ namespace TeamsGameMode
 
             browserPanel.SetActive(false);
             UpdateSettings();
-        }
-
-        public void AddTeam()
-        {
-            
-        }
-
-        public void RemoveTeam()
-        {
-            //Removes current selected team (Unless its 0 or 1)
         }
     }
 }

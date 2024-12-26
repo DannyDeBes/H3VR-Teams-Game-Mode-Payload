@@ -11,7 +11,12 @@ namespace TeamsGameMode
         [Header("Scene Setup")]
         public TeamSpawnRoom[] teams = new TeamSpawnRoom[2];
         public TGM_Area[] areas = new TGM_Area[2];
+        public ObstacleAvoidanceType avoidanceQuailty = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+
+        [Header("Menus")]
         public Transform mainMenu;
+        public Transform teamSetupMenu;
+        public Transform profilesMenu;
 
         [Header("Audio Overwrite")]
         [Tooltip("Start Game, or spawn items etc")]
@@ -51,6 +56,9 @@ namespace TeamsGameMode
         /// <returns></returns>
         public static TeamSpawnRoom Team(int iff)
         {
+            if (instance == null || instance.teams == null || instance.teams.Length >= iff)
+                return null;
+
             return instance.teams[iff];
         }
 
@@ -67,42 +75,94 @@ namespace TeamsGameMode
 
         void OnDrawGizmos()
         {
-            for (int i = 0; i < teams.Length; i++)
-            {
-                if (teams[i] == null)
-                    continue;
 
-                Color newGreen = Color.green;
-                newGreen.a = 0.2f;
-                Gizmos.color = newGreen;
-                if (teams[i].respawnArea != null)
-                    Gizmos.DrawCube(teams[i].respawnArea.position, teams[i].respawnArea.localScale / 2);
-                
+            if (teams != null)
+            {
+                for (int i = 0; i < teams.Length; i++)
+                {
+                    if (teams[i] == null)
+                        continue;
+
+                    Color newColor = Color.green;
+                    newColor.a = 0.2f;
+                    Gizmos.color = newColor;
+                    if (teams[i].respawnArea != null)
+                        Gizmos.DrawCube(teams[i].respawnArea.position, teams[i].respawnArea.localScale / 2);
+
+                }
+            }
+
+            //MATRIX
+
+            if (mainMenu != null)
+            {
+                Color newColor = Color.grey;
+                newColor.a = 0.2f;
+                Gizmos.color = newColor;
+
+                Gizmos.matrix = Matrix4x4.identity;
+                Gizmos.DrawLine(mainMenu.position, mainMenu.position + mainMenu.forward);
+                Gizmos.matrix = Matrix4x4.TRS(mainMenu.position, mainMenu.rotation, new Vector3(1.92f, 1.08f, 0.01f));
+                Gizmos.DrawCube(Vector3.zero, Vector3.one);
+                Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+            }
+
+            if (teamSetupMenu != null)
+            {
+                Color newColor = Color.grey;
+                newColor.a = 0.2f;
+                Gizmos.color = newColor;
+
+                Gizmos.matrix = Matrix4x4.identity;
+                Gizmos.DrawLine(teamSetupMenu.position, teamSetupMenu.position + teamSetupMenu.forward);
+                Gizmos.matrix = Matrix4x4.TRS(teamSetupMenu.position, teamSetupMenu.rotation, new Vector3(1.92f, 1.08f, 0.01f));
+                Gizmos.DrawCube(Vector3.zero, Vector3.one);
+                Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+            }
+
+            if (profilesMenu != null)
+            {
+                Color newColor = Color.grey;
+                newColor.a = 0.2f;
+                Gizmos.color = newColor;
+
+                Gizmos.matrix = Matrix4x4.identity;
+                Gizmos.DrawLine(profilesMenu.position, profilesMenu.position + profilesMenu.forward);
+                Gizmos.matrix = Matrix4x4.TRS(profilesMenu.position, profilesMenu.rotation, new Vector3(0.96f, 1.08f, 0.01f));
+                Gizmos.DrawCube(Vector3.zero, Vector3.one);
+                Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
             }
         }
 
         void OnValidate()
         {
-            if (teams.Length < 2)
+
+            if (teams != null)
             {
-                List<TeamSpawnRoom> newTeams = teams.ToList();
-                int missing = 2 - newTeams.Count;
-                for (int i = 0; i < missing; i++)
+                if (teams.Length < 2)
                 {
-                    newTeams.Add(new TeamSpawnRoom());
+                    List<TeamSpawnRoom> newTeams = teams.ToList();
+                    int missing = 2 - newTeams.Count;
+                    for (int i = 0; i < missing; i++)
+                    {
+                        newTeams.Add(new TeamSpawnRoom());
+                    }
+                    teams = newTeams.ToArray();
                 }
-                teams = newTeams.ToArray();
             }
 
-            if (areas.Length < 2)
+            if (areas != null)
             {
-                List<TGM_Area> newAreas = areas.ToList();
-                int missing = 2 - newAreas.Count;
-                for (int i = 0; i < missing; i++)
+                if (areas.Length < 2)
                 {
-                    newAreas.Add(new TGM_Area());
+                    List<TGM_Area> newAreas = areas.ToList();
+                    int missing = 2 - newAreas.Count;
+                    for (int i = 0; i < missing; i++)
+                    {
+                        newAreas.Add(new TGM_Area());
+                    }
+                    areas = newAreas.ToArray();
                 }
-                areas = newAreas.ToArray();
             }
         }
     }
