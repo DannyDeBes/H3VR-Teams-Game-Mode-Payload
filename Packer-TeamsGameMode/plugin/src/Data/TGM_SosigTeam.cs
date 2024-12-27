@@ -16,13 +16,20 @@ namespace TeamsGameMode
         public string description = "A short description of this sosig faction";
         [Tooltip("Preview image of the team when selected")]
         public Sprite thumbnail;
+        public SosigSet[] sosigSet;
 
-        [Tooltip("SosigEnemyID list, add duplicate IDs to weight them more likely to be picked")]
-        public int[] sosigEnemyIDs;
-
-        public int GetRandomSosigEnemyID()
+        public class SosigSet
         {
-            return sosigEnemyIDs[Random.Range(0, sosigEnemyIDs.Length)];
+            public int minKill = -1;
+            public int maxKill = -1;
+
+            [Tooltip("SosigEnemyID list, add duplicate IDs to weight them more likely to be picked")]
+            public int[] sosigEnemyIDs;
+
+            public int GetRandomSosigEnemyID()
+            {
+                return sosigEnemyIDs[Random.Range(0, sosigEnemyIDs.Length)];
+            }
         }
 
     }

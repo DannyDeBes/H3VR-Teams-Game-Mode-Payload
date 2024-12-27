@@ -12,12 +12,21 @@ namespace TeamsGameMode
     {
         public static TGM_ClassMenu instance;
 
+
+        [Header("Menu")]
+        public Text spawnCountdown;
         public GameObject buttonPrefab;
         public Transform buttonContent;
 
-        public List<TGM_Button> buttons = new List<TGM_Button>();
+        private List<TGM_Button> buttons = new List<TGM_Button>();
 
-        public Text spawnCountdown;
+
+        [Header("Spawn Points")]
+        public Transform[] mainSpawns;
+        public Transform[] ammoSpawns;
+
+        private float spawnRange = 0.1f;
+
 
 
         void Awake()
@@ -64,9 +73,24 @@ namespace TeamsGameMode
             }
 
             int team = TGM_Manager.instance.localPlayer.iff;
-
-
         }
 
+
+        void OnDrawGizmos()
+        {
+            for (int i = 0; i < mainSpawns.Length; i++)
+            {
+                if (mainSpawns[i])
+                    Gizmos.DrawLine((-mainSpawns[i].forward * spawnRange) + mainSpawns[i].position,
+                        (mainSpawns[i].forward * spawnRange) + mainSpawns[i].position);
+            }
+
+            for (int i = 0; i < ammoSpawns.Length; i++)
+            {
+                if (ammoSpawns[i] != null)
+                    Gizmos.DrawLine((-ammoSpawns[i].forward * spawnRange) + ammoSpawns[i].position, 
+                        (ammoSpawns[i].forward * spawnRange) + ammoSpawns[i].position);
+            }
+        }
     }
 }

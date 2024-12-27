@@ -16,6 +16,6 @@ namespace TeamsGameMode
         [Tooltip("Preview image of the team when selected")]
         public Sprite thumbnail;
         public TGM_PlayerClass[] playerClasses = new TGM_PlayerClass[1];
-        public TGM_SosigTeam sosigTeam;
+        public string sosigTeam;
     }
 }
