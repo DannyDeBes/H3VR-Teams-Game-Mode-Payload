@@ -17,7 +17,36 @@ namespace TeamsGameMode
         /// </summary>
         public virtual void Setup()
         {
-            
+
+        }
+
+        /// <summary>
+        /// Called at the start of the pregame countdown
+        /// </summary>
+        public virtual void Pregame()
+        {
+
+        }
+
+        /// <summary>
+        /// Called at the start of the gameplay round
+        /// </summary>
+        public virtual void GameplayStart()
+        {
+
+        }
+
+        /// <summary>
+        /// Called at the start of the post game
+        /// </summary>
+        public virtual void Postgame()
+        {
+
+        }
+
+        public virtual void GameOver()
+        {
+
         }
 
         /// <summary>

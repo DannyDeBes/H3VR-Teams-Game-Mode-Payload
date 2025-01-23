@@ -194,7 +194,9 @@ namespace TeamsGameMode
             for (int i = 0; i < 2; i++)
             {
                 teams[i] = new Team();
-                if(TGM_Scene.Team(i).teamScore > 0)
+                TGM_Scene.TeamSpawnRoom spawnRoom = TGM_Scene.Team(i);
+
+                if (spawnRoom != null && spawnRoom.teamScore > 0)
                     teams[i].scoreGoal = TGM_Scene.Team(i).teamScore;
             }
         }

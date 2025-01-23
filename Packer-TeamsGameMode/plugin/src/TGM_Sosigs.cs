@@ -23,7 +23,6 @@ namespace TeamsGameMode
         }
         */
 
-
         public static void OrderSosigToLocations(Sosig sosig, List<Vector3> locations)
         {
             List<Vector3> pathDirs = new List<Vector3> { locations[2], locations[2] };
@@ -44,6 +43,5 @@ namespace TeamsGameMode
                 true,
                 50f);
         }
-
     }
 }

@@ -43,8 +43,7 @@ namespace TeamsGameMode
 
         public delegate void GameStateDelegate();
         public static event GameStateDelegate GameStateEvent;
-
-
+        
         public void Setup()
         {
             teams = new TGM_Teams();
@@ -56,7 +55,6 @@ namespace TeamsGameMode
             if (gameState == GameStateEnum.Gameplay)
                 gamemode.Update();
         }
-
 
         public void SetGameState(GameStateEnum state)
         {
@@ -73,13 +71,17 @@ namespace TeamsGameMode
                 case GameStateEnum.Setup:       //Gamemode being configured
                     gamemode.Setup();
                     break;
-                case GameStateEnum.Start:       //30 sec Count down to game start
+                case GameStateEnum.Pregame:       //30 sec Count down to game start
+                    gamemode.Pregame();
                     break;
                 case GameStateEnum.Gameplay:    //Combat
+                    gamemode.GameplayStart();
                     break;
-                case GameStateEnum.Finale:      //30 Sec post gameplay
+                case GameStateEnum.Postgame:      //30 Sec post gameplay
+                    gamemode.Postgame();
                     break;
                 case GameStateEnum.Gameover:    //Final Scores, Wait for master or wait for all players to ready
+                    gamemode.GameOver();
                     break;
             }
         }
@@ -184,9 +186,9 @@ namespace TeamsGameMode
         {
             GamemodeSelect,
             Setup,
-            Start,      //Countdown to game start
+            Pregame,      //Countdown to game start
             Gameplay,
-            Finale,     //30 secs post game before game over
+            Postgame,     //30 secs post game before game over
             Gameover,   //Put everyone back into start room
         }
     }
