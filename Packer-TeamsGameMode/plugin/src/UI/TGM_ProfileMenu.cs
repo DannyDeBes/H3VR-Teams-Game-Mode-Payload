@@ -18,6 +18,11 @@ namespace TeamsGameMode
         public GameObject profilePrefab;
         [SerializeField] List<TGM_Button> profileButtons = new List<TGM_Button>();
 
+        void Awake()
+        {
+            instance = this;
+        }
+
         public void Setup()
         {
 

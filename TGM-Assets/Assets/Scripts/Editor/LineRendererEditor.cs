@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using SupplyRaid;
+//using TeamsGameMode;
 
 [CustomEditor(typeof(LineRenderer))]
 public class LineRendererEditor : Editor

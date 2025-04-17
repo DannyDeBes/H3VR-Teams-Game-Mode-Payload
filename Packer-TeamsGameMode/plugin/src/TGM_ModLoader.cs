@@ -23,7 +23,7 @@ namespace TeamsGameMode
 
             assetsLoading = true;
 
-            string path = Paths.PluginPath + "/Packer-TeamsGameMode/teamsgamemode.tgm";
+            string path = Paths.PluginPath + "/Packer-Teams_Game_Mode/teamgamemode.tgm";
 
             if (!loadedAssets)
             {

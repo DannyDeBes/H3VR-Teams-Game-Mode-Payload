@@ -11,5 +11,14 @@ MonoBehaviour:
   m_Script: {fileID: -236443929, guid: 2dad86f9e6b5aece0f7796226ce8c243, type: 3}
   m_Name: TeamsGameMode
   m_EditorClassIdentifier: 
-  manager: {fileID: 0}
-  mainMenu: {fileID: 0}
+  manager: {fileID: 114104223501688204, guid: c5fa2a3747d310e47a85686fd03bc4f0, type: 2}
+  mainMenu: {fileID: 114609024206133900, guid: 1cae71bc260205e44bd3f1b93548ab77, type: 2}
+  teamSetup: {fileID: 114557342726595094, guid: 0309d478e71026f4cbda4d3c8313081a,
+    type: 2}
+  profileMenu: {fileID: 114680469243059162, guid: 8addbf140443f3f41ad7371dacb44d25,
+    type: 2}
+  classMenu: {fileID: 114166859580444620, guid: 33c839cfd34849d428bb291758a7b0c5,
+    type: 2}
+  spectator: {fileID: 114699512571440562, guid: 4a5a5410501e17b4484edbff9293520c,
+    type: 2}
+  compass: {fileID: 114163070363173658, guid: 2973ac72e3b83604e8eafa97b86fbd2f, type: 2}

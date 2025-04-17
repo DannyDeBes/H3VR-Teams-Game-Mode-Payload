@@ -7,6 +7,15 @@ namespace TeamsGameMode
     public class TGM_Assets : ScriptableObject
     {
         public TGM_Manager manager;
+
         public TGM_MainMenu mainMenu;
+        public TGM_TeamSetup teamSetup;
+        public TGM_ProfileMenu profileMenu;
+
+        public TGM_ClassMenu classMenu;
+
+        public TGM_Spectator spectator;
+
+        public TGM_Compass compass;
     }
 }

@@ -105,7 +105,7 @@ public class PackageDrawer : Editor
     [MenuItem("Team Game Mode/Build Bundles", priority = 0)]
     static void BuildAllAssetBundles()
     {
-        string directory = "Assets/TeamGameMode";
+        string directory = "Assets/TeamsGameMode";
         if (directory == "")
             return;
 

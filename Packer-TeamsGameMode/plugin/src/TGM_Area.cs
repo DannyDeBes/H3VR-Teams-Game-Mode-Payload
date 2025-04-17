@@ -100,6 +100,61 @@ namespace TeamsGameMode
 
         public static Vector3[] attackIcon = {Vector3.up, (Vector3.up * 0.5f) + (Vector3.left * 0.5f), (Vector3.up * 0.5f) + (Vector3.right * 0.5f) };
 
+        public void PlaceAllMarkersOnGround()
+        {
+            /*
+            //Patrol Paths
+            for (int x = 0; x < patrolPaths.Length; x++)
+            {
+                for (int y = 0; y < patrolPaths[x].patrolPoints.Count; y++)
+                {
+                    if (Physics.Raycast(patrolPaths[x].patrolPoints[y].position, Vector3.down, out rayHit, 200f))
+                    {
+                        patrolPaths[x].patrolPoints[y].position = rayHit.point + (Vector3.up * 0.05f);
+                    }
+                }
+            }
+
+            //Guards
+            for (int i = 0; i < guardPoints.Count; i++)
+            {
+                if (Physics.Raycast(guardPoints[i].position, Vector3.down, out rayHit, 200f))
+                {
+                    guardPoints[i].position = rayHit.point + (Vector3.up * 0.05f);
+                }
+            }
+
+            //Sniper
+            for (int i = 0; i < sniperPoints.Count; i++)
+            {
+                if (Physics.Raycast(sniperPoints[i].position, Vector3.down, out rayHit, 200f))
+                {
+                    sniperPoints[i].position = rayHit.point + (Vector3.up * 0.05f);
+                }
+            }
+
+            //Rabbit Holes
+            for (int i = 0; i < sosigSpawns.Length; i++)
+            {
+                if (Physics.Raycast(sosigSpawns[i].position, Vector3.down, out rayHit, 200f))
+                {
+                    sosigSpawns[i].position = rayHit.point + (Vector3.up * 0.05f);
+                }
+            }
+
+            //Squad Waypoint
+            if (Physics.Raycast(squadPoint.position, Vector3.down, out rayHit, 200f))
+            {
+                squadPoint.position = rayHit.point + (Vector3.up * 0.05f);
+            }
+
+            //Respawn
+            if (Physics.Raycast(respawn.position, Vector3.down, out rayHit, 200f))
+            {
+                respawn.position = rayHit.point + (Vector3.up * 0.05f);
+            }
+            */
+        }
 
 
         void OnDrawGizmos()

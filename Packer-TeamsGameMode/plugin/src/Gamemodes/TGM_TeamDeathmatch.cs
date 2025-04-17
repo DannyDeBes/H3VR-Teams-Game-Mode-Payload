@@ -11,6 +11,13 @@ namespace TeamsGameMode
     {
         public TGM_Area[] teamAreas;
 
+        public TGM_TeamDeathmatch(string modeName = "", string modeDescription = "", Sprite modeThumbnail = null)
+        {
+            name = modeName;
+            description = modeDescription;
+            thumbnail = modeThumbnail;
+        }
+
         public override void Setup()
         {
             base.Setup();
@@ -19,6 +26,7 @@ namespace TeamsGameMode
 
         public override bool IsGamemodeValid()
         {
+            TeamGameModePlugin.Logger.LogMessage(PluginInfo.NAME + "Set Gamemode " + name + " to " + true);
             //TDM always valid
             return true;
         }

@@ -40,7 +40,7 @@ namespace TeamsGameMode
             TGM_MainMenu.instance.UpdateSettings();
         }
 
-        public void ChooseGamemode(int index)
+        public void ChooseGamemode()
         {
             TGM_MainMenu.instance.SelectGamemode(index);
         }

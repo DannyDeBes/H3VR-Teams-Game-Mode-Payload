@@ -13,6 +13,8 @@ namespace TeamsGameMode
     {
         public static TGM_MainMenu instance;
 
+        public static bool handSide = false;    //Left = false, Right = true
+
         [Header("Pages")]
         public GameObject[] pages;
         public GameObject startButton;
@@ -22,6 +24,7 @@ namespace TeamsGameMode
             GameSettings = 1,
             JoinTeam = 2,
             WaitForHost = 3,
+            Spectator = 4,
         }
 
         [System.Serializable]
@@ -85,22 +88,21 @@ namespace TeamsGameMode
         }
 
 
-    //-------------------------------------------------------------------------------------
-    // Game Modes
-    //-------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------
+        // Game Modes
+        //-------------------------------------------------------------------------------------
 
-    public void SetupGamemodes()
+        public void SetupGamemodes()
         {
-            for (int i = 0; i < TGM_Manager.instance.gamemodes.Length; i++)
+            for (int i = 0; i < TGM_Manager.gamemodes.Count; i++)
             {
                 //Empty or Not Valid continue
-                if (TGM_Manager.instance.gamemodes[i] == null 
-                    || !TGM_Manager.instance.gamemodes[i].IsGamemodeValid())
+                if (!TGM_Manager.gamemodes[i].IsGamemodeValid())
                     continue;
 
-                TGM_Gamemode gm = TGM_Manager.instance.gamemodes[i];
+                TGM_Gamemode gm = TGM_Manager.gamemodes[i];
 
-                TGM_Button btn = Instantiate(gamemodeBtnPrefab, gamemodeBtnPrefab.transform).GetComponent<TGM_Button>();
+                TGM_Button btn = Instantiate(gamemodeBtnPrefab, gamemodeBtnPrefab.transform.parent).GetComponent<TGM_Button>();
                 btn.gameObject.SetActive(true);
                 btn.texts[0].text = gm.name;
                 btn.buttons[0].image.sprite = gm.thumbnail;
@@ -110,7 +112,8 @@ namespace TeamsGameMode
 
         public void SelectGamemode(int index)
         {
-            TGM_Manager.instance.gamemode = TGM_Manager.instance.gamemodes[index];
+            print("LOADING GAMEMODE: " + TGM_Manager.gamemodes[index].name);
+            TGM_Manager.instance.gamemode = TGM_Manager.gamemodes[index];
             OpenPage(Page.GameSettings);
             UpdateSettings();
             TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Setup);
@@ -124,7 +127,7 @@ namespace TeamsGameMode
         {
             for (int i = 0; i < gameSettings.Count; i++)
             {
-                TGM_Button btn = Instantiate(gameSettingPrefab, gameSettingPrefab.transform).GetComponent<TGM_Button>();
+                TGM_Button btn = Instantiate(gameSettingPrefab, gameSettingPrefab.transform.parent).GetComponent<TGM_Button>();
                 btn.gameObject.SetActive(true);
                 btn.index = i;
                 btn.value = gameSettings[i].value;
@@ -184,6 +187,7 @@ namespace TeamsGameMode
         public void StartGame()
         {
             TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Gameplay);
+            OpenPage(Page.JoinTeam);
         }
     }
 }

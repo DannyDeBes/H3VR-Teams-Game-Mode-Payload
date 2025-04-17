@@ -75,7 +75,7 @@ namespace TeamsGameMode
         {
             if (id < 0)
             {
-                TeamGameModePlugin.Logger.LogMessage(TeamGameModePlugin.Name + "Spawn Class is -1 or less and will not be spawned");
+                TeamGameModePlugin.Logger.LogMessage(PluginInfo.NAME + "Spawn Class is -1 or less and will not be spawned");
                 return;
             }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,6 +13,7 @@ namespace TeamsGameMode
         public TeamSpawnRoom[] teams = new TeamSpawnRoom[2];
         public TGM_Area[] areas = new TGM_Area[2];
         public ObstacleAvoidanceType avoidanceQuailty = ObstacleAvoidanceType.LowQualityObstacleAvoidance;
+        public Transform playerSpawnPoint;
 
         [Header("Menus")]
         public Transform mainMenu;
@@ -71,6 +73,27 @@ namespace TeamsGameMode
         void Awake()
         {
             instance = this;
+        }
+
+        void Start()
+        {
+            StartCoroutine(Setup());
+        }
+
+        public IEnumerator Setup()
+        {
+            yield return StartCoroutine(TGM_ModLoader.LoadAssets());
+
+            //Create our Gamemode assets
+
+            Instantiate(TGM_ModLoader.tgmAssets.manager);
+            yield return new WaitForEndOfFrame();
+            Instantiate(TGM_ModLoader.tgmAssets.mainMenu, mainMenu.position, mainMenu.rotation * Quaternion.Euler(0, 180, 0));
+            Instantiate(TGM_ModLoader.tgmAssets.teamSetup, teamSetupMenu.position, teamSetupMenu.rotation * Quaternion.Euler(0, 180, 0));
+            Instantiate(TGM_ModLoader.tgmAssets.profileMenu, profilesMenu.position, profilesMenu.rotation * Quaternion.Euler(0, 180, 0));
+            yield return new WaitForEndOfFrame();
+            Instantiate(TGM_ModLoader.tgmAssets.spectator);
+            Instantiate(TGM_ModLoader.tgmAssets.compass);
         }
 
         void OnDrawGizmos()

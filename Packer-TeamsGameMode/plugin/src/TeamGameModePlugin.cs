@@ -6,7 +6,8 @@ using Atlas.Loaders;
 
 namespace TeamsGameMode
 {
-    [BepInAutoPlugin]
+    [BepInPlugin(PluginInfo.GUID, PluginInfo.NAME, PluginInfo.VERSION)]
+    //[BepInAutoPlugin]
     [BepInProcess("h3vr.exe")]
     [BepInDependency("VIP.TommySoucy.H3MP", BepInDependency.DependencyFlags.SoftDependency)]
     [BepInDependency(AtlasConstants.Guid, AtlasConstants.Version)]
@@ -23,8 +24,23 @@ namespace TeamsGameMode
 
 
             //Logger.LogMessage($"Hello, world! Sent from {Id} {Name} {Version}");
+            Invoke(nameof(DebugSceneLoad), 8);
         }
-        
+
+        void DebugSceneLoad()
+        {
+
+            string sceneName = "TeamsGameMode_Example";
+
+            print("Attempting to load scene: " + sceneName);
+            CustomSceneInfo? info = AtlasPlugin.GetCustomScene(sceneName);
+            if (info != null)
+                AtlasPlugin.LoadCustomScene(sceneName);
+            else
+                SteamVR_LoadLevel.Begin(sceneName, false, 0.5f, 0f, 0f, 0f, 1f);
+
+        }
+
         internal new static ManualLogSource Logger { get; private set; }
     }
 }

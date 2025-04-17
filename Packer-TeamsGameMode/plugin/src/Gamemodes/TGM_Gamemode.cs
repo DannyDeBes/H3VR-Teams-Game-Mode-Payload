@@ -8,6 +8,13 @@ namespace TeamsGameMode
     [Serializable]
     public class TGM_Gamemode
     {
+        public TGM_Gamemode(string modeName = "", string modeDescription = "", Sprite modeThumbnail = null)
+        {
+            name = modeName;
+            description = modeDescription;
+            thumbnail = modeThumbnail;
+        }
+
         public string name;
         public string description;
         public Sprite thumbnail;
@@ -63,6 +70,7 @@ namespace TeamsGameMode
         /// <returns></returns>
         public virtual bool IsGamemodeValid()
         {
+            TeamGameModePlugin.Logger.LogMessage("Set Gamemode " + name + " to " + false);
             //Check if all required data is avalible for this gamemode to work
             return false;
         }

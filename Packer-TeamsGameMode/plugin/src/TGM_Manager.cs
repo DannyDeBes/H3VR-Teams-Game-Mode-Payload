@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TeamsGameMode.H3MP;
 
 namespace TeamsGameMode
 {
@@ -9,11 +10,11 @@ namespace TeamsGameMode
         public static TGM_Manager instance;
         public static TGM_Profile profile;
         public static GameStateEnum gameState = GameStateEnum.GamemodeSelect;
-        public TGM_Gamemode[] gamemodes;
+        public static List<TGM_Gamemode> gamemodes = new List<TGM_Gamemode>();
 
-        public Transform playerSpawnPoint;
+        //public Transform playerSpawnPoint;
         public TGM_Teams teams;
-        public TGM_Gamemode gamemode;
+        [HideInInspector] public TGM_Gamemode gamemode;
 
         [Header("DATA")]
         public TGM_Player localPlayer = new TGM_Player();
@@ -43,11 +44,28 @@ namespace TeamsGameMode
 
         public delegate void GameStateDelegate();
         public static event GameStateDelegate GameStateEvent;
-        
+
+        public delegate void StandardDelegate();
+        public static event StandardDelegate GamemodesLoadedEvent;
+
         public void Setup()
         {
             teams = new TGM_Teams();
             TGM_Teams.instance = teams;
+        }
+
+        void Awake()
+        {
+            instance = this;
+        }
+
+        void Start()
+        {
+            TGM_TeamDeathmatch teamDeathmatch = new TGM_TeamDeathmatch("Team Deathmatch", "2 Teams fight to the death", null);
+            if (gamemodes == null)
+                gamemodes = new List<TGM_Gamemode>();
+            gamemodes.Add(teamDeathmatch);
+            GamemodesLoadedEvent?.Invoke();
         }
 
         void Update()
@@ -84,6 +102,9 @@ namespace TeamsGameMode
                     gamemode.GameOver();
                     break;
             }
+
+            // Put Networking state change here
+            //if(TGM_Networking.server)
         }
 
         //------------------------------------------------------------------------------
