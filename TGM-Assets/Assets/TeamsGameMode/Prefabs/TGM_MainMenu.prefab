@@ -408,6 +408,7 @@ GameObject:
   - component: {fileID: 114246665172034024}
   - component: {fileID: 65351475980798656}
   - component: {fileID: 114136801259067438}
+  - component: {fileID: 114461815627098978}
   m_Layer: 10
   m_Name: JoinBlue
   m_TagString: Untagged
@@ -542,6 +543,7 @@ GameObject:
   - component: {fileID: 114132815645318724}
   - component: {fileID: 65372184849583574}
   - component: {fileID: 114916370052322882}
+  - component: {fileID: 114799426429660164}
   m_Layer: 10
   m_Name: Spectate
   m_TagString: Untagged
@@ -665,6 +667,7 @@ GameObject:
   - component: {fileID: 114504186696201588}
   - component: {fileID: 65369461165111868}
   - component: {fileID: 114701157793122716}
+  - component: {fileID: 114215248769486988}
   m_Layer: 10
   m_Name: JoinRed
   m_TagString: Untagged
@@ -988,8 +991,6 @@ GameObject:
   - component: {fileID: 114155871889329984}
   - component: {fileID: 114722520183376592}
   - component: {fileID: 114609024206133900}
-  - component: {fileID: 65237182115761336}
-  - component: {fileID: 114860254405993060}
   m_Layer: 10
   m_Name: TGM_MainMenu
   m_TagString: Untagged
@@ -1025,18 +1026,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 64, y: 64, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65237182115761336
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1975735395580520}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1920, y: 1080, z: 1}
-  m_Center: {x: 0, y: 0, z: 2}
 --- !u!65 &65351475980798656
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1415,7 +1404,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114677051486030850}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1588197763974750}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1989221526181546}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114136801259067438
@@ -1755,6 +1766,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: SPECTATOR
+--- !u!114 &114215248769486988
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1639722106121226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1213564552, guid: 2dad86f9e6b5aece0f7796226ce8c243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texts: []
+  buttons: []
+  index: -1
+  value: 0
 --- !u!114 &114219158214956522
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2013,7 +2039,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114439175903564496}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114461815627098978}
+        m_MethodName: JoinTeam
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114248468966358664
@@ -2741,6 +2778,21 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114461815627098978
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1380809853347050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1213564552, guid: 2dad86f9e6b5aece0f7796226ce8c243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texts: []
+  buttons: []
+  index: -1
+  value: 0
 --- !u!114 &114463903952689226
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2933,7 +2985,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114461663915745988}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114215248769486988}
+        m_MethodName: JoinTeam
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114513245046825358
@@ -3606,7 +3669,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114432146497135738}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1630881593258076}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1989221526181546}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114710067967668900
@@ -3720,6 +3805,21 @@ MonoBehaviour:
     y: 0
     width: 1
     height: 1
+--- !u!114 &114799426429660164
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1541739099975474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1213564552, guid: 2dad86f9e6b5aece0f7796226ce8c243, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  texts: []
+  buttons: []
+  index: -1
+  value: 0
 --- !u!114 &114804463455939480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3814,20 +3914,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 1}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
---- !u!114 &114860254405993060
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1975735395580520}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 2099058075, guid: 2dad86f9e6b5aece0f7796226ce8c243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxPointingRange: 10
-  PointingHands: []
-  m_isBeingPointedAt: 0
 --- !u!114 &114864854574778260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4236,7 +4322,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 28259100d0760ec40b803b473db29cec, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

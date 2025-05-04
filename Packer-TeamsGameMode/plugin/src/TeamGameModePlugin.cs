@@ -24,13 +24,15 @@ namespace TeamsGameMode
 
 
             //Logger.LogMessage($"Hello, world! Sent from {Id} {Name} {Version}");
-            Invoke(nameof(DebugSceneLoad), 8);
+
+            //print("Auto scene load in 8 seconds ");
+            //Invoke(nameof(DebugSceneLoad), 8);
         }
 
         void DebugSceneLoad()
         {
 
-            string sceneName = "TeamsGameMode_Example";
+            string sceneName = "TeamsGameModeExample";
 
             print("Attempting to load scene: " + sceneName);
             CustomSceneInfo? info = AtlasPlugin.GetCustomScene(sceneName);

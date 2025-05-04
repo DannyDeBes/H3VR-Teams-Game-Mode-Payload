@@ -6,6 +6,7 @@ public class TGM_FVRPointableButton : FVRPointableButton
 
     public void OnValidate()
     {
+        return;
         BoxCollider box = GetComponent<BoxCollider>();
 
         if (box != null)

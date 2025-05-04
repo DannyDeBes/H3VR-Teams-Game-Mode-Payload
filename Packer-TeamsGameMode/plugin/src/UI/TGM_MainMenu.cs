@@ -67,17 +67,17 @@ namespace TeamsGameMode
 
 
         public delegate void SetupDelegate();
-        public static event SetupDelegate SetupEvent;
+        public static event SetupDelegate PreGamemodeSetupEvent;
 
         void Awake()
         {
             instance = this;
         }
 
-        void Start()
+        public void Setup()
         {
-            if (SetupEvent != null)
-                SetupEvent.Invoke();
+            if (PreGamemodeSetupEvent != null)
+                PreGamemodeSetupEvent.Invoke();
 
             //Populate Main Menu
             SetupGamemodes();
@@ -105,7 +105,8 @@ namespace TeamsGameMode
                 TGM_Button btn = Instantiate(gamemodeBtnPrefab, gamemodeBtnPrefab.transform.parent).GetComponent<TGM_Button>();
                 btn.gameObject.SetActive(true);
                 btn.texts[0].text = gm.name;
-                btn.buttons[0].image.sprite = gm.thumbnail;
+                if(gm.thumbnail != null)
+                    btn.buttons[0].image.sprite = gm.thumbnail;
                 btn.index = i;
             }
         }

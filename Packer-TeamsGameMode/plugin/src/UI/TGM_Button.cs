@@ -42,7 +42,10 @@ namespace TeamsGameMode
 
         public void ChooseGamemode()
         {
+            print("PRESS GAMEMODE BUTTOn");
             TGM_MainMenu.instance.SelectGamemode(index);
+
+            TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.Confirm);
         }
 
         public void SelectTeamSetup()
@@ -70,10 +73,17 @@ namespace TeamsGameMode
             GM.CurrentMovementManager.TeleportToPoint(Global.GetValidSpawnPoint(spawn),
                 true,
                 spawn.rotation.eulerAngles);
+
+
+            Instantiate(TGM_ModLoader.tgmAssets.classMenu, spawn.position, spawn.rotation);
+
+            TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.Confirm);
         }
 
         void OnValidate()
         {
+            return;
+
             BoxCollider box = gameObject.GetComponent<BoxCollider>();
 
             if (box == null)

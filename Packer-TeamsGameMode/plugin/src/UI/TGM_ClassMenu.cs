@@ -9,7 +9,6 @@ namespace TeamsGameMode
     {
         public static TGM_ClassMenu instance;
 
-
         [Header("Menu")]
         public Text spawnCountdown;
         public GameObject buttonPrefab;
@@ -41,6 +40,11 @@ namespace TeamsGameMode
             instance = this;
         }
 
+        void Start()
+        {
+            Setup(TGM_Manager.instance.team[GM.CurrentPlayerBody.GetPlayerIFF()].playerTeam.playerClasses);
+        }
+
         void Update()
         {
             if (spawnCountdown.gameObject.activeSelf)
@@ -53,6 +57,7 @@ namespace TeamsGameMode
             for (int i = 0; i < classes.Length; i++)
             {
                 TGM_Button button = Instantiate(buttonPrefab, buttonContent).GetComponent<TGM_Button>();
+                button.gameObject.SetActive(true);
                 buttons.Add(button);
             }
         }
@@ -83,7 +88,7 @@ namespace TeamsGameMode
 
             //Spawn Locking Per class?
             if (TGM_Manager.profile.gameSettings[(int)SettingEnum.SpawnLock] == 2)
-                GM.CurrentSceneSettings.IsSpawnLockingEnabled = TGM_Teams.GetTeam(team).playerTeam.playerClasses[id].canSpawnLock;
+                GM.CurrentSceneSettings.IsSpawnLockingEnabled = TGM_Manager.instance.team[team].playerTeam.playerClasses[id].canSpawnLock;
             else
                 GM.CurrentSceneSettings.IsSpawnLockingEnabled = TGM_Manager.profile.gameSettings[(int)SettingEnum.SpawnLock] >= 1 ? true : false;
 
@@ -91,7 +96,7 @@ namespace TeamsGameMode
             int healthSetting = TGM_Manager.profile.gameSettings[(int)SettingEnum.PlayerHealth];
             //If -1 use player class health otherwise use global setting
             if (healthSetting == -1)
-                healthSetting = TGM_Teams.GetTeam(team).playerTeam.playerClasses[id].playerHealth;
+                healthSetting = TGM_Manager.instance.team[team].playerTeam.playerClasses[id].playerHealth;
             GM.CurrentPlayerBody.SetHealthThreshold(healthSetting);
 
             //Despawn any previously owned / held items
@@ -99,8 +104,8 @@ namespace TeamsGameMode
 
             //Spawn all weapons / items
             TGM_PlayerClass.SubClass subClass 
-                = TGM_Teams.GetTeam(team).playerTeam.playerClasses[id].subClasses[
-                    Random.Range(0, TGM_Teams.GetTeam(team).playerTeam.playerClasses[id].subClasses.Length)];
+                = TGM_Manager.instance.team[team].playerTeam.playerClasses[id].subClasses[
+                    Random.Range(0, TGM_Manager.instance.team[team].playerTeam.playerClasses[id].subClasses.Length)];
 
             //Spawn our sub classes items
             for (int x = 0; x < subClass.items.Length; x++)

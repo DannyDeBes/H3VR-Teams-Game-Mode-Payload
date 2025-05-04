@@ -82,7 +82,7 @@ namespace TeamsGameMode
         /// <param name="amount"></param>
         public virtual void AdjustTeamScore(int teamID, int amount)
         {
-            TGM_Teams.instance.teams[teamID].currentScore += amount;
+            TGM_Manager.instance.team[teamID].currentScore += amount;
         }
 
         public virtual void OnSosigCreate(Sosig s)

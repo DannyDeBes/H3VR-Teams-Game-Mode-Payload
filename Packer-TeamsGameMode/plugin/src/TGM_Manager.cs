@@ -13,7 +13,10 @@ namespace TeamsGameMode
         public static List<TGM_Gamemode> gamemodes = new List<TGM_Gamemode>();
 
         //public Transform playerSpawnPoint;
-        public TGM_Teams teams;
+        //public TGM_Teams teams;
+
+        public int teamCount = 2;
+        public TGM_Team[] team = new TGM_Team[2];
         [HideInInspector] public TGM_Gamemode gamemode;
 
         [Header("DATA")]
@@ -50,8 +53,25 @@ namespace TeamsGameMode
 
         public void Setup()
         {
-            teams = new TGM_Teams();
-            TGM_Teams.instance = teams;
+            //Load our Mods in
+            TGM_ModLoader.LoadPlayerTeams();
+            TGM_ModLoader.LoadSosigTeams();
+
+            //Setup our teams
+            team = new TGM_Team[teamCount];
+            for (int i = 0; i < team.Length; i++)
+            {
+                team[i] = new TGM_Team();
+
+                //Default to first in the list
+                team[i].playerTeam = TGM_ModLoader.playerTeams[0];
+                team[i].sosigTeam = TGM_ModLoader.sosigTeams[0];
+            }
+
+            //Setup our other systems
+            TGM_TeamSetup.instance.Setup();
+            TGM_MainMenu.instance.Setup();
+            TGM_ProfileMenu.instance.Setup();
         }
 
         void Awake()
@@ -65,6 +85,7 @@ namespace TeamsGameMode
             if (gamemodes == null)
                 gamemodes = new List<TGM_Gamemode>();
             gamemodes.Add(teamDeathmatch);
+
             GamemodesLoadedEvent?.Invoke();
         }
 

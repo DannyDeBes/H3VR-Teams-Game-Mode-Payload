@@ -38,6 +38,9 @@ namespace TeamsGameMode
         [Tooltip("Player's Team Lost")]
         public AudioClip audioTeamLost;
 
+        public delegate void SceneLoadedDelegate();
+        public static event SceneLoadedDelegate SceneLoadedEvent;
+
         [System.Serializable]
         public class TeamSpawnRoom
         {
@@ -85,15 +88,22 @@ namespace TeamsGameMode
             yield return StartCoroutine(TGM_ModLoader.LoadAssets());
 
             //Create our Gamemode assets
-
             Instantiate(TGM_ModLoader.tgmAssets.manager);
             yield return new WaitForEndOfFrame();
+
             Instantiate(TGM_ModLoader.tgmAssets.mainMenu, mainMenu.position, mainMenu.rotation * Quaternion.Euler(0, 180, 0));
             Instantiate(TGM_ModLoader.tgmAssets.teamSetup, teamSetupMenu.position, teamSetupMenu.rotation * Quaternion.Euler(0, 180, 0));
             Instantiate(TGM_ModLoader.tgmAssets.profileMenu, profilesMenu.position, profilesMenu.rotation * Quaternion.Euler(0, 180, 0));
             yield return new WaitForEndOfFrame();
+
             Instantiate(TGM_ModLoader.tgmAssets.spectator);
             Instantiate(TGM_ModLoader.tgmAssets.compass);
+            yield return new WaitForEndOfFrame();
+
+            //Everything has loaded in, invoke the event to get any extras in before we set everything up
+            if (SceneLoadedEvent != null)
+                SceneLoadedEvent.Invoke();
+            TGM_Manager.instance.Setup();
         }
 
         void OnDrawGizmos()

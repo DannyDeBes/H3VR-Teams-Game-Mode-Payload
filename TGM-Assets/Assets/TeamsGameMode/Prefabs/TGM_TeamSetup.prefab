@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 224532680264054398}
   - component: {fileID: 222467748296829286}
   - component: {fileID: 114912592187281122}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: TitleBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 224224261968610814}
   - component: {fileID: 222188927762743858}
   - component: {fileID: 114632407126367266}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 222118319341209588}
   - component: {fileID: 114162524513382840}
   - component: {fileID: 114788782783608552}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: TeamButtons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 224896336500416730}
   - component: {fileID: 222556861856395278}
   - component: {fileID: 114506982136272156}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Thumbnail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   - component: {fileID: 224307297783394674}
   - component: {fileID: 222747225778298124}
   - component: {fileID: 114206937526607050}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 222633947795818892}
   - component: {fileID: 114186289851858336}
   - component: {fileID: 114617442500342490}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: BottomBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 222773274856829700}
   - component: {fileID: 114626052497901672}
   - component: {fileID: 114175974478637198}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: BrowserNameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -234,7 +234,7 @@ GameObject:
   - component: {fileID: 222006200754056132}
   - component: {fileID: 114138629225920928}
   - component: {fileID: 114219301449772876}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Classes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +269,7 @@ GameObject:
   - component: {fileID: 224887181300781536}
   - component: {fileID: 222528978856487444}
   - component: {fileID: 114818261969814368}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Thumbnail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 222023417230290714}
   - component: {fileID: 114360915066497552}
   - component: {fileID: 114521566234977132}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: ObjectiveScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 224704527965016528}
   - component: {fileID: 222276733989353722}
   - component: {fileID: 114736003858438952}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: TitleBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 224085360651870872}
   - component: {fileID: 222624703992073528}
   - component: {fileID: 114021732382677290}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Border
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 224443373510993204}
   - component: {fileID: 222686163409652280}
   - component: {fileID: 114766034335631536}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerTeamProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -472,7 +472,7 @@ GameObject:
   - component: {fileID: 224169664666428364}
   - component: {fileID: 222768878594128304}
   - component: {fileID: 114876692815106986}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 224731330722236354}
   - component: {fileID: 222136278133907486}
   - component: {fileID: 114908313453195480}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: TitleBorder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -546,7 +546,7 @@ GameObject:
   - component: {fileID: 222336309766536254}
   - component: {fileID: 114295790069760884}
   - component: {fileID: 114950940627726214}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: TeamName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -563,7 +563,7 @@ GameObject:
   - component: {fileID: 224171972780438930}
   - component: {fileID: 222804928725354232}
   - component: {fileID: 114302627031635368}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: TeamTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 224380404976505186}
   - component: {fileID: 222714958206236644}
   - component: {fileID: 114713975403727858}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Objective
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -597,7 +597,7 @@ GameObject:
   - component: {fileID: 224252143658959020}
   - component: {fileID: 222917770202907904}
   - component: {fileID: 114152645410159442}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerClassesBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -653,7 +653,7 @@ GameObject:
   - component: {fileID: 222777597681300474}
   - component: {fileID: 114121757863835840}
   - component: {fileID: 114780371943022078}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -671,7 +671,7 @@ GameObject:
   - component: {fileID: 222061103357143124}
   - component: {fileID: 114447089550451136}
   - component: {fileID: 114995312459643204}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerTeamTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -690,7 +690,7 @@ GameObject:
   - component: {fileID: 114465005881952774}
   - component: {fileID: 65040130085236946}
   - component: {fileID: 114550637460803766}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Browser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -708,7 +708,7 @@ GameObject:
   - component: {fileID: 222800072369706616}
   - component: {fileID: 114150397990425014}
   - component: {fileID: 114972492427464086}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: ObjectiveScoreCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -803,7 +803,7 @@ GameObject:
   - component: {fileID: 224971802371629644}
   - component: {fileID: 222460374980755436}
   - component: {fileID: 114178572651261274}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: BrowserContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -820,7 +820,7 @@ GameObject:
   - component: {fileID: 224401545065927118}
   - component: {fileID: 222128459979254812}
   - component: {fileID: 114664213379829810}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Classes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -838,7 +838,7 @@ GameObject:
   - component: {fileID: 222598609845485278}
   - component: {fileID: 114572207152293520}
   - component: {fileID: 114058790367206920}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Text (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -856,7 +856,7 @@ GameObject:
   - component: {fileID: 222384895155522544}
   - component: {fileID: 114053808439350284}
   - component: {fileID: 114513141755903846}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: SosigCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -873,7 +873,7 @@ GameObject:
   - component: {fileID: 224943891177949608}
   - component: {fileID: 222767982136643898}
   - component: {fileID: 114567957178178344}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: TitleBG
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -931,7 +931,7 @@ GameObject:
   - component: {fileID: 222364724821730386}
   - component: {fileID: 114359201058070364}
   - component: {fileID: 114405352704666932}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: SosigText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -967,7 +967,7 @@ GameObject:
   - component: {fileID: 222753520259946154}
   - component: {fileID: 114834329920469136}
   - component: {fileID: 114661998344136174}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Description
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -985,7 +985,7 @@ GameObject:
   - component: {fileID: 222589238958811826}
   - component: {fileID: 114976958840207992}
   - component: {fileID: 114902475366990192}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1002,7 +1002,7 @@ GameObject:
   - component: {fileID: 224315871977495012}
   - component: {fileID: 222967687892791148}
   - component: {fileID: 114944609229811994}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: SosigTeamProfile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1020,7 +1020,7 @@ GameObject:
   - component: {fileID: 222465712129436198}
   - component: {fileID: 114600692655817156}
   - component: {fileID: 114965238660517300}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerTeamDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1037,7 +1037,7 @@ GameObject:
   - component: {fileID: 224748515287557592}
   - component: {fileID: 222845172623269558}
   - component: {fileID: 114262645206794226}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: SideBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1111,7 +1111,7 @@ GameObject:
   - component: {fileID: 222080191759213280}
   - component: {fileID: 114757022180251476}
   - component: {fileID: 114053270457722506}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerTeamDescription
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1132,7 +1132,7 @@ GameObject:
   - component: {fileID: 114557342726595094}
   - component: {fileID: 65497956609320632}
   - component: {fileID: 114695121225775796}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: TGM_TeamSetup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1149,7 +1149,7 @@ GameObject:
   - component: {fileID: 224418579126068952}
   - component: {fileID: 222743557942331490}
   - component: {fileID: 114710119915095996}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1167,7 +1167,7 @@ GameObject:
   - component: {fileID: 222549580724961090}
   - component: {fileID: 114397941421287668}
   - component: {fileID: 114366471309718136}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1184,7 +1184,7 @@ GameObject:
   - component: {fileID: 224844618749501236}
   - component: {fileID: 222401836288154096}
   - component: {fileID: 114724051589956572}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1201,7 +1201,7 @@ GameObject:
   - component: {fileID: 224565065683658056}
   - component: {fileID: 222830692278213692}
   - component: {fileID: 114109657134812394}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Teams
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1218,7 +1218,7 @@ GameObject:
   - component: {fileID: 224515933236748716}
   - component: {fileID: 222293101991741660}
   - component: {fileID: 114493084124342554}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Sosigs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 224472323298846988}
   - component: {fileID: 222049981996579212}
   - component: {fileID: 114711977020999862}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: PlayerClasses
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1349,7 +1349,7 @@ GameObject:
   - component: {fileID: 224442797357998066}
   - component: {fileID: 222199877583697196}
   - component: {fileID: 114037694519107514}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: ThumbnailPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1422,7 +1422,7 @@ GameObject:
   - component: {fileID: 224321164437854006}
   - component: {fileID: 222282482990704190}
   - component: {fileID: 114122488912084470}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Thumbnail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1548,7 +1548,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1920, y: 1080, z: 1}
-  m_Center: {x: 0, y: 0, z: 1}
+  m_Center: {x: 0, y: 0, z: 4}
 --- !u!65 &65522728328078214
 BoxCollider:
   m_ObjectHideFlags: 1

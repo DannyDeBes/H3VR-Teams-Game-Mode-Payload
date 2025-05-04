@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
-using H3MP.Networking;
 
 namespace TeamsGameMode
 {
@@ -18,7 +17,7 @@ namespace TeamsGameMode
         [SerializeField] GameObject teamsBarPrefab;
         private List<TGM_Button> teamsButtons = new List<TGM_Button>();
 
-        [SerializeField] TGM_Teams.Team selectedTeam;
+        [SerializeField] TGM_Team selectedTeam;
         [SerializeField] GameObject addTeamButton;
         [SerializeField] GameObject removeTeamButton;
         [SerializeField] Image teamBackground;
@@ -57,7 +56,7 @@ namespace TeamsGameMode
 
         public void SelectTeam(int iff)
         {
-            selectedTeam = TGM_Teams.instance.teams[iff];
+            selectedTeam = TGM_Manager.instance.team[iff];
             UpdateSettings();
         }
 

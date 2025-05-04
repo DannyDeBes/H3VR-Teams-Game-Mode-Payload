@@ -16,6 +16,11 @@ namespace TeamsGameMode
         public static bool loadedAssets = false;
         public static float timeout = 0;
 
+        //Loaded Teams
+        public static List<TGM_PlayerTeam> playerTeams = new List<TGM_PlayerTeam>();
+        public static List<TGM_SosigTeam> sosigTeams = new List<TGM_SosigTeam>();
+
+
         public static IEnumerator LoadAssets()
         {
             if (assetsLoading || timeout > Time.time)
@@ -91,7 +96,6 @@ namespace TeamsGameMode
         //--------------------------------------------------------------------------------------------------------
         // Player Teams
         //--------------------------------------------------------------------------------------------------------
-        public static List<TGM_PlayerTeam> playerTeams = new List<TGM_PlayerTeam>();
 
         public static void LoadPlayerTeams()
         {
@@ -127,7 +131,7 @@ namespace TeamsGameMode
                     //Add to our item category pool
                     playerTeams.Add(team);
                     string newDirectory = directories[i];
-                    newDirectory = newDirectory.Remove(newDirectory.Length - 4);
+                    newDirectory = newDirectory.Remove(newDirectory.Length - 5);
                     team.thumbnail = LoadSprite(newDirectory + "png");
 
                     //Class Icons
@@ -145,7 +149,6 @@ namespace TeamsGameMode
         //--------------------------------------------------------------------------------------------------------
         // Sosig Teams
         //--------------------------------------------------------------------------------------------------------
-        public static List<TGM_SosigTeam> sosigTeams = new List<TGM_SosigTeam>();
 
         public static void LoadSosigTeams()
         {
@@ -182,7 +185,7 @@ namespace TeamsGameMode
                     //Add to our item category pool
                     sosigTeams.Add(team);
                     string newDirectory = directories[i];
-                    newDirectory = newDirectory.Remove(newDirectory.Length - 4) + "png";
+                    newDirectory = newDirectory.Remove(newDirectory.Length - 5) + "png";
                     team.thumbnail = LoadSprite(newDirectory);
 
                     TeamGameModePlugin.Logger.LogMessage($"Loaded Sosig Team - " + team.name);

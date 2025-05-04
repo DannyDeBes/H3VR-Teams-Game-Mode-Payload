@@ -39,10 +39,9 @@ namespace TeamsGameMode
                 return;
 
             //Check for Win Condition
-            for (int i = 0; i < TGM_Teams.instance.teams.Length; i++)
+            for (int i = 0; i < TGM_Manager.instance.team.Length; i++)
             {
-                TGM_Teams.Team team = TGM_Teams.instance.teams[i];
-
+                TGM_Team team = TGM_Manager.instance.team[i];
                 if (team.currentScore == team.scoreGoal)
                 {
                     //Won
@@ -58,7 +57,7 @@ namespace TeamsGameMode
 
             int enemyIFF = TGM_Sosigs.GetEnemyIFF(s.GetIFF());
             //GO attack other team!
-            TGM_Sosigs.OrderSosigToLocations(s, TGM_Teams.GetTeam(enemyIFF).currentSpawnArea.GetRandomAttackArea());
+            TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[enemyIFF].currentSpawnArea.GetRandomAttackArea());
             
             //Defend Area
             //TGM_Sosigs.OrderSosigToLocations(s, TGM_Teams.GetTeam(s.GetIFF()).currentSpawnArea.GetRandomDefendArea());
