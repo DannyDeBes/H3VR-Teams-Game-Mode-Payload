@@ -1405,24 +1405,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1588197763974750}
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 114799426429660164}
+        m_MethodName: JoinTeam
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 1989221526181546}
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: -3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -1678,7 +1667,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114264666526045606}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114248987839545772}
+        m_MethodName: AdjustSettingValue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: -1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114192871205620546
@@ -2340,7 +2340,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114097568036915536}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114248987839545772}
+        m_MethodName: AdjustSettingValue
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114311723125267246
@@ -2695,14 +2706,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3764706, g: 0.3764706, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 8366ae9738a80254898b4fea8782ed20, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 23336fb68da579f4392db3746d4d7330, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2763,14 +2774,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.3764706, b: 0.3764706, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: 8366ae9738a80254898b4fea8782ed20, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 23336fb68da579f4392db3746d4d7330, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3396,7 +3407,6 @@ MonoBehaviour:
   startButton: {fileID: 1891176794525474}
   gameSettings:
   - description: 'Spawn Lock:'
-    setting: 0
     settings:
     - Disabled (Global)
     - Enabled (Global)
@@ -3407,8 +3417,8 @@ MonoBehaviour:
     intMax: 0
     localOnly: 0
     active: 0
+    button: {fileID: 0}
   - description: 'Wave Spawn Time:'
-    setting: 1
     settings: []
     type: 1
     value: 0
@@ -3416,8 +3426,8 @@ MonoBehaviour:
     intMax: 0
     localOnly: 0
     active: 0
+    button: {fileID: 0}
   - description: 'Time Limit:'
-    setting: 2
     settings:
     - Endless
     type: 1
@@ -3426,8 +3436,8 @@ MonoBehaviour:
     intMax: 0
     localOnly: 0
     active: 0
+    button: {fileID: 0}
   - description: 'Respawning:'
-    setting: 3
     settings:
     - Disabled
     - Enabled
@@ -3437,8 +3447,8 @@ MonoBehaviour:
     intMax: 0
     localOnly: 0
     active: 0
+    button: {fileID: 0}
   - description: 'Show Friendlies:'
-    setting: 4
     settings:
     - Disabled
     - Enabled
@@ -3448,8 +3458,8 @@ MonoBehaviour:
     intMax: 0
     localOnly: 1
     active: 0
+    button: {fileID: 0}
   - description: 'Items Drop:'
-    setting: 5
     settings:
     - Disabled
     - Enabled
@@ -3461,8 +3471,8 @@ MonoBehaviour:
     intMax: 0
     localOnly: 0
     active: 0
+    button: {fileID: 0}
   - description: 'Sosig Weapons Drop:'
-    setting: 6
     settings:
     - Disabled
     - Enabled
@@ -3472,8 +3482,8 @@ MonoBehaviour:
     intMax: 0
     localOnly: 0
     active: 0
+    button: {fileID: 0}
   - description: Player Health
-    setting: 7
     settings:
     - Set Per Class
     type: 1
@@ -3482,9 +3492,20 @@ MonoBehaviour:
     intMax: 0
     localOnly: 0
     active: 0
+    button: {fileID: 0}
   gameSettingPrefab: {fileID: 1002492998871588}
-  gamemodeSettings: []
+  gamemodeSettings:
+  - description: 
+    settings: []
+    type: 0
+    value: 0
+    intMin: 0
+    intMax: 0
+    localOnly: 0
+    active: 0
+    button: {fileID: 0}
   gamemodeSettingPrefab: {fileID: 1930703105529042}
+  requestButton: {fileID: 1143403890323264}
   gamemodeBtnPrefab: {fileID: 1487758042341724}
   gamemodesBtns: []
 --- !u!114 &114666949135979162
@@ -3519,7 +3540,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: UPDATE
+  m_Text: Refresh
 --- !u!114 &114677051486030850
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4933,7 +4954,7 @@ RectTransform:
   m_GameObject: {fileID: 1541739099975474}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224988040368925332}
   m_Father: {fileID: 224149268957332714}

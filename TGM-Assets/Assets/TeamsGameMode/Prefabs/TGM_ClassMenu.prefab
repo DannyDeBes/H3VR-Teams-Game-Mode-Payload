@@ -903,7 +903,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 192, y: 192, z: 1}
+  m_Size: {x: 256, y: 256, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &65898850991291934
 BoxCollider:
@@ -1466,9 +1466,9 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_StartCorner: 0
+  m_StartCorner: 2
   m_StartAxis: 0
-  m_CellSize: {x: 192, y: 192}
+  m_CellSize: {x: 256, y: 256}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
@@ -1712,7 +1712,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 750, y: -471.99997}
-  m_SizeDelta: {x: 192, y: 192}
+  m_SizeDelta: {x: 256, y: 256}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224872044824357474
 RectTransform:

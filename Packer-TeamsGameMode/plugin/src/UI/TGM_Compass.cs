@@ -75,8 +75,12 @@ namespace TeamsGameMode
 
         void Update()
         {
-            //TODO proper checks
-            if (TGM_Manager.instance == null || GM.CurrentPlayerBody == null)
+            //Yikes
+            if (TGM_Manager.instance == null 
+                || GM.CurrentPlayerBody == null 
+                || GM.CurrentPlayerBody.LeftHand == null 
+                || GM.CurrentPlayerBody.RightHand == null
+                || GM.CurrentPlayerBody.Head == null)
                 return;
 
             //Compass Position
@@ -97,7 +101,7 @@ namespace TeamsGameMode
             deathText.text = TGM_Manager.instance.localPlayer.deaths.ToString();
 
             int playerIFF = TGM_Manager.instance.localPlayer.iff;
-            if(playerIFF == 0 || playerIFF ==1)
+            if(playerIFF == 0 || playerIFF == 1)
                 scoreText.text = TGM_Manager.instance.team[playerIFF].currentScore.ToString();
 
             //Health

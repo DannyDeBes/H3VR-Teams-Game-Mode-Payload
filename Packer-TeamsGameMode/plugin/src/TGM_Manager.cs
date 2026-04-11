@@ -66,9 +66,8 @@ public class TGM_Manager : MonoBehaviour
             team[i].sosigTeam = 0;
             team[i].iff = i;
 
-            //Basic setup
-            //team[i].scoreGoal = gamemode.goal
         }
+
         //Unique Setup
         team[0].teamName = "Red";
         team[0].color = Color.red;

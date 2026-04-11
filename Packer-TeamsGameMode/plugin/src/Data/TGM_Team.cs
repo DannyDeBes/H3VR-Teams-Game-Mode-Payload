@@ -19,13 +19,13 @@ public class TGM_Team
     //public TGM_PlayerTeam playerTeam;   //Player Team
     //public TGM_SosigTeam sosigTeam;     //Sosig Team
     public int sosigLimit = 8;      //Total amount of sosigs on this team
-    public int scoreGoal = 80;
+    public int scoreGoal = 20;
     public List<Sosig> sosigs = new List<Sosig>();
     public Color color;
 
     //Tracking
     public int currentKills = 0;
-    public int currentScore = 80;
+    public int currentScore = 0;
     public TGM_Area currentSpawnArea;
 
     /// <summary>
