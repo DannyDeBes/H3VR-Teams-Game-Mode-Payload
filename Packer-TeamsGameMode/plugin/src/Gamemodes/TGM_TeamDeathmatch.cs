@@ -9,7 +9,6 @@ namespace TeamsGameMode;
 [Serializable]
 public class TGM_TeamDeathmatch : TGM_Gamemode
 {
-
     public TGM_TeamDeathmatch(string modeName = "", string modeDescription = "", Sprite modeThumbnail = null)
     {
         name = modeName;
@@ -57,7 +56,6 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
             TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.TeamWon);
         else
             TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.TeamLost);
-
     }
 
     public override void GameOver()

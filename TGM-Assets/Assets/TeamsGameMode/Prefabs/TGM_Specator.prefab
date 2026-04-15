@@ -128,6 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetPlayerIndex: 0
   spectatorCamera: {fileID: 20221734668507736}
+  frameRate: 30
   target: {fileID: 0}
   targetOffset: {x: 0, y: 0, z: 0}
   mask:

@@ -25,6 +25,7 @@ public class TGM_Player
 
     [Header("Data")]
     public List<FVRPhysicalObject> playersItems = new List<FVRPhysicalObject>();
+    public GameObject allyMarker;
 
     public void ResetPlayer()
     {

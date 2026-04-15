@@ -55,6 +55,7 @@ public class TGM_Compass : MonoBehaviour
                 return;
             }
 
+            Debug.Log("LOoking at " + target.name);
             parent.LookAt(target);
             parent.rotation = Quaternion.Euler(0, marker.rotation.eulerAngles.z, 0);
             marker.rotation = Quaternion.Euler(marker.rotation.eulerAngles.x, 0, 0);
@@ -112,10 +113,13 @@ public class TGM_Compass : MonoBehaviour
     {
         //Yikes
         if (TGM_Manager.instance == null 
+            || TGM_Manager.instance.localPlayer == null
             || GM.CurrentPlayerBody == null 
             || GM.CurrentPlayerBody.LeftHand == null 
             || GM.CurrentPlayerBody.RightHand == null
-            || GM.CurrentPlayerBody.Head == null)
+            || GM.CurrentPlayerBody.Head == null
+            || TGM_Manager.instance.team == null
+            || TGM_Manager.instance.team.Length == 0)
             return;
 
         //Compass Position
@@ -128,7 +132,8 @@ public class TGM_Compass : MonoBehaviour
         //Markers
         for (int i = 0; i < markers.Count; i++)
         {
-            markers[i].LookAtTarget();
+            if(markers[i] != null)
+                markers[i].LookAtTarget();
         }
 
         //Stats

@@ -90,6 +90,9 @@ public class TGM_Button : MonoBehaviour
         //Update areas depending on Team
         TGM_Scene.UpdateAllAreas();
 
+        //Ally Markers
+        TGM_Manager.instance.team[iff].AddAllyMarkers();
+
         //Set Main page back to team selection incase in spectator
         TGM_MainMenu.instance.OpenPage(TGM_MainMenu.Page.JoinTeam);
     }

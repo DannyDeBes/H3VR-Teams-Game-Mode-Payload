@@ -142,15 +142,17 @@ public class TGM_Team
                 rotation);
 
         //Assign to Empty Slot
+        int sosigDataIndex = 0;
         for (int i = 0; i < sosigsData.Count; i++)
         {
             if (sosigsData[i].sosig == null)
             {
-                sosigsData[i].sosig = sosig;
-                //TODO Display name here
+                sosigDataIndex = i;
                 break;
             }
         }
+
+        sosigsData[sosigDataIndex].sosig = sosig;
 
         DisableSosigWeaponPickup(sosig);
 
@@ -173,8 +175,9 @@ public class TGM_Team
                 sosig.Links[0].R.transform);
 
             arrow.transform.localRotation = Quaternion.Euler(0, 0, 180);
-        }
 
+            sosigsData[sosigDataIndex].allyMarker = arrow;
+        }
         return sosig;
     }
 
@@ -193,6 +196,38 @@ public class TGM_Team
             {
                 sosigs[i].Hands[h].DropHeldObject();
             }
+        }
+    }
+
+    public void AddAllyMarkers()
+    {
+        //FRIENDLY Markers
+        if (TGM_Settings.GetSetting(TGMSettingEnum.ShowFriendlies) == 1)
+        {
+            for (int i = 0; i < sosigsData.Count; i++)
+            {
+                if (sosigsData[i].sosig != null)
+                {
+                    GameObject arrow = TGM_Manager.Instantiate(
+                        TGM_ModLoader.tgmAssets.iffPrefab,
+                        sosigsData[i].sosig.Links[0].R.transform.position + (Vector3.up * 0.75f),
+                        sosigsData[i].sosig.Links[0].R.transform.rotation,
+                        sosigsData[i].sosig.Links[0].R.transform);
+
+                    arrow.transform.localRotation = Quaternion.Euler(0, 0, 180);
+
+                    sosigsData[i].allyMarker = arrow;
+                }
+            }
+        }
+    }
+
+    public void RemoveAllAllyMarkers()
+    {
+        for (int i = 0; i < sosigsData.Count; i++)
+        {
+            if(sosigsData[i].allyMarker != null)
+                TGM_Manager.Destroy(sosigsData[i].allyMarker);
         }
     }
 

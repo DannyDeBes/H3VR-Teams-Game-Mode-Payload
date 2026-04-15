@@ -166,18 +166,22 @@ MonoBehaviour:
     name: 
     description: 
     thumbnail: {fileID: 0}
+    winIFF: 0
+    index: 0
   localPlayer:
     isSosig: 0
+    playerName: 
+    sosig: {fileID: 0}
     playerIndex: 0
     classIndex: 0
     awaitingRespawn: 0
     iff: 0
     kills: 0
     deaths: 0
-    killStreak: 0
+    score: 0
     playersItems: []
-  players: []
-  sosigs: []
+    allyMarker: {fileID: 0}
+  startTime: 0
   globalAudio: {fileID: 82453659853750374}
   audioConfirm: {fileID: 8300000, guid: 084fa11303b054546a833a0b9551bda4, type: 3}
   audioPress: {fileID: 8300000, guid: 9d92fbea05ed85e44822f25c214794d5, type: 3}

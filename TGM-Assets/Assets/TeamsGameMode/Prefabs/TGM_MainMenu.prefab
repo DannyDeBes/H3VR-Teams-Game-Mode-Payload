@@ -1010,6 +1010,7 @@ GameObject:
   - component: {fileID: 114155871889329984}
   - component: {fileID: 114722520183376592}
   - component: {fileID: 114609024206133900}
+  - component: {fileID: 65818941626036402}
   m_Layer: 10
   m_Name: TGM_MainMenu
   m_TagString: Untagged
@@ -1177,6 +1178,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 64, y: 64, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &65818941626036402
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1975735395580520}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1920, y: 1080, z: 1}
+  m_Center: {x: 0, y: 0, z: 10}
 --- !u!65 &65868260012186518
 BoxCollider:
   m_ObjectHideFlags: 1
