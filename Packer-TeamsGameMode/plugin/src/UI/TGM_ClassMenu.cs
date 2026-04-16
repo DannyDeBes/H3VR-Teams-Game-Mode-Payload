@@ -73,6 +73,7 @@ public class TGM_ClassMenu : MonoBehaviour
             button.gameObject.SetActive(true);
             button.texts[0].text = classes[i].name;
             button.buttons[0].image.sprite = classes[i].thumbnail;
+            button.index = i;
             buttons.Add(button);
         }
     }
@@ -213,86 +214,68 @@ public class TGM_ClassMenu : MonoBehaviour
             //Spawn Ammo
             if (itemSet.ammoCount > 0)
             {
-                FVRObject spawnFVRAmmo;
+                FVRObject fvrContainer = null;
+                FVRObject fvrCartridge = null;
+                FVRPhysicalObject spawnContainer = null;
+                FVRPhysicalObject spawnCartridge = null;
 
-                if (itemSet.ammoContainerID == "")
-                    spawnFVRAmmo = Global.GetAmmo(
-                            spawnFVRObject,
-                            itemSet.minCapacity,
-                            itemSet.maxCapacity,
-                            (FireArmRoundClass)itemSet.ammoFireArmRoundClass,
-                            (AmmoEnum)itemSet.ammoType);
-                else
-                    spawnFVRAmmo = Global.GetObjectID(itemSet.ammoContainerID);
-
-                if (spawnFVRAmmo == null)
+                //Magazine / Speed Loader / Clip
+                if (itemSet.ammoContainerID != "")
                 {
-                    TeamGameModePlugin.Logger.LogMessage(itemSet.name + " is missing valid ammo or Ammo Container ID");
-                    continue;
-                }
+                    //Make sure ammo cotainer exists
+                    if (!IM.OD.TryGetValue(itemSet.ammoContainerID, out fvrContainer))
+                        TeamGameModePlugin.Logger.LogWarning("Could not find ammo container: " + itemSet.ammoContainerID);
 
-                //Get Our Round
-                FireArmRoundClass singleRoundClass = (FireArmRoundClass)(-1);
-
-                if (Global.GetLoadType(spawnFVRAmmo) != AmmoLoadType.Rounds
-                    && Global.GetLoadType(spawnFVRAmmo) != AmmoLoadType.None)
-                {
-                    //Round Type ONCE for all Magazines etc
-                    if (itemSet.ammoFireArmRoundClass == -1)
+                    //Spawn the Container
+                    if (fvrContainer != null)
                     {
-                        FVRObject round = Global.GetRandomRoundClass(
-                            Global.GetAllRounds(),
-                            (FireArmRoundClass)(-1),
-                            (AmmoEnum)itemSet.ammoType);
-
-                        singleRoundClass = Global.GetFirearmRoundClassFromFVRObject(round);
-                    }
-                    else
-                        singleRoundClass = (FireArmRoundClass)itemSet.ammoFireArmRoundClass;
-                }
-
-                for (int x = 0; x < itemSet.ammoCount; x++)
-                {
-                    FVRPhysicalObject newAmmo = null;
-
-                    //Setup Ammo to Spawn
-                    if (!itemSet.ammoUniform && x != 0)
-                    {
-                        spawnFVRAmmo = Global.GetAmmo(
-                            spawnFVRObject,
-                            itemSet.minCapacity,
-                            itemSet.maxCapacity,
-                            (FireArmRoundClass)itemSet.ammoFireArmRoundClass,
-                            (AmmoEnum)itemSet.ammoType);
+                        spawnContainer = Global.SpawnFVRObject(
+                            fvrContainer,
+                            instance.ammoSpawns[spawnMainIndex].position + (Vector3.up * spawnMainOffset),
+                            instance.ammoSpawns[spawnMainIndex].rotation.eulerAngles);
                     }
 
-                    //Spawn the Ammo
-                    newAmmo = Global.SpawnFVRObject(
-                        spawnFVRAmmo,
-                        instance.ammoSpawns[spawnMainIndex].position + (Vector3.up * spawnMainOffset),
-                        instance.ammoSpawns[spawnMainIndex].rotation.eulerAngles);
+                }
 
-                    TGM_Manager.instance.localPlayer.playersItems.Add(newAmmo);
+                // Cartridge / Round / Shell 
+                if (itemSet.cartridgeID != "")
+                {
+                    //Make sure ammo cotainer exists
+                    if (!IM.OD.TryGetValue(itemSet.cartridgeID, out fvrCartridge))
+                        TeamGameModePlugin.Logger.LogWarning("Could not find cartridge: " + itemSet.cartridgeID);
 
-                    //IF a Ammo Container, fill with ammo type
-                    switch (Global.GetLoadType(spawnFVRAmmo))
+                    //Fill our Container with our Cartridge type
+                    if (fvrCartridge != null)
                     {
-                        default:
-                        case AmmoLoadType.Rounds:
-                        case AmmoLoadType.None:
-                            continue;
-                        case AmmoLoadType.Magazine:
-                            FVRFireArmMagazine fvrfireArmMagazine = newAmmo.GetComponent<FVRFireArmMagazine>();
-                            fvrfireArmMagazine.ReloadMagWithType(singleRoundClass);
-                            break;
-                        case AmmoLoadType.Clip:
-                            FVRFireArmClip ammoClip = newAmmo.GetComponent<FVRFireArmClip>();
-                            ammoClip.ReloadClipWithType(singleRoundClass);
-                            break;
-                        case AmmoLoadType.SpeedLoader:
-                            Speedloader ammoSpeeloader = newAmmo.GetComponent<Speedloader>();
-                            ammoSpeeloader.ReloadClipWithType(singleRoundClass);
-                            break;
+                        bool spawnRaw = false;
+
+                        //We have a magazine waiting and ready
+                        if (fvrContainer != null && spawnContainer != null)
+                        {
+                            //Is it compatible
+                            if (fvrCartridge.RoundType == fvrContainer.RoundType)
+                            {
+                                //Fill Container with our Cartridge
+                                Global.ReloadWithCartridge(spawnContainer, fvrCartridge);
+                            }
+                            else
+                                spawnRaw = true;
+
+                        }
+                        else
+                            spawnRaw = true;
+
+                        if (spawnRaw)
+                        {
+                            for (int c = 0; c < itemSet.ammoCount; c++)
+                            {
+                                //Spawn raw round
+                                spawnCartridge = Global.SpawnFVRObject(
+                                    fvrCartridge,
+                                    instance.ammoSpawns[spawnMainIndex].position + (Vector3.up * spawnMainOffset),
+                                    instance.ammoSpawns[spawnMainIndex].rotation.eulerAngles);
+                            }
+                        }
                     }
                 }
             }

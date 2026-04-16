@@ -55,10 +55,10 @@ public class TGM_Compass : MonoBehaviour
                 return;
             }
 
-            Debug.Log("LOoking at " + target.name);
+            //Debug.Log("LOoking at " + target.name);
             parent.LookAt(target);
-            parent.rotation = Quaternion.Euler(0, marker.rotation.eulerAngles.z, 0);
-            marker.rotation = Quaternion.Euler(marker.rotation.eulerAngles.x, 0, 0);
+            //parent.rotation = Quaternion.Euler(0, marker.rotation.eulerAngles.z, 0);
+            //marker.rotation = Quaternion.Euler(marker.rotation.eulerAngles.x, 0, 0);
         }
     }
 

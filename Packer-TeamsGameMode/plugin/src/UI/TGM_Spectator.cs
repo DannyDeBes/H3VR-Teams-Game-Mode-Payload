@@ -36,7 +36,8 @@ namespace TeamsGameMode
 
         void FixedUpdate()
         {
-            if (TGM_MainMenu.instance.pages[(int)TGM_MainMenu.Page.Spectator].activeSelf == false)
+            if (TGM_MainMenu.instance.pages[(int)TGM_MainMenu.Page.Spectator].activeSelf == false
+                && GM.CurrentSceneSettings.GetCamObjectPoint() == null)
             {
                 target = null;
             }
@@ -51,7 +52,7 @@ namespace TeamsGameMode
                 return;
 
             Vector3 targetHead = target.position + (Vector3.up * 1.5f);
-            Vector3 targetBehind = target.position + (Vector3.up * 1.5f) + (-transform.forward * 2);
+            Vector3 targetBehind = target.position + (Vector3.up * 1.5f) + (-target.forward * 2);
 
             if (Physics.Linecast(targetHead, targetBehind, out hit, mask))
                 spectatorCamera.transform.position = Vector3.Slerp(spectatorCamera.transform.position, hit.point, Time.deltaTime);
@@ -119,7 +120,7 @@ namespace TeamsGameMode
             {
                 spectatorCamera.Render();
                 TGM_MainMenu.instance.spectateName.text = players[targetPlayerIndex].playerName;
-                TGM_MainMenu.instance.spectateName.color = players[targetPlayerIndex].sosig.GetIFF() == 1 ? Color.blue : Color.red;
+                TGM_MainMenu.instance.spectateName.color = players[targetPlayerIndex].sosig.GetIFF() == 1 ? TGM_Manager.instance.team[1].color : TGM_Manager.instance.team[0].color;
                 return players[targetPlayerIndex].sosig.transform;
             }
 

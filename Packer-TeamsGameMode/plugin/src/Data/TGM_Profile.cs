@@ -11,10 +11,12 @@ public class TGM_Profile
     public static TGM_Profile profile = new TGM_Profile();
 
     public string name = "New Profile";
-    public List<string> playerTeams;
-    public List<string> sosigTeams;
+    public string gamemode;
+    public string[] playerTeams = new string[2];
+    public string[] sosigTeams = new string[2];
+    public int[] sosigLimit = new int[2];
+    public int[] scoreGoal = new int[2];
 
-    public int gamemode = 0;
     public List<int> gameSettings;
     public List<int> gamemodeSettings;
 

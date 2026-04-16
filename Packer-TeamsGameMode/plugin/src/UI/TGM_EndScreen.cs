@@ -20,7 +20,6 @@ public class TGM_EndScreen : MonoBehaviour
     public Text[] endScores;
     public Text resultText;
     public Image resultBackground;
-    public Color[] teamColors;
     public Text killText;
     public Text deathText;
     public Text timeText;
@@ -51,7 +50,7 @@ public class TGM_EndScreen : MonoBehaviour
         else
             resultText.text = TGM_Manager.instance.gamemode.winIFF == GM.CurrentPlayerBody.GetPlayerIFF() ? "VICTORY" : "DEFEAT";
 
-        resultBackground.color = teamColors[TGM_Manager.instance.gamemode.winIFF];
+        resultBackground.color = TGM_Manager.instance.team[TGM_Manager.instance.gamemode.winIFF].color;
 
         //Display Stats
         killText.text = TGM_Manager.instance.localPlayer.kills.ToString();

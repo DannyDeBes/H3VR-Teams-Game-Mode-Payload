@@ -539,9 +539,6 @@ MonoBehaviour:
   - {fileID: 114558380905952010}
   resultText: {fileID: 114766155123151326}
   resultBackground: {fileID: 114763114617666750}
-  teamColors:
-  - {r: 1, g: 0.3764706, b: 0.3764706, a: 1}
-  - {r: 0.3764706, g: 0.3764706, b: 1, a: 0.76862746}
   killText: {fileID: 114799704345704910}
   deathText: {fileID: 114363269802052068}
   timeText: {fileID: 114618543139035524}

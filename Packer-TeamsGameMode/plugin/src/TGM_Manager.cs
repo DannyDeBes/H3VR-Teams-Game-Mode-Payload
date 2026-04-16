@@ -63,16 +63,25 @@ public class TGM_Manager : MonoBehaviour
 
             //Default to first in the list
             team[i].playerTeam = 0;
-            team[i].sosigTeam = 0;
             team[i].iff = i;
+
+            //Assign Meat Fortress Teams by Default
+            for (int t = 0; t < TGM_ModLoader.sosigTeams.Count; t++)
+            {
+                if (TGM_ModLoader.sosigTeams[t].name.Contains(i == 0 ? "RED" : "BLUE"))
+                {
+                    team[i].sosigTeam = t;
+                    break;
+                }
+            }
         }
 
         //Unique Setup
         team[0].teamName = "Red";
-        team[0].color = Color.red;
+        team[0].color =  new Color(1f, 0.3764f, 0.3764f);
 
         team[1].teamName = "Blue";
-        team[1].color = Color.blue;
+        team[1].color = new Color(0.3764f, 0.3764f, 1f);
 
         //Setup our other systems
         TGM_TeamSetup.instance.Setup();
@@ -80,6 +89,8 @@ public class TGM_Manager : MonoBehaviour
         TGM_ProfileMenu.instance.Setup();
 
         TeamGameModePlugin.Logger.LogMessage($"Setup Complete");
+
+        SetGameState(GameStateEnum.GamemodeSelect);
     }
 
     void Awake()
@@ -129,6 +140,10 @@ public class TGM_Manager : MonoBehaviour
         if (GameStateEvent != null)
             GameStateEvent.Invoke();
 
+        //Hide Team Selection unless in Setup
+        TGM_TeamSetup.instance.gameObject.SetActive(false);
+        TGM_ProfileMenu.instance.loadProfileButton.SetActive(false);
+
         switch (state)
         {
             case GameStateEnum.GamemodeSelect:
@@ -136,6 +151,9 @@ public class TGM_Manager : MonoBehaviour
             case GameStateEnum.Setup:       //Gamemode being configured
                 gamemode.Setup();
                 startTime = 0;               //Reset Playtime to zero;
+                TGM_TeamSetup.instance.gameObject.SetActive(true);
+                TGM_ProfileMenu.instance.loadProfileButton.SetActive(true);
+                TGM_MainMenu.instance.UpdateSettings();
                 break;
             case GameStateEnum.Pregame:     //30 sec Count down to game start
                 startTime = Time.time + TGM_Gamemode.gameStartDelay;
@@ -178,9 +196,9 @@ public class TGM_Manager : MonoBehaviour
             if (sosigTeam.sosigsData[i].sosig == s)
             {
                 if(s.GetIFF() != s.GetDiedFromIFF())
-                    Debug.Log(sosigTeam.sosigsData[i].playerName + " was killed by an enemy");
+                    TeamGameModePlugin.Logger.LogMessage(sosigTeam.sosigsData[i].playerName + " was killed by an enemy");
                 else
-                    Debug.Log(sosigTeam.sosigsData[i].playerName + " was killed by a teammate");
+                    TeamGameModePlugin.Logger.LogMessage(sosigTeam.sosigsData[i].playerName + " was killed by a teammate");
                 break;
             }
         }

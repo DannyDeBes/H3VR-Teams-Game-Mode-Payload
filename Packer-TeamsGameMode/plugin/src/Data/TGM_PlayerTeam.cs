@@ -15,6 +15,5 @@ public class TGM_PlayerTeam
     public string description;
     [Tooltip("Preview image of the team when selected")]
     public Sprite thumbnail;
-    public string sosigTeam;
     public TGM_PlayerClass[] playerClasses = new TGM_PlayerClass[1];
 }

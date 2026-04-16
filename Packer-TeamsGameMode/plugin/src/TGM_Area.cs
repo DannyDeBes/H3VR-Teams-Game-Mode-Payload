@@ -7,14 +7,18 @@ namespace TeamsGameMode;
 
 public class TGM_Area : MonoBehaviour
 {
-    [HideInInspector]
-    public int iff = 0; //Which team currently owns this area
 
     [Header("Gameplay")]
+    [HideInInspector, Tooltip("Owner\nNeutral: -1\nRed: 0\nBlue: 1")]
+    public int iff = -1; //Which team currently owns this area
+
     [Tooltip("The area which players can capture this point in if capturable")]
     public Transform capturePoint;
     [Tooltip("The location the objective will spawn, e.g. Flag for CTF")]
     public Transform objective;
+
+    [Tooltip("The map defined objective time for this area, e.g. capture point time")]
+    public float objectiveTime = 14f;
 
     [Header("Player")]
     [Tooltip("Area where players can spawn, can be scaled")]
@@ -132,64 +136,12 @@ public class TGM_Area : MonoBehaviour
 
     public void PlaceAllMarkersOnGround()
     {
-        /*
-        //Patrol Paths
-        for (int x = 0; x < patrolPaths.Length; x++)
-        {
-            for (int y = 0; y < patrolPaths[x].patrolPoints.Count; y++)
-            {
-                if (Physics.Raycast(patrolPaths[x].patrolPoints[y].position, Vector3.down, out rayHit, 200f))
-                {
-                    patrolPaths[x].patrolPoints[y].position = rayHit.point + (Vector3.up * 0.05f);
-                }
-            }
-        }
 
-        //Guards
-        for (int i = 0; i < guardPoints.Count; i++)
-        {
-            if (Physics.Raycast(guardPoints[i].position, Vector3.down, out rayHit, 200f))
-            {
-                guardPoints[i].position = rayHit.point + (Vector3.up * 0.05f);
-            }
-        }
-
-        //Sniper
-        for (int i = 0; i < sniperPoints.Count; i++)
-        {
-            if (Physics.Raycast(sniperPoints[i].position, Vector3.down, out rayHit, 200f))
-            {
-                sniperPoints[i].position = rayHit.point + (Vector3.up * 0.05f);
-            }
-        }
-
-        //Rabbit Holes
-        for (int i = 0; i < sosigSpawns.Length; i++)
-        {
-            if (Physics.Raycast(sosigSpawns[i].position, Vector3.down, out rayHit, 200f))
-            {
-                sosigSpawns[i].position = rayHit.point + (Vector3.up * 0.05f);
-            }
-        }
-
-        //Squad Waypoint
-        if (Physics.Raycast(squadPoint.position, Vector3.down, out rayHit, 200f))
-        {
-            squadPoint.position = rayHit.point + (Vector3.up * 0.05f);
-        }
-
-        //Respawn
-        if (Physics.Raycast(respawn.position, Vector3.down, out rayHit, 200f))
-        {
-            respawn.position = rayHit.point + (Vector3.up * 0.05f);
-        }
-        */
     }
 
 
     void OnDrawGizmos()
     {
-
         if (objective != null)
         {
             Gizmos.color = new Color(0.99f, 0.75f, 0);

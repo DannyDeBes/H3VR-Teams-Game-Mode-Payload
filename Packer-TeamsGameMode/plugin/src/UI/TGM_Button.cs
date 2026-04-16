@@ -11,7 +11,7 @@ public class TGM_Button : MonoBehaviour
     public int index = -1;
     public int value = 0;
 
-    public void SelectClass(int index)
+    public void SelectClass()
     {
         TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.Rearm);
         TGM_ClassMenu.instance.SpawnClass(index);

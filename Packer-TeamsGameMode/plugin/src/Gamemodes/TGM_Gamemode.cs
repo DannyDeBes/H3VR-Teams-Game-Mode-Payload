@@ -10,13 +10,6 @@ namespace TeamsGameMode;
 [Serializable]
 public class TGM_Gamemode
 {
-    public TGM_Gamemode(string modeName = "", string modeDescription = "", Sprite modeThumbnail = null)
-    {
-        name = modeName;
-        description = modeDescription;
-        thumbnail = modeThumbnail;
-    }
-
     public string name;
     public string description;
     public Sprite thumbnail;
@@ -59,11 +52,16 @@ public class TGM_Gamemode
     {
         TeamGameModePlugin.Logger.LogDebug($"Gamemode: Pregame");
 
+        GM.CurrentSceneSettings.SosigKillEvent += TGM_Manager.instance.OnSosigKilled;
+        GM.CurrentSceneSettings.SosigKillEvent += TGM_Manager.instance.gamemode.OnSosigKilled;
+        GM.CurrentSceneSettings.PlayerDeathFromIFFEvent += TGM_Manager.instance.gamemode.OnPlayerKilled;
+        GM.CurrentSceneSettings.PlayerDeathFromIFFEvent += TGM_Manager.instance.PlayerDeathEvent;
+
         //15 Seconds before game starts
         TGM_Manager.instance.StartCoroutine(TGM_Manager.instance.SetGameStateDelayed(TGM_Manager.GameStateEnum.Gameplay, gameStartDelay));
 
         
-        //Override Spawn Times
+        //Spawn Times
         if(TGM_Settings.GetSetting(TGMSettingEnum.SpawnWaveTime) >= 1)
         {
             for (int i = 0; i < TGM_Manager.instance.team.Length; i++)
@@ -147,6 +145,17 @@ public class TGM_Gamemode
 
         //Reset the gamemode to the same one!
         TGM_MainMenu.instance.SelectGamemode(index);
+
+        //Clear all Items
+        VaultSystem.ClearExistingSaveableObjects(true);
+        
+        //Clear Sosig Engineer Turrets
+        AutoMeater[] meats = GameObject.FindObjectsOfType<AutoMeater>();
+        for (int i = 0; i < meats.Length; i++)
+        {
+            if (meats[i] != null)
+                meats[i].KillMe();
+        }
     }
 
     /// <summary>

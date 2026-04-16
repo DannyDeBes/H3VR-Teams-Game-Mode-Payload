@@ -51,18 +51,38 @@ public class TGM_ProfileMenu : MonoBehaviour
 
                 TGM_Profile.profile = TGM_ModLoader.profiles[i];
 
-                //Setup Teams
-                for (int x = 0; x < TGM_Profile.profile.playerTeams.Count; x++)
-                {
+                //---------------------------------------------------------------------------------------------------------------------
+                // LOAD SETTINGS
+                //---------------------------------------------------------------------------------------------------------------------
 
+                //Set Gamemode
+                TGM_MainMenu.instance.SelectGamemode(TGM_ModLoader.GetGamemodeIndex(TGM_Profile.profile.gamemode));
+
+                //Setup Teams
+                for (int x = 0; x < TGM_Manager.instance.team.Length; x++)
+                {
+                    TGM_Manager.instance.team[x].sosigTeam = TGM_ModLoader.GetSosigTeamIndex(TGM_Profile.profile.sosigTeams[x]);
+                    TGM_Manager.instance.team[x].playerTeam = TGM_ModLoader.GetPlayerTeamIndex(TGM_Profile.profile.playerTeams[x]);
+                    TGM_Manager.instance.team[x].sosigLimit = TGM_Profile.profile.sosigLimit[x];
+                    TGM_Manager.instance.team[x].scoreGoal = TGM_Profile.profile.scoreGoal[x];
                 }
 
-                /*
-                if (TGM_Manager.profile.character != "")
-                    SetCharacterByName(TGM_Manager.profile.character);
-                if (TGM_Manager.profile.faction != "")
-                    SetFactionByName(TGM_Manager.profile.faction);
-                */
+                //Load Game Settings
+                for (int x = 0; x < TGM_Settings.gameSettings.Count; x++)
+                {
+                    TGM_Settings.gameSettings[x].value = TGM_Profile.profile.gameSettings[x];
+                }
+
+                //Load Gamemode Settings
+                for (int x = 0; x < TGM_Settings.gamemodeSettings.Count; x++)
+                {
+                    TGM_Settings.gamemodeSettings[x].value = TGM_Profile.profile.gamemodeSettings[x];
+                }
+
+                //---------------------------------------------------------------------------------------------------------------------
+
+                TGM_MainMenu.instance.UpdateSettings();
+
                 //UpdateGameOptions();
                 TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.Confirm);
                 return;
@@ -74,8 +94,23 @@ public class TGM_ProfileMenu : MonoBehaviour
 
     public void Save()
     {
+        if (profileInput.text == "")
+        {
+            TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.Fail);
+            return;
+        }
+
+        if (TGM_ModLoader.SaveProfile(profileInput.text))
+        {
+            TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.Confirm);
+            TGM_ModLoader.LoadProfiles();
+            PopulateProfiles();
+        }
+        else
+            TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.Fail);
 
     }
+
     public void SetProfile(string profileName)
     {
         if (profileName != "")

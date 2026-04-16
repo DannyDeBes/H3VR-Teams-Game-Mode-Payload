@@ -19,7 +19,7 @@ public class TGM_Team
     //public TGM_PlayerTeam playerTeam;   //Player Team
     //public TGM_SosigTeam sosigTeam;     //Sosig Team
     public int sosigLimit = 8;      //Total amount of sosigs on this team
-    public int scoreGoal = 20;
+    public int scoreGoal = -1;      //Score needed to win
     public List<Sosig> sosigs = new List<Sosig>();
     public List<TGM_Player> sosigsData = new List<TGM_Player>();
     public Color color;
@@ -108,12 +108,12 @@ public class TGM_Team
 
             if (selectedSosigTeam == null)
             {
-                Debug.Log("MISSING SOSIG TEAM");
+                TeamGameModePlugin.Logger.LogError("MISSING SOSIG TEAM");
                 return null;
             }
             if (selectedSosigTeam.sosigSet == null)
             {
-                Debug.Log("MISSING SOSIG SET");
+                TeamGameModePlugin.Logger.LogError("MISSING SOSIG SET");
                 return null;
             }
 

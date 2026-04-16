@@ -47,41 +47,7 @@ public class TGM_TeamSetup : MonoBehaviour
         TGM_Scene.UpdateAllAreas();
 
         //Settings
-        UpdateSettings();
-    }
-
-    /*
-    public void SelectTeam(int iff)
-    {
-        selectedTeam = TGM_Manager.instance.team[iff];
-        TGM_Manager.instance.localPlayer.iff = iff;
-        UpdateSettings();
-    }
-    */
-
-
-    void UpdateSettings()
-    {
-        for (int i = 0; i < TGM_Manager.instance.team.Length; i++)
-        {
-            scoreCountText[i].text = TGM_Manager.instance.team[i].scoreGoal.ToString();
-            sosigsCountText[i].text = TGM_Manager.instance.team[i].sosigLimit.ToString();
-
-            //Check if mods are loaded in yet
-            if (TGM_ModLoader.playerTeams == null || TGM_ModLoader.playerTeams.Count == 0)
-                break;
-
-            int playerIndex = TGM_Manager.instance.team[i].playerTeam;
-            //Display new Profile Infomation
-            playerTeamTitles[i].text = TGM_ModLoader.playerTeams[playerIndex].name;
-            playerTeamDescriptions[i].text = TGM_ModLoader.playerTeams[playerIndex].description;
-            playerTeamThumbnails[i].sprite = TGM_ModLoader.playerTeams[playerIndex].thumbnail;
-
-            int sosigIndex = TGM_Manager.instance.team[i].sosigTeam;
-            sosigTeamTitles[i].text = TGM_ModLoader.sosigTeams[sosigIndex].name;
-            sosigTeamDescriptions[i].text = TGM_ModLoader.sosigTeams[sosigIndex].description;
-            sosigTeamThumbnails[i].sprite = TGM_ModLoader.sosigTeams[sosigIndex].thumbnail;
-        }
+        TGM_MainMenu.instance.UpdateSettings();
     }
 
 
@@ -89,13 +55,13 @@ public class TGM_TeamSetup : MonoBehaviour
     public void AdjustRedTeamScore(int amount)
     {
         TGM_Manager.instance.team[0].scoreGoal = Mathf.Clamp(TGM_Manager.instance.team[0].scoreGoal + amount, 1, int.MaxValue);
-        UpdateSettings();
+        TGM_MainMenu.instance.UpdateSettings();
     }
 
     public void AdjustRedSosigCount(int amount)
     {
         TGM_Manager.instance.team[0].sosigLimit = Mathf.Clamp(TGM_Manager.instance.team[0].sosigLimit + amount, 0, 32);
-        UpdateSettings();
+        TGM_MainMenu.instance.UpdateSettings();
     }
 
     public void OpenBrowserRed(int type)
@@ -107,13 +73,13 @@ public class TGM_TeamSetup : MonoBehaviour
     public void AdjustBlueTeamScore(int amount)
     {
         TGM_Manager.instance.team[1].scoreGoal = Mathf.Clamp(TGM_Manager.instance.team[1].scoreGoal + amount, 1, int.MaxValue);
-        UpdateSettings();
+        TGM_MainMenu.instance.UpdateSettings();
     }
 
     public void AdjustBlueSosigCount(int amount)
     {
         TGM_Manager.instance.team[1].sosigLimit = Mathf.Clamp(TGM_Manager.instance.team[1].sosigLimit + amount, 0, 32);
-        UpdateSettings();
+        TGM_MainMenu.instance.UpdateSettings();
     }
 
     public void OpenBrowserBlue(int type)
@@ -223,6 +189,6 @@ public class TGM_TeamSetup : MonoBehaviour
         browserButtons.Clear();
 
         browserPanel.SetActive(false);
-        UpdateSettings();
+        TGM_MainMenu.instance.UpdateSettings();
     }
 }

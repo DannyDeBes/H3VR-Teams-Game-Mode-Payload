@@ -215,14 +215,40 @@ public class TGM_ModLoader
         if (TGM_Profile.profile.name == "Profile")
             return false;
 
-        //Copy Player Teams and Sosig Teams
 
+        //---------------------------------------------------------------------------------------------------------------------
+        // SAVE SETTINGS
+        //---------------------------------------------------------------------------------------------------------------------
 
-        //TGM_Manager.profile.character = TGM_Manager.Character().name;
-        //TGM_Manager.profile.faction = TGM_Manager.Faction().name;
+        TGM_Profile.profile.gamemode = TGM_Manager.instance.gamemode.name;
+
+        //Save Teams
+        for (int x = 0; x < TGM_Manager.instance.team.Length; x++)
+        {
+            TGM_Profile.profile.sosigTeams[x] = sosigTeams[TGM_Manager.instance.team[x].sosigTeam].name;
+            TGM_Profile.profile.playerTeams[x] = playerTeams[TGM_Manager.instance.team[x].playerTeam].name;
+            TGM_Profile.profile.sosigLimit[x] = TGM_Manager.instance.team[x].sosigLimit;
+            TGM_Profile.profile.scoreGoal[x] = TGM_Manager.instance.team[x].scoreGoal;
+        }
+
+        //Save Game Settings
+        TGM_Profile.profile.gameSettings = new List<int>();
+        for (int x = 0; x < TGM_Settings.gameSettings.Count; x++)
+        {
+            TGM_Profile.profile.gameSettings.Add(TGM_Settings.gameSettings[x].value);
+        }
+
+        //Save Gamemode Settings
+        TGM_Profile.profile.gamemodeSettings = new List<int>();
+        for (int x = 0; x < TGM_Settings.gamemodeSettings.Count; x++)
+        {
+            TGM_Profile.profile.gamemodeSettings.Add(TGM_Settings.gamemodeSettings[x].value);
+        }
+
+        //---------------------------------------------------------------------------------------------------------------------
 
         bool status = false;
-        string path = Paths.PluginPath + "\\Packer-TeamsGameMode\\";
+        string path = Paths.PluginPath + "\\Packer-Teams_Game_Mode\\";
         string fileName = path + saveName + ".protgm";
 
         try
@@ -321,6 +347,42 @@ public class TGM_ModLoader
         TGM_ProfileMenu.instance.PopulateProfiles();
 
         return profiles;
+    }
+
+    public static int GetGamemodeIndex(string gamemodeName)
+    {
+        for (int i = 0; i < TGM_Manager.gamemodes.Count; i++)
+        {
+            if (TGM_Manager.gamemodes[i].name == gamemodeName)
+                return i;
+        }
+        return 0;
+    }
+
+    public static int GetSosigTeamIndex(string teamName)
+    {
+        for (int i = 0; i < sosigTeams.Count; i++)
+        {
+            if (sosigTeams[i].name == teamName)
+                return i;
+            
+        }
+
+        //Return first index if missing team
+        return 0;
+    }
+
+    public static int GetPlayerTeamIndex(string teamName)
+    {
+        for (int i = 0; i < playerTeams.Count; i++)
+        {
+            if (playerTeams[i].name == teamName)
+                return i;
+
+        }
+
+        //Return first index if missing team
+        return 0;
     }
 
     //--------------------------------------------------------------------------------------------------------

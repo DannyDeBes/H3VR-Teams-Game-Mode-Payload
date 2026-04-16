@@ -124,12 +124,6 @@ public class TGM_MainMenu : MonoBehaviour
         TGM_Manager.instance.localPlayer.ResetPlayer();
 
 
-        GM.CurrentSceneSettings.SosigKillEvent += TGM_Manager.instance.OnSosigKilled;
-        GM.CurrentSceneSettings.SosigKillEvent += TGM_Manager.instance.gamemode.OnSosigKilled;
-        GM.CurrentSceneSettings.PlayerDeathFromIFFEvent += TGM_Manager.instance.gamemode.OnPlayerKilled;
-        GM.CurrentSceneSettings.PlayerDeathFromIFFEvent += TGM_Manager.instance.PlayerDeathEvent;
-
-
         OpenPage(Page.GameSettings);
         UpdateSettings();
         TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Setup);
@@ -158,12 +152,16 @@ public class TGM_MainMenu : MonoBehaviour
 
         UpdateSettings();
     }
-
+    
     public void UpdateSettings()
     {
+        //Main Menu
         for (int i = 0; i < TGM_Settings.gameSettings.Count; i++)
         {
             TGM_Button btn = TGM_Settings.gameSettings[i].button;
+            if (btn == null)
+                continue;
+
             btn.value = TGM_Settings.gameSettings[i].value;
             btn.texts[0].text = TGM_Settings.gameSettings[i].description;
 
@@ -173,7 +171,7 @@ public class TGM_MainMenu : MonoBehaviour
             else if (TGM_Settings.gameSettings[i].type == TGM_Settings.Setting.SettingType.FirstString)
             {
                 //Set to first String name (Default) else use raw numbers
-                if(TGM_Settings.gameSettings[i].value == 0)
+                if (TGM_Settings.gameSettings[i].value == 0)
                     btn.texts[1].text = TGM_Settings.gameSettings[i].settings[TGM_Settings.gameSettings[i].value]; //Text
                 else
                     btn.texts[1].text = TGM_Settings.gameSettings[i].value.ToString(); //Number
@@ -189,6 +187,34 @@ public class TGM_MainMenu : MonoBehaviour
             }
         }
 
+        //Teams Setup
+        for (int i = 0; i < TGM_Manager.instance.team.Length; i++)
+        {
+            TGM_TeamSetup.instance.scoreCountText[i].text = TGM_Manager.instance.team[i].scoreGoal.ToString();
+            TGM_TeamSetup.instance.sosigsCountText[i].text = TGM_Manager.instance.team[i].sosigLimit.ToString();
+
+            //Check if mods are loaded in yet
+            if (TGM_ModLoader.playerTeams == null || TGM_ModLoader.playerTeams.Count == 0)
+                break;
+
+            int playerIndex = TGM_Manager.instance.team[i].playerTeam;
+
+            if (playerIndex >= 0 && playerIndex < TGM_ModLoader.playerTeams.Count)
+            {
+                //Display new Profile Infomation
+                TGM_TeamSetup.instance.playerTeamTitles[i].text = TGM_ModLoader.playerTeams[playerIndex].name;
+                TGM_TeamSetup.instance.playerTeamDescriptions[i].text = TGM_ModLoader.playerTeams[playerIndex].description;
+                TGM_TeamSetup.instance.playerTeamThumbnails[i].sprite = TGM_ModLoader.playerTeams[playerIndex].thumbnail;
+            }
+
+            int sosigIndex = TGM_Manager.instance.team[i].sosigTeam;
+            if (sosigIndex >= 0 && sosigIndex < TGM_ModLoader.sosigTeams.Count)
+            {
+                TGM_TeamSetup.instance.sosigTeamTitles[i].text = TGM_ModLoader.sosigTeams[sosigIndex].name;
+                TGM_TeamSetup.instance.sosigTeamDescriptions[i].text = TGM_ModLoader.sosigTeams[sosigIndex].description;
+                TGM_TeamSetup.instance.sosigTeamThumbnails[i].sprite = TGM_ModLoader.sosigTeams[sosigIndex].thumbnail;
+            }
+        }
 
         if (TeamGameModePlugin.h3mp)
         {
@@ -242,5 +268,14 @@ public class TGM_MainMenu : MonoBehaviour
         TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Pregame);
         OpenPage(Page.JoinTeam);
         TeamGameModePlugin.Logger.LogMessage($"Game Started");
+    }
+
+    public void ToggleSpectatorCamera()
+    {
+        if (GM.CurrentSceneSettings.GetCamObjectPoint() == TGM_Spectator.instance.spectatorCamera.transform)
+            GM.CurrentSceneSettings.SetCamObjectPoint(null);
+        else
+            GM.CurrentSceneSettings.SetCamObjectPoint(TGM_Spectator.instance.spectatorCamera.transform);
+        TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.Press);
     }
 }

@@ -56,8 +56,6 @@ namespace TeamsGameMode
             public Transform teamMenu;
             [Tooltip("The Starting area for this Team")]
             public TGM_Area startSpawnArea;
-            [Tooltip("Recommended Team Objective Score for this team, set to 0 or less to use default")]
-            public int teamScore = 0;
             [Tooltip("The time between wave respawns, attacking teams should have lower than defending")]
             public float teamSpawnTime = 5f;
         }

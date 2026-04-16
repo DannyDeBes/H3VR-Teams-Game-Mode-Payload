@@ -27,10 +27,12 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
     {
         base.Setup();
         //Defaults
-        for (int i = 0; i < 2; i++)
+        for (int i = 0; i < TGM_Manager.instance.team.Length; i++)
         {
-            TGM_Manager.instance.team[i].scoreGoal = 50;
+            if(TGM_Manager.instance.team[i].scoreGoal == -1)
+                TGM_Manager.instance.team[i].scoreGoal = 50;
         }
+        TGM_MainMenu.instance.UpdateSettings();
     }
 
     public override void Pregame()
