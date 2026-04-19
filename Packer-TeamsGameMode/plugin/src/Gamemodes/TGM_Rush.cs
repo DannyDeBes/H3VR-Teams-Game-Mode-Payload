@@ -65,8 +65,10 @@ public class TGM_Rush : TGM_Gamemode
         {
             if (TGM_Scene.instance.areas[i].iff == blueIFF)
             {
+                GameObject prefab = TGM_Scene.instance.rushCapturePrefab != null ? TGM_Scene.instance.rushCapturePrefab : TGM_ModLoader.tgmAssets.rushCapturePointPrefab;
+
                 Rush_CapturePoint capturePoint = TGM_Manager.Instantiate(
-                    TGM_ModLoader.tgmAssets.rushCapturePointPrefab,
+                    prefab,
                     TGM_Scene.instance.areas[i].objective.position,
                     TGM_Scene.instance.areas[i].objective.rotation).GetComponent<Rush_CapturePoint>();
 
@@ -257,14 +259,14 @@ public class TGM_Rush : TGM_Gamemode
             int enemyIFF = TGM_Sosigs.GetEnemyIFF(s.GetIFF());
             if (redSpawnRatio++ >= captureRatio)
             {
-                //Get on the objective!
-                TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[enemyIFF].currentSpawnArea.GetObjectiveArea());
+                //Move to attack positions
+                TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[enemyIFF].currentSpawnArea.GetRandomAttackArea());
                 redSpawnRatio = 0;
             }
             else
             {
-                //Move to attack positions
-                TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[enemyIFF].currentSpawnArea.GetRandomAttackArea());
+                //Get on the objective!
+                TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[enemyIFF].currentSpawnArea.GetObjectiveArea());
             }
         }
     }

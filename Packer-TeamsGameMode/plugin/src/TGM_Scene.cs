@@ -26,6 +26,9 @@ public class TGM_Scene : MonoBehaviour
     public Transform profilesMenu;
     public Transform itemSpawner;
 
+    [Header("Prefab Overwrite")]
+    public GameObject rushCapturePrefab;
+
     [Header("Audio Overwrite")]
     [Tooltip("Start Game, or spawn items etc")]
     public AudioClip audioConfirm;

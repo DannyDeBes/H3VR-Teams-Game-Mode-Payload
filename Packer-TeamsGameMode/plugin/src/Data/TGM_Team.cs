@@ -64,7 +64,7 @@ public class TGM_Team
         if (localIFF == iff
             && TGM_Manager.instance.localPlayer.awaitingRespawn)
         {
-            Vector3[] data = Global.GetRandomPlayerSpawnPoint(currentSpawnArea.spawnPoints);
+            Vector3[] data = Global.GetRandomPlayerSpawnPoint(currentSpawnArea.spawnPoints[localIFF].playerSpawnPoints);
             GM.CurrentMovementManager.TeleportToPoint(data[0], true, data[1]);
             TGM_Manager.instance.localPlayer.awaitingRespawn = false;
             TGM_ClassMenu.instance.spawnButtonText.text = "Spawn";
@@ -85,7 +85,7 @@ public class TGM_Team
 
             for (int i = 0; i < sosigRemain; i++)
             {
-                Transform spawnArea = currentSpawnArea.sosigSpawnPoints[Random.Range(0, currentSpawnArea.sosigSpawnPoints.Length)];
+                Transform spawnArea = currentSpawnArea.spawnPoints[iff].sosigSpawnPoints[Random.Range(0, currentSpawnArea.spawnPoints[iff].sosigSpawnPoints.Length)];
                 Vector3[] spawnPoint = Global.GetValidSpawnPoint(spawnArea);
                 Sosig s = CreateTeamSosig(_spawnOptions, spawnPoint[0], spawnArea.rotation);
 
