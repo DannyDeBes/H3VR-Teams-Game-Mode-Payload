@@ -5,8 +5,8 @@
 | -------- | ------- |
 | name  | Player Team name |
 | description | A Brief description of the player team |
-| sosigTeam    | Name of the complimentary Sosig Team that goes with this player team |
-| playerClasses  | List of Classes the player can choose from |
+| sosigSet | A collection of Sosig Sets that will be randomly selected from when spawning a sosig |
+
 
 ### Player Class
 | Variable    | Setting |
@@ -31,10 +31,6 @@
 | uniformObjects | If `true`, only one `objectID` is selected and spawned `objectCount` amount of times, if `false` randomly select from the `objectID` list per spawned object |
 | requiredSecondaryPieces  | if `objectID` has a required Secondary Pieces, spawn them |
 | objectID  | A list of spawnable objectIDs |
-| ammoCount  | The amount of rounds/magazines/speed loaders/clips spawned |
-| ammoUniform  | If `true`, will spawn all ammo as the same type |
-| ammoContainerID  | Specific ObjectID for the ammo container used |
-| minCapacity  | The minimum capacity the ammo container will be |
-| maxCapacity  | The maximum capacity the ammo container will be |
-| ammoFireArmRoundClass  | The exact type of ammo thats loaded into the container, see `FireArmRoundClass` enum, default to `-1` to use `ammoType` instead |
-| ammoType  | The generic type of ammo thats loaded into the container, see `AmmoEnum` |
+| ammoCount  | The amount of cartridges/magazines/speed loaders/clips spawned |
+| ammoContainerID  | Specific ObjectID for the ammo container used, will autofill with its default cartridges if no `cartridgeID` is supplied |
+| cartridgeID  | The ObjectID of the cartridge, if  `cartridgeID` is blank, `ammoContainerID` will use its default cartridge, if `ammoContainerID` is blank, `cartridgeID` will spawn |
