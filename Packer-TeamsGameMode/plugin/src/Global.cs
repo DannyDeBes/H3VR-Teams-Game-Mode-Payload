@@ -7,7 +7,6 @@ namespace TeamsGameMode;
 
 public class Global
 {
-
     public static FVRObject GetObjectID(string objectID)
     {
         FVRObject mainObject;
@@ -109,5 +108,27 @@ public class Global
         }
 
         return AM.SRoundDisplayDataDic[round.RoundType].Classes[0].Class;
+    }
+
+    public static Vector3 GetGridXZPositionTransform(Transform t, int index, int squareCount)
+    {
+        Vector3 scale = t.lossyScale;
+
+        float xGrid = (scale.x / squareCount);
+        float zGrid = (scale.z / squareCount);
+
+        float xOffset = -(scale.x / 2) + (xGrid / 2);
+        float zOffset = -(scale.z / 2) + (zGrid / 2);
+
+        int row = index / squareCount;
+        int col = index % squareCount;
+
+        Vector3 position = t.position; //Transform Position
+
+        position += t.rotation * new Vector3(xOffset + (row * xGrid), 0, zOffset + (col * zGrid));
+        //position += (t.rotation * new Vector3(row * x, 0, col * z));    //Rotation offset
+        //position -= -new Vector3(scale.x / 2, 0, scale.z / 2);
+
+        return position ;
     }
 }

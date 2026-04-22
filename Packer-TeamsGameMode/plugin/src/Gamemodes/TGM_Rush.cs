@@ -11,7 +11,7 @@ namespace TeamsGameMode;
 public class TGM_Rush : TGM_Gamemode
 {
     List<Rush_CapturePoint> capturePoints = new List<Rush_CapturePoint>();
-    int captureRatio = 4;  //1 in X will get the objective
+    int captureRatio = 2;  //1 in X will go to attack positions (Rest goes to Objective)
     int redSpawnRatio = 0;
 
     public TGM_Rush(string modeName = "", string modeDescription = "", Sprite modeThumbnail = null)
@@ -45,20 +45,31 @@ public class TGM_Rush : TGM_Gamemode
     {
         base.Pregame();
 
+        //Blu instantly spawns:
+        TGM_Scene.instance.teams[blueIFF].teamSpawnTime = 1;
+
         //Assign all areas to Team BLU
         for (int i = 0; i < TGM_Scene.instance.areas.Length; i++)
         {
-            TGM_Scene.instance.areas[i].iff = 1;
+            TGM_Scene.instance.areas[i].iff = blueIFF;
         }
 
         //Set Red Spawn
+        TGM_Manager.instance.team[redIFF].currentSpawnArea = TGM_Scene.instance.teams[redIFF].startSpawnArea;
         TGM_Manager.instance.team[redIFF].currentSpawnArea.iff = redIFF;
 
         //Set BLU Spawn
-        if(TGM_Scene.instance.areas[blueIFF] != TGM_Manager.instance.team[redIFF].currentSpawnArea)    //If Next spot is not owned by Red
-            TGM_Manager.instance.team[blueIFF].currentSpawnArea = TGM_Scene.instance.areas[blueIFF];
+        if(TGM_Scene.instance.areas[1] != TGM_Manager.instance.team[redIFF].currentSpawnArea)    //If Next spot is not owned by Red
+            TGM_Manager.instance.team[blueIFF].currentSpawnArea = TGM_Scene.instance.areas[1]; //2nd Area belongs to Blue
         TGM_Manager.instance.team[blueIFF].currentSpawnArea.iff = blueIFF;
 
+        //Clear old Radios
+        for (int i = 0; i < capturePoints.Count; i++)
+        {
+            if (capturePoints[i] != null)
+                TGM_Manager.Destroy(capturePoints[i].gameObject);
+        }
+        capturePoints.Clear();
 
         //All Blu Areas get a Radio
         for (int i = 0; i < TGM_Scene.instance.areas.Length; i++)
@@ -82,6 +93,12 @@ public class TGM_Rush : TGM_Gamemode
 
 
         TGM_Scene.UpdateAllAreas();
+    }
+
+    public override void GameplayStart()
+    {
+        //Set spawn time back to the same as Red
+        TGM_Scene.instance.teams[blueIFF].teamSpawnTime = TGM_Scene.instance.teams[redIFF].teamSpawnTime;
     }
 
     public override void Postgame()
@@ -122,6 +139,17 @@ public class TGM_Rush : TGM_Gamemode
 
         if (Networking.IsClient())
             return;
+
+        //Only Blue gets Respawn in Pregame
+        if (TGM_Manager.gameState == TGM_Manager.GameStateEnum.Pregame)
+        {
+            if (Time.time >= TGM_Manager.instance.team[blueIFF].respawnTime)
+            {
+                TeamGameModePlugin.Logger.LogDebug("Gamemode: RespawnTime at: " + Time.time + " for team " + blueIFF);
+                TGM_Manager.instance.team[blueIFF].Respawn();
+                TGM_Manager.instance.team[blueIFF].respawnTime = Time.time + TGM_Scene.instance.teams[blueIFF].teamSpawnTime;
+            }
+        }            
 
         //Only update during gameplay
         if (TGM_Manager.gameState != TGM_Manager.GameStateEnum.Gameplay)
@@ -209,13 +237,14 @@ public class TGM_Rush : TGM_Gamemode
             return;
         }
 
-
-        //Next Capture Point!
+        //IF RED SCORED
         if (teamIFF == redIFF)
         {
+            Debug.Log("RED " + "A");
             //Audio Capture
             int localIFF = GM.CurrentPlayerBody.GetPlayerIFF();
 
+            Debug.Log("RED " + localIFF);
             //If Red or Spectator
             if (localIFF <= redIFF)
                 TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.ObjectiveFriendlyCaptured);
@@ -223,21 +252,31 @@ public class TGM_Rush : TGM_Gamemode
                 TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.ObjectiveEnemyCaptured);
 
             //Score
-            int score = TGM_Manager.instance.team[redIFF].currentScore;
+            int redScore = TGM_Manager.instance.team[redIFF].currentScore;
+            int blueArea = redScore + 1;
+            Debug.Log("RED score " + redScore);
+            Debug.Log("RED blue: " + blueArea);
 
             //Set All capture points (For Networking reasons)
             for (int i = 0; i < capturePoints.Count; i++)
             {
+                Debug.Log("RED cap " + i);
                 capturePoints[i].canCapture = false;
             }
 
-            if (score < capturePoints.Count)
+            if (blueArea <= capturePoints.Count)
             {
-                Debug.Log("CAPTURED!!!");
-                capturePoints[score + 1].canCapture = true;
+                Debug.Log("CAPTURED!!! " + redScore);
+                //Update Spawns
+                TGM_Manager.instance.team[redIFF].currentSpawnArea = TGM_Scene.instance.areas[redScore];
+                TGM_Manager.instance.team[redIFF].currentSpawnArea.iff = redIFF;
+                TGM_Manager.instance.team[blueIFF].currentSpawnArea = TGM_Scene.instance.areas[blueArea];
+                TGM_Manager.instance.team[blueIFF].currentSpawnArea.iff = blueIFF;
 
-                TGM_Manager.instance.team[redIFF].currentSpawnArea = TGM_Manager.instance.team[blueIFF].currentSpawnArea;
-                TGM_Manager.instance.team[blueIFF].currentSpawnArea = TGM_Scene.instance.areas[score + 1];
+                //Captures at 1 behind blue Area
+                capturePoints[redScore].canCapture = true;
+
+                TGM_Scene.UpdateAllAreas();
             }
         }
     }

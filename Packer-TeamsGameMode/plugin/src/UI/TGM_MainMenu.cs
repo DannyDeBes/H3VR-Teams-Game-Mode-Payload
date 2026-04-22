@@ -35,6 +35,8 @@ public class TGM_MainMenu : MonoBehaviour
     //Put Base Game settings here
     //Save Data?
     [Header("Page: Team Select")]
+    public Image[] teamButtons;
+    public Text[] teamButtonText;
 
     [Header("Page: Spectator")]
     public Text spectateName;

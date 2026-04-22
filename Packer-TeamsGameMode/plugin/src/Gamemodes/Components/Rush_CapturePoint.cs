@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using FistVR;
 using H3MP.Networking;
+using System.Collections.Generic;
 
 namespace TeamsGameMode;
 public class Rush_CapturePoint : MonoBehaviour
@@ -17,7 +18,7 @@ public class Rush_CapturePoint : MonoBehaviour
     private GameObject spawnedPrefab;
 
     private int handCount = 0;
-    private int sosigCount = 0;
+    private List<Sosig> sosigCount = new List<Sosig>();
 
 
     void OnEnabled()
@@ -26,7 +27,7 @@ public class Rush_CapturePoint : MonoBehaviour
         captureTime = 0;
         captureCircle.gameObject.SetActive(false);
         handCount = 0;
-        sosigCount = 0;
+        sosigCount.Clear();
 
         if (spawnedPrefab != null)
             Destroy(spawnedPrefab);
@@ -47,7 +48,7 @@ public class Rush_CapturePoint : MonoBehaviour
         {
             if (captureTime != 0)
             {
-                captureTime = Mathf.Clamp(captureTime - Time.deltaTime, 0, captureTotalTime);
+                captureTime = Mathf.Clamp(captureTime - (Time.deltaTime * 2), 0, captureTotalTime);
                 captureCircle.gameObject.SetActive(false);
                 return;
             }
@@ -68,8 +69,8 @@ public class Rush_CapturePoint : MonoBehaviour
     public void CapturePoint()
     {
         //Called on all clients
-        GameObject captured = Instantiate(capturedPrefab, transform.position, transform.rotation);
-        captured.SetActive(true);
+        spawnedPrefab = Instantiate(capturedPrefab, transform.position, transform.rotation);
+        spawnedPrefab.SetActive(true);
 
         //Disable capturing
         canCapture = false;
@@ -97,7 +98,15 @@ public class Rush_CapturePoint : MonoBehaviour
 
     bool IsCapturing()
     {
-        return sosigCount > 0 || handCount > 0;
+        for (int i = sosigCount.Count - 1; i >= 0; i--)
+        {
+            if (sosigCount[i] != null)
+                return true;
+            else
+                sosigCount.RemoveAt(i); //Missing Sosig, remove it
+        }
+
+        return handCount > 0 && GM.CurrentPlayerBody.Health > 0;
     }
 
     void OnTriggerEnter(Collider other)
@@ -115,7 +124,7 @@ public class Rush_CapturePoint : MonoBehaviour
         if (sosig != null 
             && sosig.S.GetIFF() == detectIFF)
         {
-            sosigCount++;
+            sosigCount.Add(sosig.S);
         }
     }
 
@@ -134,12 +143,12 @@ public class Rush_CapturePoint : MonoBehaviour
         if (sosig != null 
             && sosig.S.GetIFF() == detectIFF)
         {
-            sosigCount--;
+            sosigCount.Remove(sosig.S);
         }
     }
 
     void OnValidate()
     {
-        gameObject.layer = LayerMask.NameToLayer("Interactable");
+        //gameObject.layer = LayerMask.NameToLayer("Interactable");
     }
 }

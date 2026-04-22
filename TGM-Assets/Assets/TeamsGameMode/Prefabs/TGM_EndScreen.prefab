@@ -539,6 +539,12 @@ MonoBehaviour:
   - {fileID: 114558380905952010}
   resultText: {fileID: 114766155123151326}
   resultBackground: {fileID: 114763114617666750}
+  teamPanels:
+  - {fileID: 114754442611728558}
+  - {fileID: 114411882273648034}
+  teamNames:
+  - {fileID: 114264149075752510}
+  - {fileID: 114978593463780382}
   killText: {fileID: 114799704345704910}
   deathText: {fileID: 114363269802052068}
   timeText: {fileID: 114618543139035524}
@@ -566,13 +572,13 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 67469ed0797710b448492a1b29746de9, type: 3}
     m_FontSize: 64
     m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 128
+    m_BestFit: 1
+    m_MinSize: 0
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: RED
@@ -1150,13 +1156,13 @@ MonoBehaviour:
     m_Font: {fileID: 12800000, guid: 67469ed0797710b448492a1b29746de9, type: 3}
     m_FontSize: 64
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 1
-    m_MaxSize: 128
+    m_MaxSize: 64
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
+    m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: BLUE
@@ -1416,7 +1422,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -64, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224417253078032068
 RectTransform:
@@ -1510,7 +1516,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -0.015252681}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -64, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224646043472727664
 RectTransform:

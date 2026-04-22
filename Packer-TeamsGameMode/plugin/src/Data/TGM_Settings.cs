@@ -155,8 +155,20 @@ public class TGM_Settings
             intIncrement = 1,
             localOnly = false,
         },
+        new Setting
+        {
+            description = "Color Blind:",
+            settings = ["Disabled", "Enabled"],
+            type = Setting.SettingType.Strings,
+            value = 0,
+            intMin = 0,
+            intMax = 1,
+            intIncrement = 1,
+            localOnly = true,
+        },
     };
 }
+
 public enum TGMSettingEnum
 {
     ///<summary>"Disabled (Global)" = 0, "Enabled (Global)" = 1, "Set Per Class" = 2</summary>
@@ -177,4 +189,6 @@ public enum TGMSettingEnum
     PlayerHealth,
     ///<summary>"Disabled" = 0, "Enabled" = 1</summary>
     ItemSpawner,
+    ///<summary>"Disabled" = 0, "Enabled" = 1</summary>
+    ColorBlind,
 }

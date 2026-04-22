@@ -20,18 +20,19 @@ public class TGM_Compass : MonoBehaviour
     public Text killText;
     public Text deathText;
     public Text scoreText;
+    public Text gameTimeText;
 
     [Header("Teams")]
     public Text redScoreText;
     public Text blueScoreText;
     public Transform scorePanel;
+    public Image[] cornerBackgrounds;
 
     [Header("Markers")]
     public List<Marker> markers = new List<Marker>();
     public GameObject markerPrefab;
 
     public Sprite[] markerSprites;
-    public bool colorBlind = false;
 
     [Header("Direction")]
     public Transform directionNeedle;
@@ -56,7 +57,7 @@ public class TGM_Compass : MonoBehaviour
             }
 
             //Debug.Log("LOoking at " + target.name);
-            parent.LookAt(target);
+            marker.LookAt(target);
             //parent.rotation = Quaternion.Euler(0, marker.rotation.eulerAngles.z, 0);
             //marker.rotation = Quaternion.Euler(marker.rotation.eulerAngles.x, 0, 0);
         }

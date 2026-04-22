@@ -34,6 +34,8 @@ public class TGM_Team
     /// </summary>
     public float respawnTime = 0;
 
+    private int spawnIndex = 0;
+
     public TGM_PlayerTeam GetPlayerTeam()
     {
         return TGM_ModLoader.playerTeams[playerTeam];
@@ -86,13 +88,19 @@ public class TGM_Team
             for (int i = 0; i < sosigRemain; i++)
             {
                 Transform spawnArea = currentSpawnArea.spawnPoints[iff].sosigSpawnPoints[Random.Range(0, currentSpawnArea.spawnPoints[iff].sosigSpawnPoints.Length)];
-                Vector3[] spawnPoint = Global.GetValidSpawnPoint(spawnArea);
-                Sosig s = CreateTeamSosig(_spawnOptions, spawnPoint[0], spawnArea.rotation);
+                
+                Vector3 spawnPoint = Global.GetGridXZPositionTransform(spawnArea, spawnIndex, 6);   //6x6 area, 4 bonus spawns
+                //Debug.Log(spawnArea.position + " : " + spawnPoint);
+                Sosig s = CreateTeamSosig(_spawnOptions, spawnPoint, spawnArea.rotation);
 
                 TGM_Manager.instance.gamemode.OnSosigCreate(s);
 
                 if (CreateSosigEvent != null)
                     CreateSosigEvent.Invoke(s);
+
+                spawnIndex++;
+                if (spawnIndex >= sosigLimit)
+                    spawnIndex = 0;
             }
         }
     }
@@ -119,7 +127,7 @@ public class TGM_Team
 
             for (int i = 0; i < selectedSosigTeam.sosigSet.Length; i++)
             {
-                if (currentKills > selectedSosigTeam.sosigSet[i].minKills
+                if (currentKills >= selectedSosigTeam.sosigSet[i].minKills
                     && currentKills <= selectedSosigTeam.sosigSet[i].maxKills)
                 {
                     sets.Add(selectedSosigTeam.sosigSet[i]);

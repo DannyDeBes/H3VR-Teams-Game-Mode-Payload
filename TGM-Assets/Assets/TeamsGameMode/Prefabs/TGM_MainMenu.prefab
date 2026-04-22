@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: 114173013719080650}
   - component: {fileID: 114248468966358664}
   m_Layer: 10
-  m_Name: Text
+  m_Name: RedText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 114311723125267246}
   - component: {fileID: 114224537990918896}
   m_Layer: 10
-  m_Name: Text
+  m_Name: BlueText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3565,6 +3565,12 @@ MonoBehaviour:
   gameSettingPrefab: {fileID: 1002492998871588}
   gamemodeSettingPrefab: {fileID: 1930703105529042}
   requestButton: {fileID: 1143403890323264}
+  teamButtons:
+  - {fileID: 114461663915745988}
+  - {fileID: 114439175903564496}
+  teamButtonText:
+  - {fileID: 114173013719080650}
+  - {fileID: 114311723125267246}
   spectateName: {fileID: 114211128446264758}
   gamemodeBtnPrefab: {fileID: 1487758042341724}
   gamemodesBtns: []

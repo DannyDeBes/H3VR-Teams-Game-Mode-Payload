@@ -6,89 +6,171 @@ using UnityEngine;
 using H3MP;
 using H3MP.Networking;
 
-namespace TeamsGameMode.H3MP
+namespace TeamsGameMode.H3MP;
+
+public class TGM_Networking : MonoBehaviour
 {
-    public  class TGM_Networking : MonoBehaviour
+    public static TGM_Networking instance;
+
+    private int updatePlayerStats = -1;
+
+    [Serializable]
+    public class NetworkData
     {
-        public static TGM_Networking instance;
+        //public DataType Type { get; private set; }
+        public object Value { get; private set; }
 
-        private int updatePlayerStats = -1;
-
-
-        void Awake()
+        public NetworkData(object value)
         {
-            instance = this;
+            Value = value;
+            //Type = GetDataType(value);
         }
 
-
-        void SetupPacketTypes()
+        /*
+        private DataType GetDataType(object value)
         {
-
-            //Server
-            if (Networking.IsHost())
+            return value switch
             {
-                if (Mod.registeredCustomPacketIDs.ContainsKey("TGM_PlayerStatsUpdate"))
-                    updatePlayerStats = Mod.registeredCustomPacketIDs["TGM_PlayerStatsUpdate"];
-                else
-                    updatePlayerStats = Server.RegisterCustomPacketType("TGM_PlayerStatsUpdate");
+                byte => DataType.Byte,
+                short => DataType.Short,
+                ushort => DataType.UShort,
+                int => DataType.Int,
+                uint => DataType.UInt,
+                long => DataType.Long,
+                float => DataType.Float,
+                double => DataType.Double,
+                bool => DataType.Bool,
+                string => DataType.String,
+                _ => throw new Exception("Unsupported type")
+            };
+        }
+
+        public enum DataType
+        {
+            Byte, 
+            Short, 
+            UShort, 
+            Int, 
+            UInt, 
+            Long, 
+            Float, 
+            Double, 
+            Bool, 
+            String
+        }
+        */
+    }
+
+    /*
+    [Serializable]
+    public class NetworkData()
+    {
+        public DataType type = DataType.Bool;
+
+        byte Byte;
+        short Short;
+        ushort UShort;
+        int Int;
+        uint UInt;
+        long Long;
+        float Float;
+        double Double;
+        bool Bool;
+        string String;
+        public enum DataType
+        {
+            Byte,
+            Short,
+            UShort,
+            Int,
+            UInt,
+            Long,
+            Float,
+            Double,
+            Bool,
+            String,
+        }
+    }
+    */
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    void Start()
+    {
+        if (Networking.IsHost() || Client.isFullyConnected)
+            SetupPacketTypes();
+    }
+
+
+    void SetupPacketTypes()
+    {
+        //Server
+        if (Networking.IsHost())
+        {
+            if (Mod.registeredCustomPacketIDs.ContainsKey("TGM_PlayerStatsUpdate"))
+                updatePlayerStats = Mod.registeredCustomPacketIDs["TGM_PlayerStatsUpdate"];
+            else
+                updatePlayerStats = Server.RegisterCustomPacketType("TGM_PlayerStatsUpdate");
+            Mod.customPacketHandlers[updatePlayerStats] = StatsUpdate_Handler;
+
+        }
+        else // Client
+        {
+            if (Mod.registeredCustomPacketIDs.ContainsKey("TGM_PlayerStatsUpdate"))
+            {
+                updatePlayerStats = Mod.registeredCustomPacketIDs["TGM_PlayerStatsUpdate"];
                 Mod.customPacketHandlers[updatePlayerStats] = StatsUpdate_Handler;
-
             }
-            else // Client
+            else
             {
-                if (Mod.registeredCustomPacketIDs.ContainsKey("TGM_PlayerStatsUpdate"))
-                {
-                    updatePlayerStats = Mod.registeredCustomPacketIDs["TGM_PlayerStatsUpdate"];
-                    Mod.customPacketHandlers[updatePlayerStats] = StatsUpdate_Handler;
-                }
-                else
-                {
-                    ClientSend.RegisterCustomPacketType("TGM_PlayerStatsUpdate");
-                    Mod.CustomPacketHandlerReceived += StatsUpdate_Received;
-                }
+                ClientSend.RegisterCustomPacketType("TGM_PlayerStatsUpdate");
+                Mod.CustomPacketHandlerReceived += StatsUpdate_Received;
             }
         }
-        //---------------------------------------------------------------
-        //  Send and Receive
-        //---------------------------------------------------------------
+    }
+    //---------------------------------------------------------------
+    //  Send and Receive
+    //---------------------------------------------------------------
 
-        //---------------------------------------------------------------
-        // STATS UPDATE
-        // Send
-        public void StatsUpdate_Send(TGM_Player player)
+    //---------------------------------------------------------------
+    // STATS UPDATE
+    // Send
+    public void StatsUpdate_Send(TGM_Player player)
+    {
+        if (!Networking.ServerRunning() || Networking.IsClient())
+            return;
+
+        Packet packet = new Packet(updatePlayerStats);
+
+        packet.Write(player.kills);
+        ServerSend.SendTCPDataToAll(packet, true);
+
+        TeamGameModePlugin.Logger.LogMessage($"Host - Stats Update " + player.kills);
+    }
+
+    // Receive
+    void StatsUpdate_Handler(int clientID, Packet packet)
+    {
+        int totalKills = packet.ReadInt();
+
+        TeamGameModePlugin.Logger.LogMessage($"Client - Level Update " + totalKills);
+    }
+    //---------------------------------------------------------------
+
+    //---------------------------------------------------------------
+    //(Client) Packet Handlers
+    //---------------------------------------------------------------
+
+    void StatsUpdate_Received(string identifier, int index)
+    {
+        if (identifier == "TGM_PlayerStatsUpdate")
         {
-            if (!Networking.ServerRunning() || Networking.IsClient())
-                return;
-
-            Packet packet = new Packet(updatePlayerStats);
-
-            packet.Write(player.kills);
-            ServerSend.SendTCPDataToAll(packet, true);
-
-            TeamGameModePlugin.Logger.LogMessage($"Host - Stats Update " + player.kills);
-        }
-
-        // Receive
-        void StatsUpdate_Handler(int clientID, Packet packet)
-        {
-            int totalKills = packet.ReadInt();
-
-            TeamGameModePlugin.Logger.LogMessage($"Client - Level Update " + totalKills);
-        }
-        //---------------------------------------------------------------
-
-        //---------------------------------------------------------------
-        //(Client) Packet Handlers
-        //---------------------------------------------------------------
-
-        void StatsUpdate_Received(string identifier, int index)
-        {
-            if (identifier == "TGM_PlayerStatsUpdate")
-            {
-                updatePlayerStats = index;
-                Mod.customPacketHandlers[index] = StatsUpdate_Handler;
-                Mod.CustomPacketHandlerReceived -= StatsUpdate_Received;
-            }
+            updatePlayerStats = index;
+            Mod.customPacketHandlers[index] = StatsUpdate_Handler;
+            Mod.CustomPacketHandlerReceived -= StatsUpdate_Received;
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using FistVR;
+using H3MP.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TeamsGameMode.H3MP;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -25,6 +27,9 @@ public class TGM_Scene : MonoBehaviour
     public Transform teamSetupMenu;
     public Transform profilesMenu;
     public Transform itemSpawner;
+
+    [Header("Spectator")]
+    public Transform[] spectatorStaticCameras;
 
     [Header("Prefab Overwrite")]
     public GameObject rushCapturePrefab;
@@ -50,6 +55,8 @@ public class TGM_Scene : MonoBehaviour
     public AudioClip audioObjectiveFriendlyCaptured;
     [Tooltip("An objective has been captured by the enemy")]
     public AudioClip audioObjectiveEnemyCaptured;
+    [Tooltip("Background Audio that plays, should loop")]
+    public AudioClip audioBackground;
 
     public delegate void SceneLoadedDelegate();
     public static event SceneLoadedDelegate SceneLoadedEvent;
@@ -59,11 +66,9 @@ public class TGM_Scene : MonoBehaviour
     {
         [Tooltip("The area which a player can respawn, can be scaled")]
         public Transform respawnArea;   //Based on Gizmo
-        [Tooltip("The team menu for spectating, scoreboard and rejoining the game")]
-        public Transform teamMenu;
         [Tooltip("The Starting area for this Team")]
         public TGM_Area startSpawnArea;
-        [Tooltip("The time between wave respawns, attacking teams should have lower than defending")]
+        [Tooltip("The time between wave respawns for this team")]
         public float teamSpawnTime = 5f;
     }
 
@@ -102,7 +107,11 @@ public class TGM_Scene : MonoBehaviour
         yield return StartCoroutine(TGM_ModLoader.LoadAssets());
 
         //Create our Gamemode assets
-        Instantiate(TGM_ModLoader.tgmAssets.manager);
+        TGM_Manager manager = Instantiate(TGM_ModLoader.tgmAssets.manager);
+
+        //Add Networking if H3MP is enabled
+        if (Networking.H3MP)
+            manager.gameObject.AddComponent<TGM_Networking>();
         yield return new WaitForEndOfFrame();
 
         Instantiate(TGM_ModLoader.tgmAssets.mainMenu, mainMenu.position, mainMenu.rotation * Quaternion.Euler(0, 180, 0));
@@ -119,6 +128,12 @@ public class TGM_Scene : MonoBehaviour
         if (SceneLoadedEvent != null)
             SceneLoadedEvent.Invoke();
         TGM_Manager.instance.Setup();
+
+        //Play the supplied audio
+        if (audioBackground != null)
+        {
+            TGM_Manager.PlayBackground(audioBackground);
+        }
     }
 
     public static void UpdateAllAreas()
@@ -144,7 +159,7 @@ public class TGM_Scene : MonoBehaviour
                     continue;
 
                 if (teams[i].respawnArea != null)
-                    Gizmos.DrawCube(teams[i].respawnArea.position, teams[i].respawnArea.localScale / 2);
+                    Gizmos.DrawCube(teams[i].respawnArea.position, teams[i].respawnArea.lossyScale);
 
             }
         }

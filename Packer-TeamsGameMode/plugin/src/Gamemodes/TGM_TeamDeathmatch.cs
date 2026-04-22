@@ -19,8 +19,6 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
     public override void LoadDefaultProfile()
     {
         base.LoadDefaultProfile();
-        //Do Gamemode Settings here
-
     }
 
     public override void Setup()
@@ -30,7 +28,7 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
         for (int i = 0; i < TGM_Manager.instance.team.Length; i++)
         {
             if(TGM_Manager.instance.team[i].scoreGoal == -1)
-                TGM_Manager.instance.team[i].scoreGoal = 50;
+                TGM_Manager.instance.team[i].scoreGoal = 80;    //Default sosig count * 10
         }
         TGM_MainMenu.instance.UpdateSettings();
     }

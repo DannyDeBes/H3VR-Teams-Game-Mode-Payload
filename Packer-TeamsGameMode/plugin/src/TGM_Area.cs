@@ -18,7 +18,7 @@ public class TGM_Area : MonoBehaviour
     public Transform objective;
 
     [Tooltip("The map defined objective time for this area, e.g. capture point time")]
-    public float objectiveTime = 14f;
+    public float captureTime = 20f;
 
     public SpawnPoints[] spawnPoints = new SpawnPoints[2];
 
@@ -29,6 +29,10 @@ public class TGM_Area : MonoBehaviour
     public GameObject[] enemyObjects;
     [Tooltip("Neutral Objects that are enabled when owned by no team, e.g. Door on unused spawn room")]
     public GameObject[] neutralObjects;
+    [Tooltip("Red Team Objects that are enabled when owned by the red team, e.g. Flags, banners")]
+    public GameObject[] redObjects;
+    [Tooltip("Blue Team Objects that are enabled when owned by the blue team, e.g. Flags, banners")]
+    public GameObject[] blueObjects;
 
     [System.Serializable]
     public class SpawnPoints()
@@ -51,61 +55,41 @@ public class TGM_Area : MonoBehaviour
     public void UpdateArea()
     {
         int playerIFF = GM.CurrentPlayerBody.GetPlayerIFF();
+        int enemyIFF = Global.GetEnemyIFF(playerIFF);
 
-        //Ally/Friendly
-        if (iff == playerIFF)
+        //Friendly Team Owns this
+        for (int i = 0; i < friendlyObjects.Length; i++)
         {
-            for (int i = 0; i < friendlyObjects.Length; i++)
-            {
-                if(friendlyObjects[i] != null)
-                    friendlyObjects[i].SetActive(true);
-            }
-            for (int i = 0; i < enemyObjects.Length; i++)
-            {
-                if(enemyObjects[i] != null)
-                    enemyObjects[i].SetActive(false);
-            }
-            for (int i = 0; i < neutralObjects.Length; i++)
-            {
-                if (neutralObjects[i] != null)
-                    neutralObjects[i].SetActive(false);
-            }
+            if (friendlyObjects[i] != null)
+                friendlyObjects[i].SetActive(iff == playerIFF);
         }
-        else if (iff == Global.GetEnemyIFF(playerIFF)) //Enemy
+
+        //Enemy Team owns this
+        for (int i = 0; i < enemyObjects.Length; i++)
         {
-            for (int i = 0; i < friendlyObjects.Length; i++)
-            {
-                if (friendlyObjects[i] != null)
-                    friendlyObjects[i].SetActive(false);
-            }
-            for (int i = 0; i < enemyObjects.Length; i++)
-            {
-                if (enemyObjects[i] != null)
-                    enemyObjects[i].SetActive(true);
-            }
-            for (int i = 0; i < neutralObjects.Length; i++)
-            {
-                if (neutralObjects[i] != null)
-                    neutralObjects[i].SetActive(false);
-            }
+            if (enemyObjects[i] != null)
+                enemyObjects[i].SetActive(iff == enemyIFF);
         }
-        else //Neutral
+
+        //Owned by no Team
+        for (int i = 0; i < neutralObjects.Length; i++)
         {
-            for (int i = 0; i < friendlyObjects.Length; i++)
-            {
-                if (friendlyObjects[i] != null)
-                    friendlyObjects[i].SetActive(false);
-            }
-            for (int i = 0; i < enemyObjects.Length; i++)
-            {
-                if (enemyObjects[i] != null)
-                    enemyObjects[i].SetActive(false);
-            }
-            for (int i = 0; i < neutralObjects.Length; i++)
-            {
-                if (neutralObjects[i] != null)
-                    neutralObjects[i].SetActive(true);
-            }
+            if (neutralObjects[i] != null)
+                neutralObjects[i].SetActive(iff != playerIFF && iff != enemyIFF);
+        }
+
+        //Owned By Red Team
+        for (int i = 0; i < redObjects.Length; i++)
+        {
+            if (redObjects[i] != null)
+                redObjects[i].SetActive(iff == TGM_Gamemode.redIFF);
+        }
+
+        //Owned by Blue Team
+        for (int i = 0; i < blueObjects.Length; i++)
+        {
+            if (blueObjects[i] != null)
+                blueObjects[i].SetActive(iff == TGM_Gamemode.blueIFF);
         }
     }
 
@@ -153,7 +137,7 @@ public class TGM_Area : MonoBehaviour
     {
         List<Vector3> locations = new List<Vector3>();
 
-        Vector3 areaScale = area.localScale / 2;
+        Vector3 areaScale = area.lossyScale / 2;
 
         for (int i = 0; i < 2; i++)
         {
@@ -209,10 +193,10 @@ public class TGM_Area : MonoBehaviour
                     if (spawnPoints[i] == null)
                         continue;
 
-                    Gizmos.DrawCube(spawnPoints[s].playerSpawnPoints[i].position, spawnPoints[s].playerSpawnPoints[i].localScale / 2);
-                    Vector3 wireBottom = (spawnPoints[s].playerSpawnPoints[i].localScale / 2);
+                    Gizmos.DrawCube(spawnPoints[s].playerSpawnPoints[i].position, spawnPoints[s].playerSpawnPoints[i].lossyScale);
+                    Vector3 wireBottom = (spawnPoints[s].playerSpawnPoints[i].lossyScale);
                     wireBottom.y = 0.001f;
-                    Vector3 cubeBottom = spawnPoints[s].playerSpawnPoints[i].position + (Vector3.down * (spawnPoints[s].playerSpawnPoints[i].localScale.y * 0.25f));
+                    Vector3 cubeBottom = spawnPoints[s].playerSpawnPoints[i].position + (Vector3.down * (spawnPoints[s].playerSpawnPoints[i].lossyScale.y * 0.25f));
                     Gizmos.DrawWireCube(cubeBottom, wireBottom);
                     Gizmos.DrawLine(spawnPoints[s].playerSpawnPoints[i].position, spawnPoints[s].playerSpawnPoints[i].position + spawnPoints[s].playerSpawnPoints[i].forward);
                 }
@@ -228,12 +212,35 @@ public class TGM_Area : MonoBehaviour
                     if (spawnPoints[s].sosigSpawnPoints[i] == null)
                         continue;
 
-                    Gizmos.DrawCube(spawnPoints[s].sosigSpawnPoints[i].position, spawnPoints[s].sosigSpawnPoints[i].localScale / 2);
-                    Vector3 wireBottom = (spawnPoints[s].sosigSpawnPoints[i].localScale / 2);
+                    /*
+                    Gizmos.DrawCube(spawnPoints[s].sosigSpawnPoints[i].position, spawnPoints[s].sosigSpawnPoints[i].lossyScale);
+                    Vector3 wireBottom = (spawnPoints[s].sosigSpawnPoints[i].lossyScale);
                     wireBottom.y = 0.001f;
-                    Vector3 cubeBottom = spawnPoints[s].sosigSpawnPoints[i].position + (Vector3.down * (spawnPoints[s].sosigSpawnPoints[i].localScale.y * 0.25f));
+                    Vector3 cubeBottom = spawnPoints[s].sosigSpawnPoints[i].position + (Vector3.down * (spawnPoints[s].sosigSpawnPoints[i].lossyScale.y * 0.25f));
                     Gizmos.DrawWireCube(cubeBottom, wireBottom);
+                    */
+                    //Direction
                     Gizmos.DrawLine(spawnPoints[s].sosigSpawnPoints[i].position, spawnPoints[s].sosigSpawnPoints[i].position + spawnPoints[s].sosigSpawnPoints[i].forward);
+                    /*
+                    //Square
+                    Gizmos.DrawLine(
+                        Global.GetGridXZPositionTransform(spawnPoints[s].sosigSpawnPoints[i], 0, 6),
+                        Global.GetGridXZPositionTransform(spawnPoints[s].sosigSpawnPoints[i], 5, 6));
+                    Gizmos.DrawLine(
+                        Global.GetGridXZPositionTransform(spawnPoints[s].sosigSpawnPoints[i], 5, 6),
+                        Global.GetGridXZPositionTransform(spawnPoints[s].sosigSpawnPoints[i], 35, 6));
+                    Gizmos.DrawLine(
+                        Global.GetGridXZPositionTransform(spawnPoints[s].sosigSpawnPoints[i], 35, 6),
+                        Global.GetGridXZPositionTransform(spawnPoints[s].sosigSpawnPoints[i], 30, 6));
+                    Gizmos.DrawLine(
+                        Global.GetGridXZPositionTransform(spawnPoints[s].sosigSpawnPoints[i], 30, 6),
+                        Global.GetGridXZPositionTransform(spawnPoints[s].sosigSpawnPoints[i], 0, 6));
+                    */
+                    for (int y = 0; y < 36; y++)
+                    {
+                        Vector3 spawnPoint = Global.GetGridXZPositionTransform(spawnPoints[s].sosigSpawnPoints[i], y, 6);
+                        Gizmos.DrawLine(spawnPoint, spawnPoint + (Vector3.up * 2));
+                    }
                 }
             }
 
@@ -245,12 +252,12 @@ public class TGM_Area : MonoBehaviour
             {
                 for (int i = 0; i < spawnPoints[s].sosigAttackAreas.Length; i++)
                 {
-                    Gizmos.DrawCube(spawnPoints[s].sosigAttackAreas[i].position, spawnPoints[s].sosigAttackAreas[i].localScale / 2);
+                    Gizmos.DrawCube(spawnPoints[s].sosigAttackAreas[i].position, spawnPoints[s].sosigAttackAreas[i].lossyScale);
                     for (int x = 0; x < attackIcon.Length; x++)
                     {
                         Gizmos.DrawLine(spawnPoints[s].sosigAttackAreas[i].position, spawnPoints[s].sosigAttackAreas[i].position + attackIcon[x]);
                     }
-                    Gizmos.DrawWireCube(spawnPoints[s].sosigAttackAreas[i].position, spawnPoints[s].sosigAttackAreas[i].localScale / 2);
+                    Gizmos.DrawWireCube(spawnPoints[s].sosigAttackAreas[i].position, spawnPoints[s].sosigAttackAreas[i].lossyScale);
                 }
             }
 
@@ -263,8 +270,8 @@ public class TGM_Area : MonoBehaviour
 
                 for (int i = 0; i < spawnPoints[s].sosigDefendAreas.Length; i++)
                 {
-                    Gizmos.DrawCube(spawnPoints[s].sosigDefendAreas[i].position, spawnPoints[s].sosigDefendAreas[i].localScale / 2);
-                    Gizmos.DrawWireCube(spawnPoints[s].sosigDefendAreas[i].position, spawnPoints[s].sosigDefendAreas[i].localScale / 2);
+                    Gizmos.DrawCube(spawnPoints[s].sosigDefendAreas[i].position, spawnPoints[s].sosigDefendAreas[i].lossyScale);
+                    Gizmos.DrawWireCube(spawnPoints[s].sosigDefendAreas[i].position, spawnPoints[s].sosigDefendAreas[i].lossyScale);
 
                     Gizmos.DrawLine(spawnPoints[s].sosigDefendAreas[i].position, spawnPoints[s].sosigDefendAreas[i].position + BL);
                     Gizmos.DrawLine(spawnPoints[s].sosigDefendAreas[i].position, spawnPoints[s].sosigDefendAreas[i].position + BR);
@@ -279,10 +286,41 @@ public class TGM_Area : MonoBehaviour
 
         if (capturePoint != null && capturePoint.gameObject.activeSelf == true)
         {
-            Gizmos.matrix = Matrix4x4.TRS(capturePoint.position, capturePoint.rotation, capturePoint.lossyScale / 2);
+            Gizmos.matrix = Matrix4x4.TRS(capturePoint.position, capturePoint.rotation, capturePoint.lossyScale);
             Gizmos.color = new Color(0.1f, 1, 1f, 0.25f);
             Gizmos.DrawCube(Vector3.zero, Vector3.one);
             Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
+        }
+
+        for (int s = 0; s < spawnPoints.Length; s++)
+        {
+            if (spawnPoints[s].sosigSpawnPoints != null)
+            {
+                Color yellow = new Color(0.999f, 0.5f, 0);
+                yellow.a = 0.2f;
+                Gizmos.color = yellow;
+                for (int i = 0; i < spawnPoints[s].sosigSpawnPoints.Length; i++)
+                {
+                    if (spawnPoints[s].sosigSpawnPoints[i] == null)
+                        continue;
+
+                    Gizmos.matrix = Matrix4x4.TRS(
+                        spawnPoints[s].sosigSpawnPoints[i].position, 
+                        spawnPoints[s].sosigSpawnPoints[i].rotation, 
+                        spawnPoints[s].sosigSpawnPoints[i].lossyScale);
+
+                    Gizmos.DrawCube(Vector3.zero, Vector3.one);
+                    Vector3 cubeBottom = (Vector3.down * (spawnPoints[s].sosigSpawnPoints[i].lossyScale.y * 0.25f));
+                    Gizmos.DrawWireCube(cubeBottom, Vector3.one);
+                    /*
+                    Gizmos.DrawCube(spawnPoints[s].sosigSpawnPoints[i].position, spawnPoints[s].sosigSpawnPoints[i].lossyScale);
+                    Vector3 wireBottom = (spawnPoints[s].sosigSpawnPoints[i].lossyScale);
+                    wireBottom.y = 0.001f;
+                    Vector3 cubeBottom = spawnPoints[s].sosigSpawnPoints[i].position + (Vector3.down * (spawnPoints[s].sosigSpawnPoints[i].lossyScale.y * 0.25f));
+                    Gizmos.DrawWireCube(cubeBottom, wireBottom);
+                    */
+                }
+            }
         }
     }
 

@@ -28,6 +28,7 @@ public class TGM_Manager : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource globalAudio;
+    public AudioSource backgroundAudio;
     [Tooltip("Start Game, or spawn items etc")]
     public AudioClip audioConfirm;
     [Tooltip("Regular Button Press")]
@@ -54,6 +55,8 @@ public class TGM_Manager : MonoBehaviour
 
     public delegate void StandardDelegate();
     public static event StandardDelegate GamemodesLoadedEvent;
+
+    private float safteyCheck = 0;
 
     public void Setup()
     {
@@ -125,6 +128,24 @@ public class TGM_Manager : MonoBehaviour
         if (gameState == GameStateEnum.Gameplay)
         {
             gamemode.Update();
+
+            //Catch any Sosigs that have fallen out of the map
+            if (Time.time >= safteyCheck)
+            {
+                safteyCheck = Time.time + 10.1f;
+
+                for (int i = 0; i < team.Length; i++)
+                {
+                    for (int x = 0; x < team[i].sosigsData.Count; x++)
+                    {
+                        if (team[i].sosigsData[x].sosig != null
+                            && team[i].sosigsData[x].sosig.transform.position.y < GM.CurrentSceneSettings.CatchHeight)
+                        {
+                            team[i].sosigsData[x].sosig.ClearSosig();
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -164,6 +185,7 @@ public class TGM_Manager : MonoBehaviour
                 TGM_TeamSetup.instance.gameObject.SetActive(true);
                 TGM_ProfileMenu.instance.loadProfileButton.SetActive(true);
                 TGM_MainMenu.instance.UpdateSettings();
+                SetColorBlind();
                 break;
             case GameStateEnum.Pregame:     //30 sec Count down to game start
                 startTime = Time.time + TGM_Gamemode.gameStartDelay;
@@ -216,6 +238,36 @@ public class TGM_Manager : MonoBehaviour
             }
         }
         */
+    }
+
+    public void SetColorBlind()
+    {
+        if (TGM_Settings.GetSetting(TGMSettingEnum.ColorBlind) == 1)
+        {
+            team[0].teamName = "YELLOW";
+            team[0].color = new Color(1f, 1f, 0.3764f);
+
+            team[1].teamName = "PURPLE";
+            team[1].color = new Color(0.5f, 0.3764f, 1f);
+        }
+        else
+        {
+            //Unique Setup
+            team[0].teamName = "RED";
+            team[0].color = new Color(1f, 0.3764f, 0.3764f);
+
+            team[1].teamName = "BLUE";
+            team[1].color = new Color(0.3764f, 0.3764f, 1f);
+        }
+        //RED
+        TGM_Compass.instance.cornerBackgrounds[0].color = team[0].color;
+        TGM_MainMenu.instance.teamButtons[0].color = team[0].color;
+        TGM_MainMenu.instance.teamButtonText[0].text = team[0].teamName;
+
+        //BLUE
+        TGM_Compass.instance.cornerBackgrounds[1].color = team[1].color;
+        TGM_MainMenu.instance.teamButtons[1].color = team[1].color;
+        TGM_MainMenu.instance.teamButtonText[1].text = team[1].teamName;
     }
 
     //------------------------------------------------------------------------------
@@ -383,6 +435,13 @@ public class TGM_Manager : MonoBehaviour
 
         if (clip != null)
             instance.globalAudio.PlayOneShot(clip);
+    }
+
+    public static void PlayBackground(AudioClip clip)
+    {
+        instance.backgroundAudio.clip = clip;
+        instance.backgroundAudio.loop = true;
+        instance.backgroundAudio.Play();
     }
 
     public static void PlayCustomAudio(AudioClip clip)

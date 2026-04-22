@@ -3185,8 +3185,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: bad14e689ddd4a1408dc70dcb32fbcce, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 306c378d564561643bc40202dc20db31, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 0
   m_FillMethod: 4
@@ -3898,8 +3898,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: bad14e689ddd4a1408dc70dcb32fbcce, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 306c378d564561643bc40202dc20db31, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 0
   m_FillMethod: 4
@@ -4294,8 +4294,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: bad14e689ddd4a1408dc70dcb32fbcce, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 306c378d564561643bc40202dc20db31, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 0
   m_FillMethod: 4
@@ -4687,11 +4687,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'A long description of things if its okay I will try to make this stuff
-    fit in here in this box area?? oKAy amkf akmfakl nflakjnsfglajngkjabgkhs glhjkwebt
-    dw aihbaga;ikbgi;a ge;i aeikgbnaki;egbn ksjdgiw;e n
-
-    wasadsa asda'
+  m_Text: "If you can read this, something broke. \nCheck Console, post full log"
 --- !u!114 &114391766908546476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -7986,8 +7982,8 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: bad14e689ddd4a1408dc70dcb32fbcce, type: 3}
-  m_Type: 0
+  m_Sprite: {fileID: 21300000, guid: 306c378d564561643bc40202dc20db31, type: 3}
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 0
   m_FillMethod: 4
