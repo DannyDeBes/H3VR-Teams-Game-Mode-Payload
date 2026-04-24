@@ -162,6 +162,11 @@ public class TGM_Team
                 position,
                 rotation);
 
+        //Force Sosig to RUN
+        sosig.SetAssaultSpeed(Sosig.SosigMoveSpeed.Running);
+        sosig.FallbackOrder = Sosig.SosigOrder.Assault;
+        sosig.CommandAssaultPoint(spawnOptions.SosigTargetPosition);
+
         //Assign to Empty Slot
         int sosigDataIndex = 0;
         for (int i = 0; i < sosigsData.Count; i++)
