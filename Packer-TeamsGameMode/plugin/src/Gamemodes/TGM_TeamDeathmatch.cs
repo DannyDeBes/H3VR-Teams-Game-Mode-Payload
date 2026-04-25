@@ -99,6 +99,9 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
 
     public override void OnPlayerKilled(bool killedSelf, int iff)
     {
+        if (iff != redIFF && iff != blueIFF)
+            return;
+
         base.OnPlayerKilled(killedSelf, iff);
 
         if (TGM_Manager.gameState != TGM_Manager.GameStateEnum.Gameplay)

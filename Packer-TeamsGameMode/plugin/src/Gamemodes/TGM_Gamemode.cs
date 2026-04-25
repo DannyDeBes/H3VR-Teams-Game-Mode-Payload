@@ -273,6 +273,9 @@ public class TGM_Gamemode
     {
         TeamGameModePlugin.Logger.LogDebug("Gamemode: OnPlayerKilled");
 
+        if (iff != redIFF && iff != blueIFF)
+            return;
+
         //Update Class Menu
         TGM_ClassMenu.instance.Setup(TGM_Manager.instance.team[GM.CurrentPlayerBody.GetPlayerIFF()].GetPlayerTeam().playerClasses);
     }
