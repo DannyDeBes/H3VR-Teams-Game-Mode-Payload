@@ -136,6 +136,12 @@ public class Rush_CapturePoint : MonoBehaviour
                 sosigCount.RemoveAt(i); //Missing Sosig, remove it
         }
 
+        //Player Dead, remove hands
+        if (GM.CurrentPlayerBody.Health <= 0)
+        {
+            handCount = 0;
+        }
+
         return handCount > 0 && GM.CurrentPlayerBody.Health > 0;
     }
 

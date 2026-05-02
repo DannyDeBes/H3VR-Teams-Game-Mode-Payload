@@ -89,13 +89,13 @@ public class TGM_Team
             for (int i = 0; i < sosigRemain; i++)
             {
                 SosigSetGroup group = GetSosigID(iff);
-                bool useVehicle = TGM_ModLoader.sosigTeams[sosigTeam].sosigSet[group.set].useVehicleSpawn;
+                bool useVehicle = group.useVehicle;
                 Transform spawnArea;
 
                 //Use Vehicle spawns for vehicle sosigs
                 if (useVehicle
                     && currentSpawnArea.spawnPoints[iff].sosigVehicleSpawnPoints != null 
-                    && currentSpawnArea.spawnPoints[iff].sosigVehicleSpawnPoints.Length >= 0)
+                    && currentSpawnArea.spawnPoints[iff].sosigVehicleSpawnPoints.Length > 0)
                 {
                     spawnArea = currentSpawnArea.spawnPoints[iff].sosigVehicleSpawnPoints[Random.Range(0, currentSpawnArea.spawnPoints[iff].sosigVehicleSpawnPoints.Length)];
                 }
@@ -109,7 +109,17 @@ public class TGM_Team
                 //Vehicle sosig? On the Vehicle navMesh
                 if (useVehicle && TGM_Scene.instance.vehicleNavMesh != null)
                 {
-                    s.Agent.areaMask = NavMesh.GetAreaFromName("Exfil");
+                    TGM_Scene.instance.vehicleNavMesh.defaultArea = 134217728;
+                    s.Agent.agentTypeID = TGM_Scene.instance.vehicleNavMesh.agentTypeID;
+                    NavMeshQueryFilter agentQuery = new NavMeshQueryFilter();
+                    agentQuery.agentTypeID = TGM_Scene.instance.vehicleNavMesh.agentTypeID;
+                    agentQuery.areaMask = 134217728;
+                    if (NavMesh.SamplePosition(spawnPoint, out NavMeshHit hit, 10, 134217728))
+                    {
+                        Debug.Log("WE JUST FUCKING WRAPED HERE WOWOW");
+                        s.Agent.Warp(hit.position);
+                    }
+
                 }
 
                 TGM_Manager.instance.gamemode.OnSosigCreate(s);
@@ -127,12 +137,12 @@ public class TGM_Team
     public class SosigSetGroup
     {
         public int id;
-        public int set;
+        public bool useVehicle;
     }
 
     public SosigSetGroup GetSosigID(int iff)
     {
-        int setID = 0;
+        bool useVehicle = false;
         int sosigID = -2;
 
         List<TGM_SosigTeam.SosigSet> sets = new List<TGM_SosigTeam.SosigSet>();
@@ -185,7 +195,7 @@ public class TGM_Team
                 idList.AddRange(team);
                 if (idList.Count >= spawnOrderIndex)
                 {
-                    setID = i;
+                    useVehicle = sets[i].useVehicleSpawn;
                 }
             }
 
@@ -193,16 +203,18 @@ public class TGM_Team
             if (spawnOrderIndex >= idList.Count)
             {
                 spawnOrderIndex = 0;
-                setID = 0;
+                useVehicle = sets[0].useVehicleSpawn;
             }
 
             sosigID = idList[spawnOrderIndex];
         }
         else
         {
-            setID = Random.Range(0, sets.Count);
+            int setID = Random.Range(0, sets.Count);
+
             //RANDOM
             TGM_SosigTeam.SosigSet selectedSet = sets[setID];
+            useVehicle = selectedSet.useVehicleSpawn;
 
             //Team specific Sosigs
             if (iff == TGM_Gamemode.redIFF)
@@ -211,7 +223,7 @@ public class TGM_Team
                 sosigID = selectedSet.sosigEnemyIDsBlue[Random.Range(0, selectedSet.sosigEnemyIDsBlue.Length)];
         }
 
-        return new SosigSetGroup { id = sosigID, set = setID };
+        return new SosigSetGroup { id = sosigID, useVehicle = useVehicle };
     }
 
     public Sosig CreateTeamSosig(SosigAPI.SpawnOptions spawnOptions, Vector3 position, Quaternion rotation, int sosigID)

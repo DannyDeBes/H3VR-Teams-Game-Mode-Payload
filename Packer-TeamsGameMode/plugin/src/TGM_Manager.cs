@@ -78,12 +78,22 @@ public class TGM_Manager : MonoBehaviour
             team[i].playerTeam = 0;
             team[i].iff = i;
 
-            //Assign Meat Fortress Teams by Default
+            //Assign Default Sosig Team
             for (int t = 0; t < TGM_ModLoader.sosigTeams.Count; t++)
             {
-                if (TGM_ModLoader.sosigTeams[t].name.Contains(i == 0 ? "RED" : "BLUE"))
+                if (TGM_ModLoader.sosigTeams[t].name.Contains(TGM_Scene.instance.teams[i].defaultSosigTeam))
                 {
                     team[i].sosigTeam = t;
+                    break;
+                }
+            }
+
+            //Assign Default Player Team
+            for (int t = 0; t < TGM_ModLoader.playerTeams.Count; t++)
+            {
+                if (TGM_ModLoader.playerTeams[t].name.Contains(TGM_Scene.instance.teams[i].defaultPlayerTeam))
+                {
+                    team[i].playerTeam = t;
                     break;
                 }
             }

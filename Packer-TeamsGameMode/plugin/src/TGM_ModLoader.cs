@@ -141,6 +141,8 @@ public class TGM_ModLoader
                 newDirectory = newDirectory.Replace("pttgm", "png");
                 team.thumbnail = LoadSprite(newDirectory);
 
+                //Set Defaults
+
                 //Class Icons
                 for (int x = 0; x < team.playerClasses.Length; x++)
                 {

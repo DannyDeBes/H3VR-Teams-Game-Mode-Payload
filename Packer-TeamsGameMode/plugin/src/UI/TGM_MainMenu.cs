@@ -15,6 +15,7 @@ public class TGM_MainMenu : MonoBehaviour
     [Header("Pages")]
     public GameObject[] pages;
     public GameObject startButton;
+
     public enum Page
     {
         Gamemode = 0,
@@ -24,10 +25,7 @@ public class TGM_MainMenu : MonoBehaviour
         Spectator = 4,
     }
 
-
     [Header("Page: Game Settings")]
-    //public List<TGM_Settings.Setting> TGM_Settings.gameSettings = new List<TGM_Settings.Setting>();      //DELETE ME
-    //public List<TGM_Settings.Setting> gamemodeSettings = new List<TGM_Settings.Setting>();  //TODO DELETE ME
     public GameObject gameSettingPrefab;
     public GameObject gamemodeSettingPrefab;
     public GameObject requestButton;
@@ -45,7 +43,6 @@ public class TGM_MainMenu : MonoBehaviour
     public GameObject gamemodeBtnPrefab;
     [HideInInspector]
     public TGM_Button[] gamemodesBtns;
-
 
     public delegate void PreGameDelegate();
     public static event PreGameDelegate PreGamemodeSetupEvent;
@@ -124,7 +121,6 @@ public class TGM_MainMenu : MonoBehaviour
 
         //Reset player Tracking
         TGM_Manager.instance.localPlayer.ResetPlayer();
-
 
         OpenPage(Page.GameSettings);
         UpdateSettings();

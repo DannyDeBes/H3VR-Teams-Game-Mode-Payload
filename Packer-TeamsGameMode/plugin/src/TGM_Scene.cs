@@ -79,6 +79,11 @@ public class TGM_Scene : MonoBehaviour
         public TGM_Area startSpawnArea;
         [Tooltip("The time between wave respawns for this team")]
         public float teamSpawnTime = 5f;
+
+        [Tooltip("What Sosig Team is auto selected on this map")]
+        public string defaultPlayerTeam = "Meatcenaries";
+        [Tooltip("What Player Team is auto selected on this map")]
+        public string defaultSosigTeam = "Meat Fortress Meatcenaries";
     }
 
     /// <summary>
