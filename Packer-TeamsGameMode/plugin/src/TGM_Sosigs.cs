@@ -7,11 +7,6 @@ namespace TeamsGameMode;
 
 public class TGM_Sosigs
 {
-    public static int GetEnemyIFF(int friendlyIFF)
-    {
-        return friendlyIFF == 0 ? 1 : 0;
-    }
-
     /*
     public static void UpdateAllSosigsAttackArea()
     {

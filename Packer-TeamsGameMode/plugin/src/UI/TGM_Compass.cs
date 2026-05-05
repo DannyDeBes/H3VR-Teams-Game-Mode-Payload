@@ -56,10 +56,11 @@ public class TGM_Compass : MonoBehaviour
                 return;
             }
 
-            //Debug.Log("LOoking at " + target.name);
-            marker.LookAt(target);
-            //parent.rotation = Quaternion.Euler(0, marker.rotation.eulerAngles.z, 0);
-            //marker.rotation = Quaternion.Euler(marker.rotation.eulerAngles.x, 0, 0);
+            parent.LookAt(target.position);
+
+            parent.rotation = Quaternion.LookRotation(target.position - parent.position, Vector3.up);
+            parent.rotation = Quaternion.Euler(0, parent.rotation.eulerAngles.y, 0);
+            //marker.rotation = Quaternion.LookRotation(marker.position, Vector3.up);
         }
     }
 
@@ -74,14 +75,16 @@ public class TGM_Compass : MonoBehaviour
     public void CreateMarker(Sprite sprite, Color color, Transform lookAt)
     {
         GameObject newMarker = Instantiate(markerPrefab, markerPrefab.transform.parent);
-        newMarker.SetActive(true);
+        TGM_Button markerBtn = newMarker.GetComponent<TGM_Button>();
+
         Marker marker = new Marker
         {
             parent = newMarker.transform,
-            marker = newMarker.transform.GetChild(0),
-            thumbnail = newMarker.transform.GetChild(0).GetComponent<Image>(),
+            marker = markerBtn.go.transform,
+            thumbnail = markerBtn.go.GetComponent<Image>(),
             target = lookAt
         };
+        newMarker.SetActive(true);
 
         marker.thumbnail.sprite = sprite;
         marker.thumbnail.color = color;
@@ -113,14 +116,9 @@ public class TGM_Compass : MonoBehaviour
     void Update()
     {
         //Yikes
-        if (TGM_Manager.instance == null 
-            || TGM_Manager.instance.localPlayer == null
-            || GM.CurrentPlayerBody == null 
-            || GM.CurrentPlayerBody.LeftHand == null 
-            || GM.CurrentPlayerBody.RightHand == null
-            || GM.CurrentPlayerBody.Head == null
-            || TGM_Manager.instance.team == null
-            || TGM_Manager.instance.team.Length == 0)
+        if (TGM_Manager.instance == null
+            || TGM_Manager.gameState == TGM_Manager.GameStateEnum.GamemodeSelect
+            || TGM_Manager.gameState == TGM_Manager.GameStateEnum.Setup)
             return;
 
         //Compass Position

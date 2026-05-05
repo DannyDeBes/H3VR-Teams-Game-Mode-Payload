@@ -154,7 +154,7 @@ public class TGM_Rush : TGM_Gamemode
 
     public override bool IsGamemodeValid()
     {
-        TeamGameModePlugin.Logger.LogMessage(PluginInfo.NAME + "Set Gamemode " + name + " to " + true);
+        TGMPlugin.Logger.LogMessage(PluginInfo.NAME + "Set Gamemode " + name + " to " + true);
 
         //Do we have a prefab for Rush Radios
         if (TGM_Scene.instance.rushCapturePrefab == null)
@@ -188,7 +188,7 @@ public class TGM_Rush : TGM_Gamemode
         {
             if (Time.time >= TGM_Manager.instance.team[blueIFF].respawnTime)
             {
-                TeamGameModePlugin.Logger.LogDebug("Gamemode: RespawnTime at: " + Time.time + " for team " + blueIFF);
+                TGMPlugin.Logger.LogDebug("Gamemode: RespawnTime at: " + Time.time + " for team " + blueIFF);
                 TGM_Manager.instance.team[blueIFF].Respawn();
                 TGM_Manager.instance.team[blueIFF].respawnTime = Time.time + TGM_Scene.instance.teams[blueIFF].teamSpawnTime;
             }
@@ -211,17 +211,6 @@ public class TGM_Rush : TGM_Gamemode
         }
 
         RespawnTime();
-
-        /*
-        //Check for Win Condition
-        TGM_Team team = TGM_Manager.instance.team[redIFF];
-        if (team.currentScore >= team.scoreGoal)
-        {
-            winIFF = team.iff;
-            TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Postgame);
-            return;
-        }
-        */
     }
 
     public override void OnPlayerKilled(bool killedSelf, int iff)
@@ -243,8 +232,26 @@ public class TGM_Rush : TGM_Gamemode
     public override void OnJoinTeam(int iff)
     {
         base.OnJoinTeam(iff);
+        SetMarkers();
+    }
 
-        int enemyIFF = TGM_Sosigs.GetEnemyIFF(GM.CurrentPlayerBody.GetPlayerIFF());
+    void SetMarkers()
+    {
+        //Clear anything that remains
+        TGM_Compass.ClearAllMarkers();
+
+        //MARKERS
+        int playerIFF = GM.CurrentPlayerBody.GetPlayerIFF();
+        int enemyIFF = Global.GetEnemyIFF(playerIFF);
+
+        int spriteIndex = playerIFF == redIFF ? (int)TGM_Compass.MarkerEnum.Attack : (int)TGM_Compass.MarkerEnum.Defend;
+
+        //Set at Objective
+        TGM_Compass.instance.CreateMarker(
+            TGM_Compass.instance.markerSprites[spriteIndex],
+            Color.blue,
+            TGM_Manager.instance.team[blueIFF].currentSpawnArea.objective
+            );
     }
 
     public override void AdjustTeamScore(int teamIFF, int amount, bool network = true)
@@ -341,7 +348,7 @@ public class TGM_Rush : TGM_Gamemode
         else
         {
             //ATTACKERS
-            int enemyIFF = TGM_Sosigs.GetEnemyIFF(s.GetIFF());
+            int enemyIFF = Global.GetEnemyIFF(s.GetIFF());
             if (redSpawnRatio++ >= captureRatio)
             {
                 //Move to attack positions
@@ -370,6 +377,9 @@ public class TGM_Rush : TGM_Gamemode
 
     void UpdateSosigOrders()
     {
+        //Set Player's Markers
+        SetMarkers();
+
         for (int iff = 0; iff < TGM_Manager.instance.team.Length; iff++)
         {
             for (int x = 0; x < TGM_Manager.instance.team[iff].sosigs.Count; x++)
@@ -386,7 +396,7 @@ public class TGM_Rush : TGM_Gamemode
                 else
                 {
                     //ATTACKERS
-                    int enemyIFF = TGM_Sosigs.GetEnemyIFF(s.GetIFF());
+                    int enemyIFF = Global.GetEnemyIFF(s.GetIFF());
                     if (redSpawnRatio++ >= captureRatio)
                     {
                         //Move to attack positions

@@ -126,7 +126,7 @@ public class TGM_Manager : MonoBehaviour
 
         SetGameState(GameStateEnum.GamemodeSelect);
 
-        TeamGameModePlugin.Logger.LogMessage($"TGM Setup Complete");
+        TGMPlugin.Logger.LogMessage($"TGM Setup Complete");
     }
 
     void OnDestroy()
@@ -195,7 +195,7 @@ public class TGM_Manager : MonoBehaviour
                 return;
         }
 
-        TeamGameModePlugin.Logger.LogMessage($"Adding Gamemode: " + gamemode.name);
+        TGMPlugin.Logger.LogMessage($"Adding Gamemode: " + gamemode.name);
         gamemodes.Add(gamemode);
         gamemode.index = gamemodes.Count - 1;
     }
@@ -204,7 +204,7 @@ public class TGM_Manager : MonoBehaviour
     {
         gameState = state;
 
-        TeamGameModePlugin.Logger.LogMessage($"Set Game State: " + state.ToString());
+        TGMPlugin.Logger.LogMessage($"Set Game State: " + state.ToString());
 
         if (GameStateEvent != null)
             GameStateEvent.Invoke();

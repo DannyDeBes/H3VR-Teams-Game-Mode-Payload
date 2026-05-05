@@ -46,7 +46,7 @@ public class TGM_Gamemode
     /// </summary>
     public virtual void Setup()
     {
-        TeamGameModePlugin.Logger.LogDebug($"Gamemode: Setup");
+        TGMPlugin.Logger.LogDebug($"Gamemode: Setup");
     }
 
     /// <summary>
@@ -54,7 +54,7 @@ public class TGM_Gamemode
     /// </summary>
     public virtual void Pregame()
     {
-        TeamGameModePlugin.Logger.LogDebug($"Gamemode: Pregame");
+        TGMPlugin.Logger.LogDebug($"Gamemode: Pregame");
 
         GM.CurrentSceneSettings.SosigKillEvent += TGM_Manager.instance.OnSosigKilled;
         GM.CurrentSceneSettings.SosigKillEvent += TGM_Manager.instance.gamemode.OnSosigKilled;
@@ -83,7 +83,7 @@ public class TGM_Gamemode
     /// </summary>
     public virtual void GameplayStart()
     {
-        TeamGameModePlugin.Logger.LogDebug($"Gamemode: Gameplay Start");
+        TGMPlugin.Logger.LogDebug($"Gamemode: Gameplay Start");
     }
 
     /// <summary>
@@ -91,7 +91,7 @@ public class TGM_Gamemode
     /// </summary>
     public virtual void Postgame()
     {
-        TeamGameModePlugin.Logger.LogDebug($"Gamemode: Post Game");
+        TGMPlugin.Logger.LogDebug($"Gamemode: Post Game");
 
         //Force Respawn everyone if not already spawned
         for (int i = 0; i < TGM_Manager.instance.team.Length; i++)
@@ -132,7 +132,7 @@ public class TGM_Gamemode
 
     public virtual void GameOver()
     {
-        TeamGameModePlugin.Logger.LogDebug($"Gamemode: Game Over, Team Won: " + winIFF);
+        TGMPlugin.Logger.LogDebug($"Gamemode: Game Over, Team Won: " + winIFF);
 
         TGM_Manager.PlayAudio(TGM_Manager.PlayAudioEnum.Confirm);
         TGM_Manager.LeaveTeam();
@@ -211,7 +211,7 @@ public class TGM_Gamemode
     /// <returns></returns>
     public virtual bool IsGamemodeValid()
     {
-        TeamGameModePlugin.Logger.LogDebug("Gamemode: IsGamemode " + name + " valid: " + false);
+        TGMPlugin.Logger.LogDebug("Gamemode: IsGamemode " + name + " valid: " + false);
         //Check if all required data is avalible for this gamemode to work
         return false;
     }
@@ -228,7 +228,7 @@ public class TGM_Gamemode
     /// <param name="amount"></param>
     public virtual void AdjustTeamScore(int teamIFF, int amount, bool network = true)
     {
-        TeamGameModePlugin.Logger.LogDebug($"Gamemode: Adjust Team:" + teamIFF + " Score: " + amount);
+        TGMPlugin.Logger.LogDebug($"Gamemode: Adjust Team:" + teamIFF + " Score: " + amount);
 
         if (TGM_Manager.gameState != TGM_Manager.GameStateEnum.Gameplay)
             return;
@@ -246,7 +246,7 @@ public class TGM_Gamemode
 
     public virtual void OnSosigCreate(Sosig s)
     {
-        TeamGameModePlugin.Logger.LogDebug("Gamemode: OnSosigCreate");
+        TGMPlugin.Logger.LogDebug("Gamemode: OnSosigCreate");
         //Command Sosig here
     }
 
@@ -256,7 +256,7 @@ public class TGM_Gamemode
     /// <param name="s"></param>
     public virtual void OnSosigKilled(Sosig s)
     {
-        TeamGameModePlugin.Logger.LogDebug("Gamemode: OnSosigKilled");
+        TGMPlugin.Logger.LogDebug("Gamemode: OnSosigKilled");
 
         if (TGM_Settings.GetSetting(TGMSettingEnum.SosigWeapons) == 0)
             s.DestroyAllHeldObjects();
@@ -287,7 +287,7 @@ public class TGM_Gamemode
     /// <param name="killerIFF"></param>
     public virtual void OnPlayerKilled(bool killedSelf, int iff)
     {
-        TeamGameModePlugin.Logger.LogDebug("Gamemode: OnPlayerKilled");
+        TGMPlugin.Logger.LogDebug("Gamemode: OnPlayerKilled");
 
         if (iff != redIFF && iff != blueIFF)
             return;
@@ -305,7 +305,7 @@ public class TGM_Gamemode
         {
             if (Time.time >= TGM_Manager.instance.team[i].respawnTime)
             {
-                TeamGameModePlugin.Logger.LogDebug("Gamemode: RespawnTime at: " + Time.time + " for team " + i);
+                TGMPlugin.Logger.LogDebug("Gamemode: RespawnTime at: " + Time.time + " for team " + i);
                 TGM_Manager.instance.team[i].Respawn();
                 TGM_Manager.instance.team[i].respawnTime = Time.time + TGM_Scene.instance.teams[i].teamSpawnTime;
             }

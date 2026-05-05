@@ -4,6 +4,6 @@ namespace TeamsGameMode
 	{
 		internal const string NAME = "Teams Game Mode";
 		internal const string GUID = "Packer.Teams";
-		internal const string VERSION = "0.9.1";
+		internal const string VERSION = "1.0.6";
 	}
 }

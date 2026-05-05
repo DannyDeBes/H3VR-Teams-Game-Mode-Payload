@@ -47,7 +47,7 @@ public class TGM_ProfileMenu : MonoBehaviour
         {
             if (TGM_ModLoader.profiles[i].name == profileInput.text)
             {
-                TeamGameModePlugin.Logger.LogError($"Loading Profile - " + TGM_ModLoader.profiles[i].name);
+                TGMPlugin.Logger.LogError($"Loading Profile - " + TGM_ModLoader.profiles[i].name);
 
                 TGM_Profile.profile = TGM_ModLoader.profiles[i];
 

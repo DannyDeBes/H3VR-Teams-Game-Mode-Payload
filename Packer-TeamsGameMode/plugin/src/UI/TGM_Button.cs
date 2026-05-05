@@ -11,6 +11,7 @@ public class TGM_Button : MonoBehaviour
     public Button[] buttons;
     public int index = -1;
     public int value = 0;
+    public GameObject go;
 
     public void SelectClass()
     {
@@ -151,5 +152,9 @@ public class TGM_Button : MonoBehaviour
 
         box.size = new Vector3(rect.sizeDelta.x, rect.sizeDelta.y, 1);
         */
+    }
+    public void SelectMap()
+    {
+        TGM_MapSelector.instance.SelectMap(index);
     }
 }

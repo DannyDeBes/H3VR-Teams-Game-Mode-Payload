@@ -123,7 +123,7 @@ public class TGM_Area : MonoBehaviour
         //Error backup
         if (iff < 0)
         {
-            TeamGameModePlugin.Logger.LogWarning("Wrong Attack IFF, defaulting to Objective");
+            TGMPlugin.Logger.LogWarning("Wrong Attack IFF, defaulting to Objective");
             return GetObjectiveArea();
         }
 
@@ -142,7 +142,7 @@ public class TGM_Area : MonoBehaviour
         //Error backup
         if (iff < 0)
         {
-            TeamGameModePlugin.Logger.LogWarning("Wrong Defend IFF, defaulting to Objective");
+            TGMPlugin.Logger.LogWarning("Wrong Defend IFF, defaulting to Objective");
             return GetObjectiveArea();
         }
         

@@ -104,7 +104,7 @@ public class TGM_MainMenu : MonoBehaviour
 
     public void SelectGamemode(int index)
     {
-        TeamGameModePlugin.Logger.LogMessage($"Gamemode Selected: " + TGM_Manager.instance.gamemodes[index].name);
+        TGMPlugin.Logger.LogMessage($"Gamemode Selected: " + TGM_Manager.instance.gamemodes[index].name);
 
         //If not already assigned, assign the gamemode
         if (TGM_Manager.instance.gamemode != TGM_Manager.instance.gamemodes[index])
@@ -317,7 +317,7 @@ public class TGM_MainMenu : MonoBehaviour
         }
 
         TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Pregame);
-        TeamGameModePlugin.Logger.LogMessage($"Game Started");
+        TGMPlugin.Logger.LogMessage($"Game Started");
     }
 
     public void ToggleSpectatorCamera()

@@ -33,6 +33,7 @@ public class TGM_ModLoader
         if (!File.Exists(path))
             path = Paths.PluginPath + "/Teams_Game_Mode/teamgamemode.tgm";
 
+        Debug.Log(path);
 
         if (!loadedAssets)
         {
@@ -44,20 +45,19 @@ public class TGM_ModLoader
 
             if (localAssetBundle == null)
             {
-                TeamGameModePlugin.Logger.LogMessage($"Failed to load Teams Game Mode AssetBundle");
+                TGMPlugin.Logger.LogMessage($"Failed to load Teams Game Mode AssetBundle");
                 yield break;
             }
 
             tgmBundle = localAssetBundle;
         }
 
-
         AssetBundleRequest assetRequest = tgmBundle.LoadAssetWithSubAssetsAsync<TGM_Assets>("TeamsGameMode");
         yield return assetRequest;
 
         if (assetRequest == null)
         {
-            TeamGameModePlugin.Logger.LogMessage($"Missing TGM Assets");
+            TGMPlugin.Logger.LogMessage($"Missing TGM Assets");
             yield break;
         }
 
@@ -69,32 +69,7 @@ public class TGM_ModLoader
         //yield return TGM_Scene.instance.StartCoroutine(LoadInAssets());
         assetsLoading = false;
 
-        yield return TGM_Scene.instance.StartCoroutine(SetupGameData());
-
         timeout = Time.time + 10f;
-    }
-
-
-    public static IEnumerator LoadInAssets()
-    {
-
-        //------------------------------------------------------------------
-        // Menus
-        //------------------------------------------------------------------
-
-        Transform mainMenu = TGM_Scene.instance.mainMenu;
-        TGM_MainMenu instance = TGM_Scene.Instantiate(
-            tgmAssets.mainMenu,
-            mainMenu.position,
-            mainMenu.rotation,
-            mainMenu.parent);
-
-        yield return null;
-    }
-
-    public static IEnumerator SetupGameData()
-    {
-        yield return null;
     }
 
     //--------------------------------------------------------------------------------------------------------
@@ -107,7 +82,7 @@ public class TGM_ModLoader
 
         if (directories.Count == 0)
         {
-            TeamGameModePlugin.Logger.LogMessage($"No Player Teams were found!");
+            TGMPlugin.Logger.LogMessage($"No Player Teams were found!");
             return;
         }
 
@@ -130,7 +105,7 @@ public class TGM_ModLoader
                 }
                 catch (Exception ex)
                 {
-                    TeamGameModePlugin.Logger.LogMessage(ex.Message);
+                    TGMPlugin.Logger.LogMessage(ex.Message);
                     return;
                 }
 
@@ -151,7 +126,7 @@ public class TGM_ModLoader
                     team.playerClasses[x].thumbnail = LoadSprite(pathName + "\\" + team.playerClasses[x].spriteName);
                 }
 
-                TeamGameModePlugin.Logger.LogMessage($"Loaded Player Team - " + team.name);
+                TGMPlugin.Logger.LogMessage($"Loaded Player Team - " + team.name);
             }
         }
     }
@@ -166,7 +141,7 @@ public class TGM_ModLoader
 
         if (directories.Count == 0)
         {
-            TeamGameModePlugin.Logger.LogMessage($"No Sosig Teams were found!");
+            TGMPlugin.Logger.LogMessage($"No Sosig Teams were found!");
             return;
         }
 
@@ -189,7 +164,7 @@ public class TGM_ModLoader
                 }
                 catch (Exception ex)
                 {
-                    TeamGameModePlugin.Logger.LogMessage(ex.Message);
+                    TGMPlugin.Logger.LogMessage(ex.Message);
                     return;
                 }
 
@@ -200,7 +175,7 @@ public class TGM_ModLoader
                 newDirectory = newDirectory.Replace("sttgm", "png");
                 team.thumbnail = LoadSprite(newDirectory);
 
-                TeamGameModePlugin.Logger.LogMessage($"Loaded Sosig Team - " + team.name);
+                TGMPlugin.Logger.LogMessage($"Loaded Sosig Team - " + team.name);
             }
         }
     }
@@ -267,7 +242,7 @@ public class TGM_ModLoader
         catch (Exception ex)
         {
             FistVR.SM.PlayGlobalUISound(FistVR.SM.GlobalUISound.Error, FistVR.GM.CurrentPlayerBody.transform.position);
-            TeamGameModePlugin.Logger.LogMessage($"Failed Saving Profile - " + ex.Message);
+            TGMPlugin.Logger.LogMessage($"Failed Saving Profile - " + ex.Message);
             return false;
         }
 
@@ -280,7 +255,7 @@ public class TGM_ModLoader
                 newFile.Close();
             }
 
-            TeamGameModePlugin.Logger.LogMessage($"Writing to " + fileName);
+            TGMPlugin.Logger.LogMessage($"Writing to " + fileName);
             using (StreamWriter writer = new StreamWriter(fileName, false))
             {
                 string json = JsonUtility.ToJson(TGM_Profile.profile, true);
@@ -293,7 +268,7 @@ public class TGM_ModLoader
         catch (Exception ex)
         {
             FistVR.SM.PlayGlobalUISound(FistVR.SM.GlobalUISound.Error, FistVR.GM.CurrentPlayerBody.transform.position);
-            TeamGameModePlugin.Logger.LogError($"Failed Saving Profile - " + ex.Message);
+            TGMPlugin.Logger.LogError($"Failed Saving Profile - " + ex.Message);
             status = false;
         }
 
@@ -314,7 +289,7 @@ public class TGM_ModLoader
 
         if (directories.Count == 0)
         {
-            TeamGameModePlugin.Logger.LogMessage($"No profiles found");
+            TGMPlugin.Logger.LogMessage($"No profiles found");
             return null;
         }
 
@@ -335,17 +310,17 @@ public class TGM_ModLoader
                     if (newProfile != null)
                     {
                         profiles.Add(newProfile);
-                        TeamGameModePlugin.Logger.LogMessage($"Loaded External Profile - " + newProfile.name);
+                        TGMPlugin.Logger.LogMessage($"Loaded External Profile - " + newProfile.name);
                     }
                     else
-                        TeamGameModePlugin.Logger.LogMessage($"Failed to Load External Profile, is it a valid json? - " + i);
+                        TGMPlugin.Logger.LogMessage($"Failed to Load External Profile, is it a valid json? - " + i);
 
                 }
             }
             catch (Exception ex)
             {
                 FistVR.SM.PlayGlobalUISound(FistVR.SM.GlobalUISound.Error, FistVR.GM.CurrentPlayerBody.transform.position);
-                TeamGameModePlugin.Logger.LogMessage(ex.Message);
+                TGMPlugin.Logger.LogMessage(ex.Message);
                 return null;
             }
         }
@@ -417,7 +392,7 @@ public class TGM_ModLoader
 
             if (tex == null)
             {
-                TeamGameModePlugin.Logger.LogError($"Texture Not Found: " + path);
+                TGMPlugin.Logger.LogError($"Texture Not Found: " + path);
                 return null;
             }
             else

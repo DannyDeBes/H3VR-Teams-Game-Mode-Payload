@@ -164,12 +164,12 @@ public class TGM_Team
 
         if (selectedSosigTeam == null)
         {
-            TeamGameModePlugin.Logger.LogError("MISSING SOSIG TEAM");
+            TGMPlugin.Logger.LogError("MISSING SOSIG TEAM");
             return null;
         }
         if (selectedSosigTeam.sosigSet == null)
         {
-            TeamGameModePlugin.Logger.LogError("MISSING SOSIG SET");
+            TGMPlugin.Logger.LogError("MISSING SOSIG SET");
             return null;
         }
 
@@ -193,7 +193,7 @@ public class TGM_Team
         //Error Check - Backup make sure we have at least ONE sosig set
         if (sets.Count <= 0)
         {
-            TeamGameModePlugin.Logger.LogWarning("No Valid Sosig Sets found, defaulting to first Sosig Set");
+            TGMPlugin.Logger.LogWarning("No Valid Sosig Sets found, defaulting to first Sosig Set");
             sets.Add(selectedSosigTeam.sosigSet[0]);
         }
 

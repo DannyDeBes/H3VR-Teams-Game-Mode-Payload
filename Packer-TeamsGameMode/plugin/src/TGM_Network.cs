@@ -14,7 +14,7 @@ public  class TGM_Network
 
     public static void Setup()
     {
-        TeamGameModePlugin.Logger.LogMessage("Network Setup");
+        TGMPlugin.Logger.LogMessage("Network Setup");
         connectionGameSettings = Tools.CreateCustomConnection("TGM_GameSettings");
         //connectionGameSettings.ServerHandlerEvent += GameSettings_Receiver;
         connectionGameSettings.ClientHandlerEvent += GameSettings_Receiver;
@@ -63,7 +63,7 @@ public  class TGM_Network
         if (!Tools.ServerRunning() || Tools.IsHost())
             return;
 
-        TeamGameModePlugin.Logger.LogMessage("Game Settings Received");
+        TGMPlugin.Logger.LogMessage("Game Settings Received");
 
         //Gamemode
         int gmi = packet.ReadInt();
@@ -153,7 +153,7 @@ public  class TGM_Network
             packet.Write(TGM_Scene.instance.areas[i].iff);
         }
 
-        TeamGameModePlugin.Logger.LogMessage("Game Settings Sent to Clients");
+        TGMPlugin.Logger.LogMessage("Game Settings Sent to Clients");
 
         connectionGameSettings.ServerToClients(packet);
     }
@@ -168,7 +168,7 @@ public  class TGM_Network
         if (!Tools.ServerRunning() || Tools.IsHost())
             return;
 
-        TeamGameModePlugin.Logger.LogMessage("Request Settings Received");
+        TGMPlugin.Logger.LogMessage("Request Settings Received");
 
         //Send Settings
         GameSettings_ToClients();
@@ -182,7 +182,7 @@ public  class TGM_Network
         if (!Tools.ServerRunning() || connectionRequestSettings == null)
             return;
 
-        TeamGameModePlugin.Logger.LogMessage("Request Settings Sent");
+        TGMPlugin.Logger.LogMessage("Request Settings Sent");
 
         PacketData packet = new PacketData(connectionRequestSettings.ToServerID);
         connectionRequestSettings.ClientToServer(packet);
@@ -198,7 +198,7 @@ public  class TGM_Network
         if (!Tools.ServerRunning() || !Tools.IsClient())
             return;
 
-        TeamGameModePlugin.Logger.LogMessage("Gameplay Received");
+        TGMPlugin.Logger.LogMessage("Gameplay Received");
 
         //Teams
         for (int teamIFF = 0; teamIFF < TGM_Manager.instance.team.Length; teamIFF++)
@@ -223,7 +223,7 @@ public  class TGM_Network
             return;
 
 
-        TeamGameModePlugin.Logger.LogMessage("Gameplay To Server");
+        TGMPlugin.Logger.LogMessage("Gameplay To Server");
 
         PacketData packet = new PacketData(connectionGameplay.ToServerID);
 
@@ -235,7 +235,7 @@ public  class TGM_Network
         if (!Tools.ServerRunning())
             return;
 
-        TeamGameModePlugin.Logger.LogMessage("Gameplay To Clients");
+        TGMPlugin.Logger.LogMessage("Gameplay To Clients");
 
 
         PacketData packet = new PacketData(connectionGameplay.ToClientID);
@@ -268,7 +268,7 @@ public  class TGM_Network
         if (!Tools.ServerRunning())
             return;
 
-        TeamGameModePlugin.Logger.LogMessage("Adjust Scores Received");
+        TGMPlugin.Logger.LogMessage("Adjust Scores Received");
 
         int teamIFF = packet.ReadInt();
         int score = packet.ReadInt();
@@ -282,7 +282,7 @@ public  class TGM_Network
         if (!Tools.ServerRunning() || connectionAdjustScores == null)
             return;
 
-        TeamGameModePlugin.Logger.LogMessage("Adjust Scores To Server");
+        TGMPlugin.Logger.LogMessage("Adjust Scores To Server");
 
         PacketData packet = new PacketData(connectionAdjustScores.ToServerID);
         packet.Write(teamIFF);
@@ -296,7 +296,7 @@ public  class TGM_Network
             return;
 
 
-        TeamGameModePlugin.Logger.LogMessage("Adjust Scores To Clients");
+        TGMPlugin.Logger.LogMessage("Adjust Scores To Clients");
 
         PacketData packet = new PacketData(connectionAdjustScores.ToClientID);
         packet.Write(teamIFF);

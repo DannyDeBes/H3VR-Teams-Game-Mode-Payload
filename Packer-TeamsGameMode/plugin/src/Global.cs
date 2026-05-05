@@ -13,7 +13,7 @@ public class Global
         //Try to find the weapon ID
         if (!IM.OD.TryGetValue(objectID, out mainObject))
         {
-            TeamGameModePlugin.Logger.LogMessage($"Cannot find object with id: " + objectID);
+            TGMPlugin.Logger.LogMessage($"Cannot find object with id: " + objectID);
             return null;
         }
         return mainObject;
@@ -23,7 +23,7 @@ public class Global
     {
         if (fvrObject == null || fvrObject.GetGameObject() == null)
         {
-            TeamGameModePlugin.Logger.LogWarning("Failed to spawn FVRObject");
+            TGMPlugin.Logger.LogWarning("Failed to spawn FVRObject");
             return null;
         }
 

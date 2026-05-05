@@ -67,7 +67,7 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
 
     public override bool IsGamemodeValid()
     {
-        TeamGameModePlugin.Logger.LogMessage(PluginInfo.NAME + "Set Gamemode " + name + " to " + true);
+        TGMPlugin.Logger.LogMessage(PluginInfo.NAME + "Set Gamemode " + name + " to " + true);
         //TDM always valid
         return true;
     }
@@ -129,7 +129,7 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
     {
         base.OnJoinTeam(iff);
 
-        int enemyIFF = TGM_Sosigs.GetEnemyIFF(GM.CurrentPlayerBody.GetPlayerIFF());
+        int enemyIFF = Global.GetEnemyIFF(GM.CurrentPlayerBody.GetPlayerIFF());
 
         Transform markerPoint =
             (TGM_Manager.instance.team[enemyIFF].currentSpawnArea.capturePoint != null) ?
@@ -139,9 +139,10 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
         //Give player some direction to the combat area
         if (markerPoint != null)
         {
+            TGM_Compass.ClearAllMarkers();
             TGM_Compass.instance.CreateMarker(
                 TGM_Compass.instance.markerSprites[(int)TGM_Compass.MarkerEnum.Attack],
-                iff == 0 ? Color.red : Color.blue,
+                iff == redIFF ? Color.red : Color.blue,
                 markerPoint);
         }
     }
@@ -163,7 +164,7 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
     {
         base.OnSosigCreate(s);
 
-        int enemyIFF = TGM_Sosigs.GetEnemyIFF(s.GetIFF());
+        int enemyIFF = Global.GetEnemyIFF(s.GetIFF());
         //GO attack other team!
         TGM_Sosigs.OrderSosigToLocations(s, TGM_Manager.instance.team[enemyIFF].currentSpawnArea.GetRandomAttackArea());
         

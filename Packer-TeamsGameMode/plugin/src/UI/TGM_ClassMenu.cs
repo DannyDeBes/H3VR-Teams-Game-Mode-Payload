@@ -151,7 +151,7 @@ public class TGM_ClassMenu : MonoBehaviour
     {
         if (id < 0)
         {
-            TeamGameModePlugin.Logger.LogMessage(PluginInfo.NAME + "Spawn Class is -1 or less and will not be spawned");
+            TGMPlugin.Logger.LogMessage(PluginInfo.NAME + "Spawn Class is -1 or less and will not be spawned");
             return;
         }
 
@@ -265,7 +265,7 @@ public class TGM_ClassMenu : MonoBehaviour
                 {
                     //Make sure ammo cotainer exists
                     if (!IM.OD.TryGetValue(itemSet.ammoContainerID, out fvrContainer))
-                        TeamGameModePlugin.Logger.LogWarning("Could not find ammo container: " + itemSet.ammoContainerID);
+                        TGMPlugin.Logger.LogWarning("Could not find ammo container: " + itemSet.ammoContainerID);
 
                     //Spawn the Container
                     if (fvrContainer != null)
@@ -288,7 +288,7 @@ public class TGM_ClassMenu : MonoBehaviour
                 {
                     //Make sure ammo cotainer exists
                     if (!IM.OD.TryGetValue(itemSet.cartridgeID, out fvrCartridge))
-                        TeamGameModePlugin.Logger.LogWarning("Could not find cartridge: " + itemSet.cartridgeID);
+                        TGMPlugin.Logger.LogWarning("Could not find cartridge: " + itemSet.cartridgeID);
 
                     //Fill our Container with our Cartridge type
                     if (fvrCartridge != null)

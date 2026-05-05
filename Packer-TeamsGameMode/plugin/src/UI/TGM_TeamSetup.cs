@@ -43,7 +43,7 @@ public class TGM_TeamSetup : MonoBehaviour
         {
             if (TGM_Scene.instance.teams[i].startSpawnArea == null)
             {
-                TeamGameModePlugin.Logger.LogError("Map is Missing team " + i + " startSpawnArea !!!");
+                TGMPlugin.Logger.LogError("Map is Missing team " + i + " startSpawnArea !!!");
                 continue;
             }
 
