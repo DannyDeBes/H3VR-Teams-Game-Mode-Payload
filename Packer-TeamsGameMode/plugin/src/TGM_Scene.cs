@@ -32,6 +32,7 @@ public class TGM_Scene : MonoBehaviour
 
     [Header("Gamemode Prefabs")]
     public GameObject rushCapturePrefab;
+    public GameObject payloadCartPrefab;
 
     [Header("Audio Overwrite")]
     [Tooltip("Start Game, or spawn items etc")]

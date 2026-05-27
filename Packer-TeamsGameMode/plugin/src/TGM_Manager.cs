@@ -24,7 +24,8 @@ public class TGM_Manager : MonoBehaviour
 
     [Header("DATA")]
     public TGM_Player localPlayer = new TGM_Player();
-    public float startTime = 0;
+    private float startTime = 0;
+    private int currentTimeLimit = 0;
 
     [Header("Audio")]
     public AudioSource globalAudio;
@@ -156,7 +157,10 @@ public class TGM_Manager : MonoBehaviour
         
         TGM_Rush rush = new TGM_Rush("Rush", "Attack and Defend", gamemodeThumbnails[1]);
         AddGamemode(rush);
-        
+
+        TGM_Payload payload = new TGM_Payload("Payload", "Push an objective along a path or stop it.", gamemodeThumbnails[2]);
+        AddGamemode(payload);
+
         GamemodesLoadedEvent?.Invoke();
     }
 
@@ -230,6 +234,7 @@ public class TGM_Manager : MonoBehaviour
             case GameStateEnum.Pregame:     //30 sec Count down to game start
                 TGM_MainMenu.instance.OpenPage(TGM_MainMenu.Page.JoinTeam);
                 startTime = Time.time + TGM_Gamemode.gameStartDelay;
+                currentTimeLimit = TGM_Settings.GetSetting(TGMSettingEnum.TimeLimit);
                 gamemode.Pregame();
                 break;
             case GameStateEnum.Gameplay:    //Combat
@@ -527,5 +532,29 @@ public class TGM_Manager : MonoBehaviour
         Gameplay,
         Postgame,   //30 secs post game before game over
         Gameover,   //Put everyone back into start room
+    }
+
+    //------------------------------------------------------------------------------
+    // TIME KEEPING
+    //------------------------------------------------------------------------------
+
+    public float GetCurrentTimeElapsed()
+    {
+        return Time.time - startTime;
+    }
+
+    public int GetCurrentTimeLimit()
+    {
+        return currentTimeLimit;
+    }
+
+    public float GetCurrentRemainingTime()
+    {
+        return (startTime + GetCurrentTimeLimit()) - GetCurrentTimeElapsed();
+    }
+
+    public void ChangeCurrentTimeLimit(int change)
+    {
+        currentTimeLimit += change;
     }
 }

@@ -49,7 +49,7 @@ public class TGM_Team
     }
 
     /// <summary>
-    /// Returns all Team tracking values back to thier default values
+    /// Returns all Team tracking values back to their default values
     /// </summary>
     public void ResetTeamTracking()
     {

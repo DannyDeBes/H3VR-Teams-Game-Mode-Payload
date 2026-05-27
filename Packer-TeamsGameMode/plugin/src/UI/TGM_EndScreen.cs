@@ -74,8 +74,8 @@ public class TGM_EndScreen : MonoBehaviour
             endScores[i].text = TGM_Manager.instance.team[i].currentScore.ToString();
         }
 
-        TimeSpan time = TimeSpan.FromSeconds(Time.time - TGM_Manager.instance.startTime);
-        timeText.text = time.Minutes + ":" + time.Seconds;
+        TimeSpan time = TimeSpan.FromSeconds(TGM_Manager.instance.GetCurrentTimeElapsed());
+        timeText.text = string.Format("{0}:{1:00}", time.Minutes, time.Seconds);
     }
 
     void FixedUpdate()

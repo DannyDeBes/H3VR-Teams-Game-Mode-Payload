@@ -188,21 +188,15 @@ public class TGM_Gamemode
         TimeSpan time;
 
         //TIME LIMIT
-        if (TGM_Settings.GetSetting(TGMSettingEnum.TimeLimit) > 0)
+        if (TGM_Manager.instance.GetCurrentTimeLimit() > 0)
         {
-            //How long a round is
-            float goal = TGM_Settings.GetSetting(TGMSettingEnum.TimeLimit);
-            float playTime = Time.time - TGM_Manager.instance.startTime;
-
-            float remainTime = (TGM_Manager.instance.startTime + goal) - playTime;
-            time = TimeSpan.FromSeconds(remainTime);
+            time = TimeSpan.FromSeconds(TGM_Manager.instance.GetCurrentRemainingTime());
         }
         else   //INFINITE
         {
-            float remainTime = Time.time - TGM_Manager.instance.startTime;
-            time = TimeSpan.FromSeconds(remainTime);
+            time = TimeSpan.FromSeconds(TGM_Manager.instance.GetCurrentTimeElapsed());
         }
-        TGM_Compass.instance.gameTimeText.text = time.Minutes + ":" + (time.Seconds < 10 ? "0" + time.Seconds : time.Seconds);
+        TGM_Compass.instance.gameTimeText.text = string.Format("{0}:{1:00}", time.Minutes, time.Seconds);
     }
 
     /// <summary>
@@ -260,7 +254,7 @@ public class TGM_Gamemode
 
         if (TGM_Settings.GetSetting(TGMSettingEnum.SosigWeapons) == 0)
             s.DestroyAllHeldObjects();
-        s.ClearSosig();
+        s.TickDownToClear(1);
 
         if (TGM_Manager.gameState != TGM_Manager.GameStateEnum.Gameplay)
             return;

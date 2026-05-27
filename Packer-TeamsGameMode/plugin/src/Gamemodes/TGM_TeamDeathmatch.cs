@@ -99,11 +99,11 @@ public class TGM_TeamDeathmatch : TGM_Gamemode
         }
 
         //If hit our custom Timelimit
-        if (TGM_Settings.GetSetting(TGMSettingEnum.TimeLimit) > 0)
+        if (TGM_Manager.instance.GetCurrentTimeLimit() > 0)
         {
             winIFF = -1;    //Default to Draw
-            float remainTime = Time.time - TGM_Manager.instance.startTime;
-            if (remainTime >= TGM_Settings.GetSetting(TGMSettingEnum.TimeLimit))
+
+            if (TGM_Manager.instance.GetCurrentTimeElapsed() >= TGM_Manager.instance.GetCurrentTimeLimit())
                 TGM_Manager.instance.SetGameState(TGM_Manager.GameStateEnum.Postgame);
         }
     }

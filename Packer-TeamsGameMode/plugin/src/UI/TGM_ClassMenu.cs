@@ -56,7 +56,7 @@ public class TGM_ClassMenu : MonoBehaviour
             switch (TGM_Manager.gameState)
             {
                 case TGM_Manager.GameStateEnum.Pregame:
-                    spawnButtonText.text = Mathf.Abs((Time.time - TGM_Manager.instance.startTime)).ToString("F2");
+                    spawnButtonText.text = Mathf.Abs((TGM_Manager.instance.GetCurrentTimeElapsed())).ToString("F2");
                     break;
                 case TGM_Manager.GameStateEnum.Gameplay:
                     spawnButtonText.text = Mathf.Abs((Time.time - TGM_Manager.instance.team[iff].respawnTime)).ToString("F2");
